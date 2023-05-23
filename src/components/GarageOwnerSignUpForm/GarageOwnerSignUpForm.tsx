@@ -1,6 +1,6 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Button, Form, Input, Select, Typography } from 'antd';
+import { Button, Form, Input, Select, Tag, Typography } from 'antd';
 
 import { CAR_COMPANIES, GARAGE_SERVICES } from '@/constants';
 import { useStep } from '@/hooks';
@@ -89,11 +89,17 @@ export function GarageOwnerSignUpForm() {
           <Form.Item name="carCompany">
             <RoundedSelect
               size="large"
+              mode="multiple"
+              tagRender={(props) => (
+                <Tag {...props} className="rounded-full flex">
+                  {props.label}
+                </Tag>
+              )}
               className="rounded-full shadow-md"
               options={CAR_COMPANIES.map(({ icon: Icon, label, value }) => ({
                 label: (
                   <div className="flex items-center gap-2">
-                    <Icon /> <span>{label}</span>
+                    <Icon className="text-4xl" /> <span>{label}</span>
                   </div>
                 ),
                 value,

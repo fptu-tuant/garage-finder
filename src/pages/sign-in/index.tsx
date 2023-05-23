@@ -59,7 +59,7 @@ export default function LoginPage() {
         </Link>
 
         <div className="max-w-md w-full">
-          <Divider className="after:bg-slate-100 before:bg-slate-100">
+          <Divider className="after:bg-slate-100 before:bg-slate-100 before:content-[''] after:content-['']">
             <Typography.Text>hoặc</Typography.Text>
           </Divider>
         </div>
