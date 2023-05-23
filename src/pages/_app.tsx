@@ -1,5 +1,6 @@
 import '@/styles/index.css';
 
+import { ConfigProvider } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -11,16 +12,28 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   const { Layout = MainLayout, title = 'Garage Finder' } = Component;
 
   return (
-    <div
-      className={twcx(fontMono.variable, fontSans.variable, fontSans.className)}
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#8A79EF',
+        },
+      }}
     >
-      <Head>
-        <title>{title}</title>
-      </Head>
+      <div
+        className={twcx(
+          fontMono.variable,
+          fontSans.variable,
+          fontSans.className
+        )}
+      >
+        <Head>
+          <title>{title}</title>
+        </Head>
 
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </div>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
+    </ConfigProvider>
   );
 }

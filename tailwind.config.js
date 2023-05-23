@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        lavender: {
-          500: '#8b5cf6',
+        primary: {
+          DEFAULT: '#8A79EF',
         },
       },
       fontFamily: {
