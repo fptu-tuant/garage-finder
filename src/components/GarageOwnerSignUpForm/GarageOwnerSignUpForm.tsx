@@ -13,7 +13,8 @@ type GarageOwnerSignUpFormValues = {
 };
 
 const RoundedSelect = styled(Select)`
-  .ant-select-selector {
+  .ant-select-selector,
+  .ant-select-selection-item {
     border-radius: 999px !important;
   }
 `;
