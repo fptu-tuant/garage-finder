@@ -13,7 +13,7 @@ export const GARAGE_SERVICES = [
   { label: 'Sửa chữa', value: 1 },
   { label: 'Bảo dưỡng', value: 2 },
   { label: 'Tân trang', value: 3 },
-  { label: 'Cứu hộ', value: 3 },
+  { label: 'Cứu hộ', value: 4 },
 ];
 
 export const CAR_COMPANIES = [
