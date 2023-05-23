@@ -1,5 +1,6 @@
 import '@/styles/index.css';
 
+import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
@@ -16,24 +17,29 @@ export default function App({ Component, pageProps }: CustomAppProps) {
       theme={{
         token: {
           colorPrimary: '#8A79EF',
+          controlHeightSM: 32,
+          controlHeight: 40,
+          controlHeightLG: 48,
         },
       }}
     >
-      <div
-        className={twcx(
-          fontMono.variable,
-          fontSans.variable,
-          fontSans.className
-        )}
-      >
-        <Head>
-          <title>{title}</title>
-        </Head>
+      <StyleProvider hashPriority="high">
+        <div
+          className={twcx(
+            fontMono.variable,
+            fontSans.variable,
+            fontSans.className
+          )}
+        >
+          <Head>
+            <title>{title}</title>
+          </Head>
 
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </div>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </div>
+      </StyleProvider>
     </ConfigProvider>
   );
 }

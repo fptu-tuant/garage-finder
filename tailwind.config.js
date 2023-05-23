@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: '#8A79EF',
+          100: '#E6E7FC',
         },
       },
       fontFamily: {
@@ -23,4 +24,7 @@ module.exports = {
     },
   },
   plugins: [require('@tailwindcss/typography')],
+  // corePlugins: {
+  //   preflight: false,
+  // },
 };

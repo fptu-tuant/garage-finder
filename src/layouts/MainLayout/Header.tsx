@@ -10,11 +10,11 @@ type HeaderProps = {
 export function Header({ className }: HeaderProps) {
   return (
     <header className={twcx(className, 'h-20 px-4 flex items-center')}>
-      <div>
+      <Link className="block" href="/">
         <div className="uppercase font-bold">
           <span>Garage</span> <span className="text-primary">Finder</span>
         </div>
-      </div>
+      </Link>
       <nav className="grow flex justify-end">
         <ul className="flex gap-8">
           <li>
@@ -35,9 +35,9 @@ export function Header({ className }: HeaderProps) {
       <Divider type="vertical" className="h-8 bg-gray-800 mx-8" />
 
       <div>
-        <Button size="large" className="border-primary text-primary">
-          Đăng Nhập
-        </Button>
+        <Link href="/sign-in">
+          <Button className="border-primary text-primary">Đăng Nhập</Button>
+        </Link>
       </div>
     </header>
   );
