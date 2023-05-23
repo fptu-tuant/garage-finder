@@ -1,6 +1,5 @@
 import '@/styles/index.css';
 
-import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
@@ -23,23 +22,21 @@ export default function App({ Component, pageProps }: CustomAppProps) {
         },
       }}
     >
-      <StyleProvider hashPriority="high">
-        <div
-          className={twcx(
-            fontMono.variable,
-            fontSans.variable,
-            fontSans.className
-          )}
-        >
-          <Head>
-            <title>{title}</title>
-          </Head>
+      <div
+        className={twcx(
+          fontMono.variable,
+          fontSans.variable,
+          fontSans.className
+        )}
+      >
+        <Head>
+          <title>{title}</title>
+        </Head>
 
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </div>
-      </StyleProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
     </ConfigProvider>
   );
 }

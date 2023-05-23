@@ -16,4 +16,13 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-slate-600;
   }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
 }

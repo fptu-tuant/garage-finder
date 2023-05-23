@@ -2,7 +2,11 @@ import { Button, Divider, Typography } from 'antd';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { AuthIllustrate, CarOwnerSignUpForm } from '@/components';
+import {
+  AuthIllustrate,
+  CarOwnerSignUpForm,
+  GarageOwnerSignUpForm,
+} from '@/components';
 
 export default function SignUpPage() {
   const [signUpFor, setSignUpFor] = useState<
@@ -38,6 +42,7 @@ export default function SignUpPage() {
         )}
 
         {signUpFor === 'car-owner' && <CarOwnerSignUpForm />}
+        {signUpFor === 'garage-owner' && <GarageOwnerSignUpForm />}
 
         {signUpFor !== 'not-select-yet' && (
           <Typography className="text-center">
