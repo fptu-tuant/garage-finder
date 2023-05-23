@@ -83,6 +83,14 @@ export function GarageOwnerSignUpForm() {
               size="large"
               mode="multiple"
               maxTagCount={3}
+              tagRender={(props) => (
+                <Tag
+                  {...props}
+                  className="rounded-full flex h-8  bg-gray-200 items-center"
+                >
+                  {props.label}
+                </Tag>
+              )}
               className="rounded-full shadow-md"
               options={GARAGE_SERVICES}
               placeholder="Loại dịch vụ cung cấp"
