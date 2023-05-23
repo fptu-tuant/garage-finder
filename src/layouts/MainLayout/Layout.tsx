@@ -8,7 +8,7 @@ export function MainLayout({ children }: PropsWithChildren) {
     <div>
       <Header />
 
-      <main>{children}</main>
+      <main className="container mx-auto">{children}</main>
 
       <Footer />
     </div>

@@ -13,7 +13,7 @@ export default function LoginPage() {
   const [form] = Form.useForm<SignInFormProps>();
 
   return (
-    <div className="flex mt-20 px-20">
+    <div className="flex mt-20">
       <div className="relative w-3/5 min-h-[500px]">
         <AuthIllustrate />
       </div>

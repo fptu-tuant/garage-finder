@@ -10,9 +10,9 @@ type FooterProps = {
 
 export function Footer({ className }: FooterProps) {
   return (
-    <footer className={twcx(className, 'pb-10')}>
+    <footer className={twcx(className, 'pb-10 container mx-auto')}>
       <div
-        className="mx-20 mt-10 flex flex-col items-center rounded-md bg-primary p-16 bg-no-repeat bg-cover"
+        className="mt-10 flex flex-col items-center rounded-md bg-primary p-16 bg-no-repeat bg-cover"
         style={{ backgroundImage: `url(${subscribeBg.src})` }}
       >
         <Typography.Text className="text-3xl text-white mb-5">

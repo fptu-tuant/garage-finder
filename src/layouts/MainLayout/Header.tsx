@@ -9,7 +9,12 @@ type HeaderProps = {
 
 export function Header({ className }: HeaderProps) {
   return (
-    <header className={twcx(className, 'h-20 px-4 flex items-center')}>
+    <header
+      className={twcx(
+        className,
+        'h-20 px-4 flex items-center container mx-auto'
+      )}
+    >
       <Link className="block" href="/">
         <div className="uppercase font-bold">
           <span>Garage</span> <span className="text-primary">Finder</span>
