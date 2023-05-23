@@ -89,6 +89,7 @@ export function GarageOwnerSignUpForm() {
           <Form.Item name="carCompany">
             <RoundedSelect
               size="large"
+              maxTagCount={3}
               mode="multiple"
               tagRender={(props) => (
                 <Tag {...props} className="rounded-full flex">
