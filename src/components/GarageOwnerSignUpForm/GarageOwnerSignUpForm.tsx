@@ -80,6 +80,8 @@ export function GarageOwnerSignUpForm() {
           <Form.Item name="service">
             <RoundedSelect
               size="large"
+              mode="multiple"
+              maxTagCount={3}
               className="rounded-full shadow-md"
               options={GARAGE_SERVICES}
               placeholder="Loại dịch vụ cung cấp"
