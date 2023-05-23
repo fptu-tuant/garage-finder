@@ -1,9 +1,8 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
-import Image from 'next/image';
 import Link from 'next/link';
 
-import otoImage from '@/assets/images/5.png';
+import { AuthIllustrate } from '@/components';
 
 type SignInFormProps = Partial<{
   username: string;
@@ -14,15 +13,12 @@ export default function LoginPage() {
   const [form] = Form.useForm<SignInFormProps>();
 
   return (
-    <div className="flex mt-20">
-      <div className="relative w-3/5 px-8 min-h-[500px]">
-        <div className="absolute w-2/3 bg-primary-100 h-full" />
-        <div className="absolute w-full h-4/5 top-[10%]">
-          <Image src={otoImage} alt="oto" fill className="object-contain" />
-        </div>
+    <div className="flex mt-20 px-20">
+      <div className="relative w-3/5 min-h-[500px]">
+        <AuthIllustrate />
       </div>
-      <div className="w-2/5 px-5">
-        <Form form={form} className="max-w-md">
+      <div className="w-2/5 px-5 flex justify-center">
+        <Form form={form} className="max-w-md w-full">
           <Typography.Title className="mb-14" level={2}>
             Đăng nhập
           </Typography.Title>
