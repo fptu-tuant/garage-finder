@@ -1,0 +1,31 @@
+{
+  "plugins": ["simple-import-sort"],
+  "extends": [
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "quotes": ["error", "single"],
+    "space-before-blocks": "error",
+    "newline-before-return": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "clsx",
+            "message": "Use 'twcx' from @/utils instead"
+          }
+        ]
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "function-declaration" }
+    ]
+  }
+}

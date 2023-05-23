@@ -1,0 +1,6 @@
+{
+  "cSpell.words": ["clsx", "Contentlayer", "rehype", "svgr", "twcx"],
+  "docwriter.hotkey.windows": "Alt + .",
+  "testing.automaticallyOpenPeekView": "never",
+  "svg.preview.background": "dark-transparent"
+}

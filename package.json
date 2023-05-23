@@ -1,0 +1,42 @@
+{
+  "name": "garage-finder",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "clsx": "^1.2.1",
+    "dayjs": "^1.11.7",
+    "lodash-es": "^4.17.21",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^7.0.0",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/lodash-es": "^4.17.7",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.35",
+    "@types/react-dom": "18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jsdom": "^22.0.0",
+    "postcss": "8.4.21",
+    "tailwind-merge": "^1.12.0",
+    "tailwindcss": "3.3.1",
+    "typescript": "5.0.4",
+    "vitest": "^0.30.1"
+  }
+}
