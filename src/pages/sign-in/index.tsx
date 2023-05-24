@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 
-import { AuthIllustrate } from '@/components';
+import { CarIllustrate } from '@/components';
 import { required } from '@/services';
 
 type SignInFormProps = Partial<{
@@ -16,7 +16,7 @@ export default function LoginPage() {
   return (
     <div className="flex mt-20">
       <div className="relative w-3/5 min-h-[500px]">
-        <AuthIllustrate />
+        <CarIllustrate />
       </div>
       <div className="w-2/5 px-5 flex flex-col items-center">
         <Form form={form} className="max-w-md w-full">

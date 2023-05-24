@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import {
-  AuthIllustrate,
+  CarIllustrate,
   CarOwnerSignUpForm,
   GarageOwnerSignUpForm,
 } from '@/components';
@@ -16,7 +16,7 @@ export default function SignUpPage() {
   return (
     <div className="flex mt-20">
       <div className="relative w-3/5 min-h-[500px]">
-        <AuthIllustrate />
+        <CarIllustrate />
       </div>
       <div className="w-2/5 px-5 flex flex-col items-center justify-center">
         {signUpFor === 'not-select-yet' && (

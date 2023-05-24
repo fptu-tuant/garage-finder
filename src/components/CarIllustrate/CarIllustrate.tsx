@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import otoImage from '@/assets/images/5.png';
 
-export function AuthIllustrate() {
+export function CarIllustrate() {
   return (
     <div className="h-full relative">
       <div className="absolute w-3/5 h-full bg-primary-100" />

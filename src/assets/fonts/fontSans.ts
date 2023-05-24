@@ -1,6 +1,6 @@
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 
-export const fontSans = Plus_Jakarta_Sans({
+export const fontSans = Montserrat({
   display: 'block',
   subsets: ['vietnamese'],
   preload: true,

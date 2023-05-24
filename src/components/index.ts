@@ -1,3 +1,3 @@
-export * from './AuthIllustrate/AuthIllustrate';
+export * from './CarIllustrate/CarIllustrate';
 export * from './CarOwnerSignUpForm/CarOwnerSignUpForm';
 export * from './GarageOwnerSignUpForm/GarageOwnerSignUpForm';
