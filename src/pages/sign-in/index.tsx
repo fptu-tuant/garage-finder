@@ -3,6 +3,7 @@ import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 
 import { AuthIllustrate } from '@/components';
+import { required } from '@/services';
 
 type SignInFormProps = Partial<{
   username: string;
@@ -23,7 +24,7 @@ export default function LoginPage() {
             Đăng nhập
           </Typography.Title>
 
-          <Form.Item name="username">
+          <Form.Item name="email" rules={[required()]}>
             <Input
               size="large"
               className="rounded-full shadow-md"
@@ -32,7 +33,7 @@ export default function LoginPage() {
             />
           </Form.Item>
 
-          <Form.Item name="password">
+          <Form.Item name="password" rules={[required()]}>
             <Input.Password
               size="large"
               className="rounded-full shadow-md"

@@ -1,10 +1,10 @@
 import '@/styles/index.css';
 
-import { ConfigProvider } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
 
 import { fontMono, fontSans } from '@/assets/fonts';
+import { AntConfigProvider } from '@/configs';
 import { MainLayout } from '@/layouts';
 import { twcx } from '@/utils';
 
@@ -12,16 +12,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   const { Layout = MainLayout, title = 'Garage Finder' } = Component;
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#8A79EF',
-          controlHeightSM: 32,
-          controlHeight: 40,
-          controlHeightLG: 48,
-        },
-      }}
-    >
+    <AntConfigProvider>
       <div
         className={twcx(
           fontMono.variable,
@@ -37,6 +28,6 @@ export default function App({ Component, pageProps }: CustomAppProps) {
           <Component {...pageProps} />
         </Layout>
       </div>
-    </ConfigProvider>
+    </AntConfigProvider>
   );
 }

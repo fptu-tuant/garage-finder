@@ -17,14 +17,14 @@ type GarageOwnerSignUpFormValues = {
 };
 
 const RoundedSelect = styled(Select)`
-  .ant-select-selector,
-  .ant-select-selection-item {
+  .tl-select-selector,
+  .tl-select-selection-item {
     border-radius: 999px !important;
   }
 `;
 
 const RoundedCascader = styled(Cascader)`
-  .ant-select-selector {
+  .tl-select-selector {
     border-radius: 999px !important;
   }
 `;
