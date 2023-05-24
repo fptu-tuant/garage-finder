@@ -1,5 +1,6 @@
 import '@/styles/index.css';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -12,22 +13,24 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   const { Layout = MainLayout, title = 'Garage Finder' } = Component;
 
   return (
-    <AntConfigProvider>
-      <div
-        className={twcx(
-          fontMono.variable,
-          fontSans.variable,
-          fontSans.className
-        )}
-      >
-        <Head>
-          <title>{title}</title>
-        </Head>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID as string}>
+      <AntConfigProvider>
+        <div
+          className={twcx(
+            fontMono.variable,
+            fontSans.variable,
+            fontSans.className
+          )}
+        >
+          <Head>
+            <title>{title}</title>
+          </Head>
 
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </div>
-    </AntConfigProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </div>
+      </AntConfigProvider>
+    </GoogleOAuthProvider>
   );
 }

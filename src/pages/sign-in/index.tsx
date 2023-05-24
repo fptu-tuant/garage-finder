@@ -1,8 +1,11 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Divider, Form, Input, Typography } from 'antd';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Button, Divider, Form, Input, message, Typography } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
 
 import { CarIllustrate } from '@/components';
+import { GoogleIcon } from '@/icons';
 import { required } from '@/services';
 
 type SignInFormProps = Partial<{
@@ -12,6 +15,21 @@ type SignInFormProps = Partial<{
 
 export default function LoginPage() {
   const [form] = Form.useForm<SignInFormProps>();
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (token) => {
+      const { access_token } = token;
+      const { data } = await axios.get(
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
+      );
+
+      console.log({ accessToken: access_token, ...data });
+      message.success(`Xin chào ${data.name}`);
+    },
+    onError: (error) => {
+      message.error(error.error_description);
+    },
+  });
 
   return (
     <div className="flex mt-20">
@@ -52,6 +70,15 @@ export default function LoginPage() {
             </Button>
           </Form.Item>
         </Form>
+
+        <Button
+          className="flex items-center gap-2 shadow-md w-full max-w-md rounded-full mb-3"
+          size="large"
+          onClick={() => loginWithGoogle()}
+        >
+          <GoogleIcon className="text-xl" />
+          <span className="grow text-center">Đăng nhập với Google</span>
+        </Button>
 
         <Link href="/forgot-password">
           <Typography.Text className="hover:text-primary hover:font-bold">
