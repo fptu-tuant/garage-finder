@@ -1,8 +1,8 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Button, Form, Input, Select, Tag, Typography } from 'antd';
+import { Button, Cascader, Form, Input, Select, Tag, Typography } from 'antd';
 
-import { CAR_COMPANIES, GARAGE_SERVICES } from '@/constants';
+import { CAR_COMPANIES, GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 import { useStep } from '@/hooks';
 
 type GarageOwnerSignUpFormValues = {
@@ -10,6 +10,10 @@ type GarageOwnerSignUpFormValues = {
   phone?: string;
   email?: string;
   password?: string;
+  retypePassword?: string;
+  services?: string[];
+  carCompanies?: string[];
+  address?: number[];
 };
 
 const RoundedSelect = styled(Select)`
@@ -19,12 +23,31 @@ const RoundedSelect = styled(Select)`
   }
 `;
 
+const RoundedCascader = styled(Cascader)`
+  .ant-select-selector {
+    border-radius: 999px !important;
+  }
+`;
+
 export function GarageOwnerSignUpForm() {
   const [currentStep, stepHelpers] = useStep(2);
   const [form] = Form.useForm<GarageOwnerSignUpFormValues>();
 
+  const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
+    label: province.name,
+    value: province.code,
+    children: province.districts.map((district) => ({
+      label: district.name,
+      value: district.code,
+    })),
+  }));
+
   return (
-    <Form form={form} className="max-w-md w-full">
+    <Form
+      form={form}
+      className="max-w-md w-full"
+      onValuesChange={(changes) => console.log(changes)}
+    >
       <Typography.Title className="mb-14" level={2}>
         Đăng ký
       </Typography.Title>
@@ -78,7 +101,7 @@ export function GarageOwnerSignUpForm() {
 
       {currentStep === 2 && (
         <>
-          <Form.Item name="service">
+          <Form.Item name="services">
             <RoundedSelect
               size="large"
               mode="multiple"
@@ -97,7 +120,7 @@ export function GarageOwnerSignUpForm() {
             />
           </Form.Item>
 
-          <Form.Item name="carCompany">
+          <Form.Item name="carCompanies">
             <RoundedSelect
               size="large"
               maxTagCount={3}
@@ -117,6 +140,33 @@ export function GarageOwnerSignUpForm() {
                 value,
               }))}
               placeholder="Hãng xe sửa chữa"
+            />
+          </Form.Item>
+
+          <Form.Item name="address">
+            <RoundedCascader
+              size="large"
+              className="rounded-full"
+              options={locationCascaderOptions}
+              placeholder="Địa chỉ"
+              showSearch={{
+                filter: (inputValue, path) =>
+                  path.some(
+                    (option) =>
+                      (option.label || '')
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(inputValue.toLowerCase()) > -1
+                  ),
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item name="detailAddress">
+            <Input
+              size="large"
+              className="rounded-full"
+              placeholder="Chi tiết địa chỉ"
             />
           </Form.Item>
         </>

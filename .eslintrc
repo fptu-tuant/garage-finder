@@ -8,10 +8,10 @@
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "quotes": ["error", "single"],
     "space-before-blocks": "error",
     "newline-before-return": "error",
     "indent": ["error", 2, { "SwitchCase": 1 }],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "no-restricted-imports": [
       "error",
       {
