@@ -18,6 +18,7 @@ export default function LoginPage() {
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (token) => {
+      console.log('token', token);
       const { access_token } = token;
       const { data } = await axios.get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
