@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
 
   const { Layout = MainLayout, title = 'Garage Finder' } = Component;
 
-  console.log('env', process.env);
+  console.log('env', process.env.NEXT_PUBLIC_CLIENT_ID);
 
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID as string}>
