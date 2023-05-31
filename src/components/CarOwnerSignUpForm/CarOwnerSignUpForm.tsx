@@ -1,18 +1,48 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
+
+import { usePostRegister } from '@/api/post';
+import { useAuthStore } from '@/contexts/auth.store';
 
 type CarOwnerSignUpFormValues = {
-  fullName?: string;
-  phone?: string;
-  email?: string;
-  password?: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  password: string;
 };
 
 export function CarOwnerSignUpForm() {
   const [form] = Form.useForm<CarOwnerSignUpFormValues>();
 
+  const { recall } = usePostRegister();
+  const updateUser = useAuthStore.use.update();
+
+  const onFinish = (values: CarOwnerSignUpFormValues) => {
+    const { email, fullName, password, phone } = values;
+
+    console.log('ok');
+
+    recall({
+      variables: {
+        name: fullName,
+        emailAddress: email,
+        password,
+        phoneNumber: phone,
+        roleID: 0,
+      },
+      onCompleted: (data) => {
+        console.log(data);
+        updateUser({ email, fullName, phone });
+      },
+      onError: (error) => {
+        console.error(error);
+        message.error(String(error));
+      },
+    });
+  };
+
   return (
-    <Form form={form} className="max-w-md w-full">
+    <Form form={form} className="max-w-md w-full" onFinish={onFinish}>
       <Typography.Title className="mb-14" level={2}>
         Đăng ký
       </Typography.Title>
@@ -65,6 +95,7 @@ export function CarOwnerSignUpForm() {
           className="w-full rounded-full shadow-md"
           size="large"
           type="primary"
+          htmlType="submit"
         >
           Đăng Ký
         </Button>

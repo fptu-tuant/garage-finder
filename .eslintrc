@@ -1,7 +1,8 @@
 {
-  "plugins": ["simple-import-sort"],
+  "plugins": ["simple-import-sort", "@typescript-eslint"],
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
     "plugin:jsx-a11y/recommended"
   ],
