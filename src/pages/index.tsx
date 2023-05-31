@@ -33,40 +33,34 @@ export default function HomePage() {
 
       <section className="px-6">
         <div className="rounded-lg shadow-lg p-10 -translate-y-4 bg-white border">
-          <Form layout="inline" className="flex justify-between">
-            <Form layout="vertical" className="grow">
-              <Form.Item label="Garage">
-                <Input placeholder="Nhập tên garage" />
-              </Form.Item>
-            </Form>
+          <Form layout="vertical" className="flex justify-between gap-4">
+            <Form.Item label="Garage" className="grow">
+              <Input placeholder="Nhập tên garage" />
+            </Form.Item>
 
-            <Form layout="vertical" className="grow">
-              <Form.Item label="Địa điểm">
-                <Cascader
-                  options={locationCascaderOptions}
-                  placeholder="Tỉnh  / Thành phố - Quận / Huyện"
-                  showSearch={{
-                    filter: (inputValue, path) =>
-                      path.some(
-                        (option) =>
-                          (option.label || '')
-                            .toString()
-                            .toLowerCase()
-                            .indexOf(inputValue.toLowerCase()) > -1
-                      ),
-                  }}
-                />
-              </Form.Item>
-            </Form>
+            <Form.Item label="Địa điểm" className="grow">
+              <Cascader
+                options={locationCascaderOptions}
+                placeholder="Tỉnh  / Thành phố - Quận / Huyện"
+                showSearch={{
+                  filter: (inputValue, path) =>
+                    path.some(
+                      (option) =>
+                        (option.label || '')
+                          .toString()
+                          .toLowerCase()
+                          .indexOf(inputValue.toLowerCase()) > -1
+                    ),
+                }}
+              />
+            </Form.Item>
 
-            <Form layout="vertical" className="grow">
-              <Form.Item label="Loại dịch vụ">
-                <Select
-                  placeholder="Chọn loại dịch vụ"
-                  options={GARAGE_SERVICES}
-                />
-              </Form.Item>
-            </Form>
+            <Form.Item label="Loại dịch vụ" className="grow">
+              <Select
+                placeholder="Chọn loại dịch vụ"
+                options={GARAGE_SERVICES}
+              />
+            </Form.Item>
 
             <Form.Item className="flex items-end">
               <Button htmlType="submit" type="primary">
