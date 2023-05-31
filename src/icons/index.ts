@@ -9,6 +9,7 @@ export { default as CadillacIcon } from './cadillac.svg';
 export { default as CalendarIcon } from './calendar.svg';
 export { default as ChevroletIcon } from './chevrolet.svg';
 export { default as ChryslerIcon } from './chrysler.svg';
+export { default as CloseIcon } from './close-x.svg';
 export { default as CopyIcon } from './copy.svg';
 export { default as GithubIcon } from './github.svg';
 export { default as GoogleIcon } from './google.svg';

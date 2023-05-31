@@ -1,4 +1,4 @@
-import { BaseApiCallProps, useBaseApi } from '../useBaseApi';
+import { BaseApiCallProps, useBaseApi } from './useBaseApi';
 
 type RegisterDataResponse = null;
 
@@ -8,11 +8,11 @@ type RegisterVariables = {
   phoneNumber: string;
   emailAddress: string;
   password: string;
-  roleID: 0;
+  roleID: 2 | 3;
 };
 
-export function usePostRegister(
+export function useRegisterApi(
   props?: BaseApiCallProps<RegisterDataResponse, RegisterVariables>
 ) {
-  return useBaseApi({ method: 'GET', url: '/register', ...props });
+  return useBaseApi({ method: 'POST', url: '/api/User/register', ...props });
 }

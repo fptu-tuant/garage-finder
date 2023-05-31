@@ -1,8 +1,8 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, message, Typography } from 'antd';
+import { Button, Form, Input, notification, Typography } from 'antd';
 
-import { usePostRegister } from '@/api/post';
-import { useAuthStore } from '@/contexts/auth.store';
+import { useRegisterApi } from '@/api';
+import { showError } from '@/utils';
 
 type CarOwnerSignUpFormValues = {
   fullName: string;
@@ -14,30 +14,23 @@ type CarOwnerSignUpFormValues = {
 export function CarOwnerSignUpForm() {
   const [form] = Form.useForm<CarOwnerSignUpFormValues>();
 
-  const { recall } = usePostRegister();
-  const updateUser = useAuthStore.use.update();
+  const { recall } = useRegisterApi();
 
   const onFinish = (values: CarOwnerSignUpFormValues) => {
     const { email, fullName, password, phone } = values;
 
-    console.log('ok');
-
     recall({
-      variables: {
+      body: {
         name: fullName,
         emailAddress: email,
         password,
         phoneNumber: phone,
-        roleID: 0,
+        roleID: 2,
       },
-      onCompleted: (data) => {
-        console.log(data);
-        updateUser({ email, fullName, phone });
+      onCompleted: () => {
+        notification.success({ message: 'Đăng ký tài khoản thành công!' });
       },
-      onError: (error) => {
-        console.error(error);
-        message.error(String(error));
-      },
+      onError: showError,
     });
   };
 

@@ -20,7 +20,7 @@ export function Header({ className }: HeaderProps) {
       <nav className="grow flex justify-end">
         <ul className="flex gap-8">
           <li>
-            <Link href="/">Trang chủ</Link>
+            <Link href="/garages">Trang chủ</Link>
           </li>
           <li>
             <Link href="/service">Dịch vụ</Link>

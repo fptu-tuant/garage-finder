@@ -2,35 +2,43 @@ import axios, { AxiosResponse } from 'axios';
 import { toLower } from 'lodash-es';
 import { useCallback, useEffect, useState } from 'react';
 
-export type BaseApiCallProps<TResponseData, TVariables> = {
-  variables?: TVariables;
+export type BaseApiCallProps<
+  TResponseData,
+  TBody,
+  TParams = Record<string, string>
+> = {
+  body?: TBody;
+  params?: TParams;
   onCompleted?: (data: TResponseData) => void;
   onError?: (e: unknown) => void;
 };
 
-type UseBaseApiProps<TResponseData, TVariables> = BaseApiCallProps<
+type UseBaseApiProps<TResponseData, TBody, TParams> = BaseApiCallProps<
   TResponseData,
-  TVariables
+  TBody,
+  TParams
 > & {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   url: string;
 };
 
-export function useBaseApi<TResponseData, TVariables>({
+export function useBaseApi<TResponseData, TBody, TParams>({
   method,
   url,
-  variables,
+  body,
+  params,
   onCompleted,
   onError,
-}: UseBaseApiProps<TResponseData, TVariables>) {
+}: UseBaseApiProps<TResponseData, TBody, TParams>) {
   const [data, setData] = useState<TResponseData>();
   const [loading, setLoading] = useState(false);
 
   const call = useCallback(
-    async (props?: BaseApiCallProps<TResponseData, TVariables>) => {
+    async (props?: BaseApiCallProps<TResponseData, TBody, TParams>) => {
       setLoading(true);
 
-      const _variables = props?.variables || variables;
+      const _body = props?.body || body;
+      const _params = props?.params || params;
       const _onCompleted = props?.onCompleted || onCompleted;
       const _onError = props?.onError || onError;
 
@@ -38,15 +46,16 @@ export function useBaseApi<TResponseData, TVariables>({
         const { data } = await axios<
           TResponseData,
           AxiosResponse<TResponseData>,
-          TVariables
+          TBody
         >({
           method: toLower(method),
           url: `${process.env.NEXT_PUBLIC_BASE_URL}${url}`,
-          data: _variables,
+          data: _body,
+          params: _params,
         });
 
-        setData(data);
         _onCompleted?.(data);
+        setData(data);
       } catch (error) {
         console.error(error);
         _onError?.(error);
@@ -54,7 +63,7 @@ export function useBaseApi<TResponseData, TVariables>({
 
       setLoading(false);
     },
-    [method, onCompleted, onError, url, variables]
+    [body, method, onCompleted, onError, params, url]
   );
 
   useEffect(() => {

@@ -1,12 +1,14 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Button, Divider, Form, Input, message, Typography } from 'antd';
-import axios from 'axios';
+import { Button, Divider, Form, Input, notification, Typography } from 'antd';
 import Link from 'next/link';
 
+import { useLoginByGoogleApi } from '@/api';
 import { CarIllustrate } from '@/components';
+import { useAuthStore } from '@/contexts/auth.store';
 import { GoogleIcon } from '@/icons';
 import { required } from '@/services';
+import { showError, showSuccess } from '@/utils';
 
 type SignInFormProps = Partial<{
   username: string;
@@ -16,20 +18,30 @@ type SignInFormProps = Partial<{
 export default function LoginPage() {
   const [form] = Form.useForm<SignInFormProps>();
 
+  const updateUser = useAuthStore.use.update();
+
+  const { loading: signingByGoogle, recall: signInByGoogle } =
+    useLoginByGoogleApi();
+
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (token) => {
-      console.log('token', token);
       const { access_token } = token;
-      const { data } = await axios.get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
-      );
 
-      console.log({ accessToken: access_token, ...data });
-      message.success(`Xin chào ${data.name}`);
+      console.log(access_token);
+      await signInByGoogle({
+        params: { accessToken: access_token },
+        onCompleted: (data) => {
+          showSuccess(`Chào mừng bạn trở lại! ${data.name}`);
+          updateUser({
+            email: data.emailAddress,
+            fullName: data.name,
+            phone: data.phoneNumber,
+          });
+        },
+        onError: showError,
+      });
     },
-    onError: (error) => {
-      message.error(error.error_description);
-    },
+    onError: showError,
   });
 
   return (
@@ -76,6 +88,7 @@ export default function LoginPage() {
           className="flex items-center gap-2 shadow-md w-full max-w-md rounded-full mb-3"
           size="large"
           onClick={() => loginWithGoogle()}
+          loading={signingByGoogle}
         >
           <GoogleIcon className="text-xl" />
           <span className="grow text-center">Đăng nhập với Google</span>
