@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 
-export function useClickOutside<T extends HTMLElement = any>(
+export function useClickOutside<T extends HTMLElement = HTMLElement>(
   handler: () => void,
   events?: string[] | null,
   nodes?: (HTMLElement | null)[]
@@ -10,6 +10,7 @@ export function useClickOutside<T extends HTMLElement = any>(
   const ref = useRef<T>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       const { target } = event ?? {};
 

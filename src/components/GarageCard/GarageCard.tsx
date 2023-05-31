@@ -10,10 +10,8 @@ type GarageCardProps = {
 
 export function GarageCard({
   image,
-  address,
-  rating,
+
   title,
-  totalRate,
 }: GarageCardProps) {
   return (
     <div>
