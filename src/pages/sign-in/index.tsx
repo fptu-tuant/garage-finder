@@ -1,6 +1,6 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Button, Divider, Form, Input, notification, Typography } from 'antd';
+import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 
 import { useLoginByGoogleApi } from '@/api';
@@ -31,7 +31,7 @@ export default function LoginPage() {
       await signInByGoogle({
         params: { accessToken: access_token },
         onCompleted: (data) => {
-          showSuccess(`Chào mừng bạn trở lại! ${data.name}`);
+          showSuccess(`Đăng nhập thành công! ${data.name}`);
           updateUser({
             email: data.emailAddress,
             fullName: data.name,
