@@ -2,6 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useLoginByGoogleApi } from '@/api';
 import { CarIllustrate } from '@/components';
@@ -19,6 +20,7 @@ export default function LoginPage() {
   const [form] = Form.useForm<SignInFormProps>();
 
   const updateUser = useAuthStore.use.update();
+  const router = useRouter();
 
   const { loading: signingByGoogle, recall: signInByGoogle } =
     useLoginByGoogleApi();
@@ -27,7 +29,6 @@ export default function LoginPage() {
     onSuccess: async (token) => {
       const { access_token } = token;
 
-      console.log(access_token);
       await signInByGoogle({
         params: { accessToken: access_token },
         onCompleted: (data) => {
@@ -37,6 +38,8 @@ export default function LoginPage() {
             fullName: data.name,
             phone: data.phoneNumber,
           });
+
+          router.push('/garages');
         },
         onError: showError,
       });
