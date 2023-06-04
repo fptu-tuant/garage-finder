@@ -14,7 +14,7 @@ import { CarIllustrate } from '@/components';
 import { useAuthStore } from '@/context/auth.context';
 import { GoogleIcon } from '@/icons';
 import { required } from '@/services';
-import { showError } from '@/utils';
+import { showError, showSuccess } from '@/utils';
 
 type SignInFormProps = {
   email: string;
@@ -40,6 +40,8 @@ export default function LoginPage() {
         accessToken: data.accessToken,
       },
     });
+
+    showSuccess('Đăng nhập thành công!');
 
     router.push('/garages');
   };
