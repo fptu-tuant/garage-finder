@@ -30,6 +30,7 @@ export function useLoginWithGoogleApi(
   return useBaseMutationApi({
     method: 'POST',
     endpoint: '/api/User/login-gg',
+    mutationKey: ['login-with-google'],
     ...options,
   });
 }

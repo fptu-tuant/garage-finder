@@ -15,6 +15,8 @@ export { default as CopyIcon } from './copy.svg';
 export { default as EnvelopIcon } from './envelop.svg';
 export { default as GithubIcon } from './github.svg';
 export { default as GoogleIcon } from './google.svg';
+export { default as HeartFilledIcon } from './heart-filled.svg';
+export { default as PinMapFilledIcon } from './pin-map-filled.svg';
 export { default as TriangleIcon } from './triangle.svg';
 export { default as TypescriptReactIcon } from './tsx.svg';
 export { default as TextFileIcon } from './txt.svg';

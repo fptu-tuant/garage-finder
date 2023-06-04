@@ -30,6 +30,7 @@ export function useLoginApi(
   return useBaseMutationApi({
     endpoint: '/api/User/login',
     method: 'POST',
+    mutationKey: ['login'],
     ...options,
   });
 }

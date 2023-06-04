@@ -20,6 +20,7 @@ export function useCarOwnerRegisterApi(
   return useBaseMutationApi({
     endpoint: 'api/User/register',
     method: 'POST',
+    mutationKey: ['car-owner-sign-up'],
     ...options,
   });
 }
