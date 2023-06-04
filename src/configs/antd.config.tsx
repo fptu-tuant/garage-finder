@@ -4,17 +4,17 @@ import { PropsWithChildren } from 'react';
 
 const formConfig: ConfigProviderProps['form'] = {
   validateMessages: {
-    required: '${label} is a required field!',
-    whitespace: ' ${label} cannot be empty!',
+    required: 'Không được để trống!',
+    whitespace: 'Không được để trống!',
     string: {
-      min: '${label} must be minimum ${min} characters!',
-      max: '${label} must be maximum ${max} characters!',
+      min: 'Trường này phải có ít nhất ${min} ký tự',
+      max: 'Trường này phải có ít hơn ${max} ký tự',
     },
     types: {
-      number: '${label} must be number!',
+      number: 'Trường này chỉ được nhập số',
     },
     pattern: {
-      mismatch: '${label} is not valid!',
+      mismatch: 'Dữ liệu nhập vào không hợp lệ',
     },
   },
 };

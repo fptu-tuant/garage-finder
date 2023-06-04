@@ -1,8 +1,11 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, notification, Typography } from 'antd';
+import styled from '@emotion/styled';
+import { Button, Form, Input, Typography } from 'antd';
 
-import { useRegisterApi } from '@/api';
-import { showError } from '@/utils';
+import { useCarOwnerRegisterApi } from '@/api';
+import { USER_ROLE } from '@/constants';
+import { confirmPassword, email, required } from '@/services';
+import { showError, showSuccess } from '@/utils';
 
 type CarOwnerSignUpFormValues = {
   fullName: string;
@@ -11,36 +14,47 @@ type CarOwnerSignUpFormValues = {
   password: string;
 };
 
+const StyledForm = styled(Form)`
+  .tl-form-item-explain {
+    padding-left: 1em;
+  }
+
+  .tl-form-item-control {
+    margin-bottom: 6px;
+  }
+` as unknown as typeof Form<CarOwnerSignUpFormValues>;
+
 export function CarOwnerSignUpForm() {
   const [form] = Form.useForm<CarOwnerSignUpFormValues>();
 
-  const { recall } = useRegisterApi();
+  const { mutate: signUp, isLoading } = useCarOwnerRegisterApi({
+    onError: showError,
+    onSuccess: () => {
+      showSuccess('Đăng ký thành công!');
+    },
+  });
 
   const onFinish = (values: CarOwnerSignUpFormValues) => {
     const { email, fullName, password, phone } = values;
 
-    recall({
+    signUp({
       body: {
         name: fullName,
         emailAddress: email,
         password,
         phoneNumber: phone,
-        roleID: 2,
+        roleID: USER_ROLE.CarOwner,
       },
-      onCompleted: () => {
-        notification.success({ message: 'Đăng ký tài khoản thành công!' });
-      },
-      onError: showError,
     });
   };
 
   return (
-    <Form form={form} className="max-w-md w-full" onFinish={onFinish}>
+    <StyledForm form={form} className="max-w-md w-full" onFinish={onFinish}>
       <Typography.Title className="mb-14" level={2}>
         Đăng ký
       </Typography.Title>
 
-      <Form.Item name="fullName">
+      <Form.Item name="fullName" rules={[required()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -49,7 +63,7 @@ export function CarOwnerSignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="phone">
+      <Form.Item name="phone" rules={[required()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -58,7 +72,7 @@ export function CarOwnerSignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="email">
+      <Form.Item name="email" rules={[required(), email()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -67,7 +81,7 @@ export function CarOwnerSignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="password">
+      <Form.Item name="password" rules={[required()]}>
         <Input.Password
           size="large"
           className="rounded-full shadow-md"
@@ -75,7 +89,7 @@ export function CarOwnerSignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="retypePassword">
+      <Form.Item name="confirmPassword" rules={[required(), confirmPassword()]}>
         <Input.Password
           size="large"
           className="rounded-full shadow-md"
@@ -89,10 +103,12 @@ export function CarOwnerSignUpForm() {
           size="large"
           type="primary"
           htmlType="submit"
+          disabled={isLoading}
+          loading={isLoading}
         >
           Đăng Ký
         </Button>
       </Form.Item>
-    </Form>
+    </StyledForm>
   );
 }

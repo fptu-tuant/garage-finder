@@ -2,7 +2,7 @@ import { BaseMutationApiOptions } from '@/types';
 
 import { useBaseMutationApi } from './useBaseMutationApi';
 
-export type LoginByGoogleData = {
+export type LoginResponseData = {
   userID: number;
   name: string;
   birthday: string;
@@ -17,19 +17,19 @@ export type LoginByGoogleData = {
   accessToken: string;
 };
 
-type LoginByGoogleDataVariables = {
-  params: { accessToken: string };
+type LoginVariables = {
+  body: {
+    email: string;
+    password: string;
+  };
 };
 
-export function useLoginWithGoogleApi(
-  options?: BaseMutationApiOptions<
-    LoginByGoogleData,
-    LoginByGoogleDataVariables
-  >
+export function useLoginApi(
+  options?: BaseMutationApiOptions<LoginResponseData, LoginVariables>
 ) {
   return useBaseMutationApi({
+    endpoint: '/api/User/login',
     method: 'POST',
-    endpoint: '/api/User/login-gg',
     ...options,
   });
 }

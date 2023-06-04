@@ -4,17 +4,22 @@ import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useLoginWithGoogleApi } from '@/api';
+import {
+  LoginByGoogleData,
+  LoginResponseData,
+  useLoginApi,
+  useLoginWithGoogleApi,
+} from '@/api';
 import { CarIllustrate } from '@/components';
 import { useAuthStore } from '@/context/auth.context';
 import { GoogleIcon } from '@/icons';
 import { required } from '@/services';
 import { showError } from '@/utils';
 
-type SignInFormProps = Partial<{
-  username: string;
+type SignInFormProps = {
+  email: string;
   password: string;
-}>;
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,23 +28,31 @@ export default function LoginPage() {
 
   const [form] = Form.useForm<SignInFormProps>();
 
+  const onLoginSuccess = (data: LoginByGoogleData | LoginResponseData) => {
+    dispatch({
+      type: 'SIGN_IN',
+      payload: {
+        user: {
+          email: data.emailAddress,
+          fullName: data.name,
+          phone: data.phoneNumber,
+        },
+        accessToken: data.accessToken,
+      },
+    });
+
+    router.push('/garages');
+  };
+
   const { mutate: loginWithGoogle, isLoading: signingWithGoogle } =
     useLoginWithGoogleApi({
-      onSuccess: (data) => {
-        dispatch({
-          type: 'SIGN_IN',
-          payload: {
-            user: {
-              email: data.emailAddress,
-              fullName: data.name,
-              phone: data.phoneNumber,
-            },
-            accessToken: data.accessToken,
-          },
-        });
+      onSuccess: onLoginSuccess,
+      onError: showError,
+    });
 
-        router.push('/garages');
-      },
+  const { mutate: loginWithPassword, isLoading: signingWithPassword } =
+    useLoginApi({
+      onSuccess: onLoginSuccess,
       onError: showError,
     });
 
@@ -58,7 +71,15 @@ export default function LoginPage() {
         <CarIllustrate />
       </div>
       <div className="w-2/5 px-5 flex flex-col items-center">
-        <Form form={form} className="max-w-md w-full">
+        <Form
+          form={form}
+          className="max-w-md w-full"
+          onFinish={(data) => {
+            loginWithPassword({
+              body: { email: data.email, password: data.password },
+            });
+          }}
+        >
           <Typography.Title className="mb-14" level={2}>
             Đăng nhập
           </Typography.Title>
@@ -86,6 +107,9 @@ export default function LoginPage() {
               className="w-full rounded-full shadow-md"
               size="large"
               type="primary"
+              htmlType="submit"
+              disabled={signingWithPassword}
+              loading={signingWithPassword}
             >
               Đăng Nhập
             </Button>

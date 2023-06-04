@@ -81,7 +81,7 @@ export function Header({ className }: HeaderProps) {
             >
               <div className="flex items-center gap-1 cursor-pointer">
                 <UserIcon className="text-2xl text-neutral-700" />
-                <Typography>{'trungluc'}</Typography>
+                <Typography>{user.fullName}</Typography>
               </div>
             </Dropdown>
           </div>

@@ -29,6 +29,16 @@ const RoundedCascader = styled(Cascader)`
   }
 `;
 
+const StyledForm = styled(Form)`
+  .tl-form-item-explain {
+    padding-left: 1em;
+  }
+
+  .tl-form-item-control {
+    margin-bottom: 6px;
+  }
+` as unknown as typeof Form<GarageOwnerSignUpFormValues>;
+
 export function GarageOwnerSignUpForm() {
   const [currentStep, stepHelpers] = useStep(2);
   const [form] = Form.useForm<GarageOwnerSignUpFormValues>();
@@ -43,7 +53,7 @@ export function GarageOwnerSignUpForm() {
   }));
 
   return (
-    <Form
+    <StyledForm
       form={form}
       className="max-w-md w-full"
       onValuesChange={(changes) => console.log(changes)}
@@ -184,6 +194,6 @@ export function GarageOwnerSignUpForm() {
           {currentStep === 1 ? 'Tiếp theo' : 'Đăng ký'}
         </Button>
       </Form.Item>
-    </Form>
+    </StyledForm>
   );
 }
