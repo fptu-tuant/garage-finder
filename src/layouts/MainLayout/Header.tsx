@@ -1,7 +1,8 @@
-import { Badge, Button, Divider, Typography } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
+import { Badge, Button, Divider, Dropdown, Typography } from 'antd';
 import Link from 'next/link';
 
-import { useAuthStore } from '@/contexts/auth.store';
+import { useAuthStore } from '@/context';
 import { BellIcon, EnvelopIcon, UserIcon } from '@/icons';
 import { twcx } from '@/utils';
 
@@ -10,7 +11,11 @@ type HeaderProps = {
 };
 
 export function Header({ className }: HeaderProps) {
-  const user = useAuthStore.use.user();
+  const [{ user }, dispatch] = useAuthStore();
+
+  const onLogout = () => {
+    dispatch({ type: 'SIGN_OUT' });
+  };
 
   return (
     <header
@@ -53,10 +58,32 @@ export function Header({ className }: HeaderProps) {
               <EnvelopIcon className="text-xl text-neutral-700 cursor-pointer" />
             </div>
 
-            <div className="flex items-center gap-1">
-              <UserIcon className="text-2xl text-neutral-700" />
-              <Typography>{user.fullName}</Typography>
-            </div>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: 'logout',
+                    label: (
+                      <div
+                        className="flex gap-2"
+                        role="button"
+                        tabIndex={0}
+                        onMouseUp={onLogout}
+                      >
+                        <LogoutOutlined />
+                        <span>Đăng xuất</span>
+                      </div>
+                    ),
+                    danger: true,
+                  },
+                ],
+              }}
+            >
+              <div className="flex items-center gap-1 cursor-pointer">
+                <UserIcon className="text-2xl text-neutral-700" />
+                <Typography>{'trungluc'}</Typography>
+              </div>
+            </Dropdown>
           </div>
         ) : (
           <Link href="/sign-in">

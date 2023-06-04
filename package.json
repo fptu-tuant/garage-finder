@@ -15,6 +15,8 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@react-oauth/google": "^0.11.0",
+    "@tanstack/react-query": "^4.29.12",
+    "@tanstack/react-query-devtools": "^4.29.12",
     "antd": "^5.5.1",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
@@ -22,8 +24,7 @@
     "lodash-es": "^4.17.21",
     "next": "13.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "zustand": "^4.3.8"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",

@@ -4,12 +4,12 @@ import { Button, Divider, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useLoginByGoogleApi } from '@/api';
+import { useLoginWithGoogleApi } from '@/api';
 import { CarIllustrate } from '@/components';
-import { useAuthStore } from '@/contexts/auth.store';
+import { useAuthStore } from '@/context/auth.context';
 import { GoogleIcon } from '@/icons';
 import { required } from '@/services';
-import { showError, showSuccess } from '@/utils';
+import { showError } from '@/utils';
 
 type SignInFormProps = Partial<{
   username: string;
@@ -17,32 +17,37 @@ type SignInFormProps = Partial<{
 }>;
 
 export default function LoginPage() {
-  const [form] = Form.useForm<SignInFormProps>();
-
-  const updateUser = useAuthStore.use.update();
   const router = useRouter();
 
-  const { loading: signingByGoogle, recall: signInByGoogle } =
-    useLoginByGoogleApi();
+  const [, dispatch] = useAuthStore();
 
-  const loginWithGoogle = useGoogleLogin({
+  const [form] = Form.useForm<SignInFormProps>();
+
+  const { mutate: loginWithGoogle, isLoading: signingWithGoogle } =
+    useLoginWithGoogleApi({
+      onSuccess: (data) => {
+        dispatch({
+          type: 'SIGN_IN',
+          payload: {
+            user: {
+              email: data.emailAddress,
+              fullName: data.name,
+              phone: data.phoneNumber,
+            },
+            accessToken: data.accessToken,
+          },
+        });
+
+        router.push('/garages');
+      },
+      onError: showError,
+    });
+
+  const onLoginWithGoogle = useGoogleLogin({
     onSuccess: async (token) => {
       const { access_token } = token;
 
-      await signInByGoogle({
-        params: { accessToken: access_token },
-        onCompleted: (data) => {
-          showSuccess(`Đăng nhập thành công! ${data.name}`);
-          updateUser({
-            email: data.emailAddress,
-            fullName: data.name,
-            phone: data.phoneNumber,
-          });
-
-          router.push('/garages');
-        },
-        onError: showError,
-      });
+      loginWithGoogle({ params: { accessToken: access_token } });
     },
     onError: showError,
   });
@@ -90,8 +95,8 @@ export default function LoginPage() {
         <Button
           className="flex items-center gap-2 shadow-md w-full max-w-md rounded-full mb-3"
           size="large"
-          onClick={() => loginWithGoogle()}
-          loading={signingByGoogle}
+          onClick={() => onLoginWithGoogle()}
+          loading={signingWithGoogle}
         >
           <GoogleIcon className="text-xl" />
           <span className="grow text-center">Đăng nhập với Google</span>
