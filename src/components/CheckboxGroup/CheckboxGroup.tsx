@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 type CheckboxGroupProps = {
   placeholder?: string;
+  showSearch?: boolean;
   options?: Array<Omit<CheckboxOptionType, 'label'> & { label: string }>;
   value?: CheckboxValueType[];
   onChange?: (value: CheckboxValueType[]) => void;
@@ -26,6 +27,7 @@ const VerticalCheckboxGroup = styled(Checkbox.Group)`
 export function CheckboxGroup({
   placeholder = 'Search...',
   options = [],
+  showSearch = true,
   value: externalValue,
   onChange,
 }: CheckboxGroupProps) {
@@ -39,22 +41,24 @@ export function CheckboxGroup({
 
   return (
     <div>
-      <Input
-        className="mt-4 mb-2"
-        placeholder={placeholder}
-        suffix={<SearchOutlined />}
-        value={keyword}
-        onChange={(e) => {
-          const { value } = e.currentTarget;
+      {showSearch && (
+        <Input
+          className="mt-4 mb-2"
+          placeholder={placeholder}
+          suffix={<SearchOutlined />}
+          value={keyword}
+          onChange={(e) => {
+            const { value } = e.currentTarget;
 
-          setKeyword(value);
-          setCurrentOptions(
-            options.filter(({ label }) =>
-              toLower(label).includes(toLower(value))
-            )
-          );
-        }}
-      />
+            setKeyword(value);
+            setCurrentOptions(
+              options.filter(({ label }) =>
+                toLower(label).includes(toLower(value))
+              )
+            );
+          }}
+        />
+      )}
       <VerticalCheckboxGroup
         className="trungluc"
         options={currentOptions}
