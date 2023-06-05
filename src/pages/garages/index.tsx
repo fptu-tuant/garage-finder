@@ -1,5 +1,6 @@
 import { Button, Form, Input, Skeleton, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { useState } from 'react';
 
 import { useGetGaragesApi } from '@/api';
 import { CheckboxGroup, GarageCard } from '@/components';
@@ -13,6 +14,8 @@ type GarageFilterFormProps = {
 export default function GaragesPage() {
   const [form] = Form.useForm<GarageFilterFormProps>();
 
+  const [keyword, setKeyword] = useState('');
+
   const { data: garages, isLoading } = useGetGaragesApi();
 
   const provineOptions = VIETNAM_PROVINCES.map((provine) => ({
@@ -23,11 +26,19 @@ export default function GaragesPage() {
   const places = Form.useWatch(['places'], form);
   const services = Form.useWatch(['services'], form);
 
+  const displayGarages = garages?.filter((garage) =>
+    garage.garageName.toLowerCase().includes(keyword.toLowerCase())
+  );
+
   return (
     <Skeleton active loading={isLoading}>
       <div className="w-2/5 flex gap-2 mx-auto">
-        <Input placeholder="Tìm kiếm ở đây ..." />
-        <Button type="primary" className="min-w-[100px]">
+        <Input
+          placeholder="Tìm kiếm ở đây ..."
+          value={keyword}
+          onChange={(e) => setKeyword(e.currentTarget.value)}
+        />
+        <Button type="primary" className="min-w-[100px">
           Tìm
         </Button>
       </div>
@@ -52,7 +63,7 @@ export default function GaragesPage() {
           </Form>
         </div>
         <div className="grow grid grid-cols-3 gap-x-6 gap-y-5">
-          {garages?.map((garage) => (
+          {displayGarages?.map((garage) => (
             <GarageCard
               key={garage.garageID}
               image="https://picsum.photos/1600/900"
