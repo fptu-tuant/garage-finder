@@ -23,6 +23,7 @@ export function useGetGaragesApi(
   options?: BaseQueryApiOptions<GetRagaresData>
 ) {
   return useBaseQueryApi({
+    queryKey: 'garages',
     endpoint: '/api/Garage/GetAll',
     ...options,
   });
