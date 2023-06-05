@@ -1,22 +1,8 @@
-import { SearchOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { Button, Checkbox, Form, Input, Skeleton, Typography } from 'antd';
-import { toLower } from 'lodash-es';
+import { Affix, Button, Form, Input, Skeleton, Typography } from 'antd';
 
 import { useGetGaragesApi } from '@/api';
-import { GarageCard } from '@/components';
+import { CheckboxGroup, GarageCard } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
-
-const VerticalCheckboxGroup = styled(Checkbox.Group)`
-  display: block;
-  max-height: 300px;
-  overflow-y: auto;
-
-  label {
-    display: flex !important;
-    margin-bottom: 0.4em;
-  }
-`;
 
 export default function GaragesPage() {
   const { data: garages, isLoading } = useGetGaragesApi();
@@ -36,37 +22,13 @@ export default function GaragesPage() {
       </div>
 
       <div className="flex gap-6 my-5">
-        <div className="w-1/4">
+        <div className="w-1/4 bg-white">
           <Form preserve onValuesChange={(_, all) => console.log(all)}>
             <Typography.Text className="uppercase text-xs tracking-wider text-gray-500 font-semibold">
               Địa điểm
             </Typography.Text>
-            <Form.Item name="searchPlace" noStyle>
-              <Input
-                className="mt-4 mb-2"
-                placeholder="Search..."
-                suffix={<SearchOutlined />}
-              />
-            </Form.Item>
-            <Form.Item dependencies={['searchPlace']}>
-              {({ getFieldValue }) => {
-                const keyword: string = toLower(getFieldValue('searchPlace'));
-
-                return (
-                  <Form.Item name="place">
-                    <VerticalCheckboxGroup
-                      options={
-                        keyword
-                          ? provineOptions.filter(({ label }) =>
-                              toLower(label).includes(keyword)
-                            )
-                          : provineOptions
-                      }
-                      className="trungluc"
-                    />
-                  </Form.Item>
-                );
-              }}
+            <Form.Item name="place">
+              <CheckboxGroup options={provineOptions} />
             </Form.Item>
           </Form>
         </div>
