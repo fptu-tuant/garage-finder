@@ -66,7 +66,7 @@ export default function GaragesPage() {
           {displayGarages?.map((garage) => (
             <GarageCard
               key={garage.garageID}
-              image="https://picsum.photos/1600/900"
+              image={garage.imagies}
               title={garage.garageName}
               address={garage.address}
               totalRate={318}

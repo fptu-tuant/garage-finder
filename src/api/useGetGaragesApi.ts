@@ -9,6 +9,9 @@ type GetRagaresData = Array<{
   address: string;
   emailAddress: string;
   phoneNumber: string;
+  imagies: string;
+  langAddress: number;
+  latAddress: number;
   // TODO: get correct schema from BE side
   //   status: null;
   //   openTime: null;

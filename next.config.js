@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['picsum.photos'],
+    domains: ['garagefinder.blob.core.windows.net'],
   },
   webpack: (config) => {
     // Grab the existing rule that handles SVG imports
