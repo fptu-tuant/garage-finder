@@ -2,7 +2,7 @@ import { Button, Form, Input, Skeleton, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useState } from 'react';
 
-import { useGetGaragesApi } from '@/api';
+import { useGetGarageByIdApi, useGetGaragesApi } from '@/api';
 import { CheckboxGroup, GarageCard } from '@/components';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 
@@ -47,7 +47,8 @@ export default function GaragesPage() {
         <div className="w-1/4 bg-white">
           <Form form={form} onValuesChange={(_, all) => console.log(all)}>
             <Typography className="uppercase text-xs tracking-wider text-gray-500 font-semibold">
-              Địa điểm <span className="text-red-600">({places?.length})</span>
+              Địa điểm{' '}
+              <span className="text-red-600">({places?.length ?? 0})</span>
             </Typography>
             <Form.Item name="places">
               <CheckboxGroup options={provineOptions} />
@@ -55,7 +56,7 @@ export default function GaragesPage() {
 
             <Typography className="uppercase text-xs tracking-wider text-gray-500 font-semibold mb-3">
               Loại dịch vụ{' '}
-              <span className="text-red-600">({services?.length})</span>
+              <span className="text-red-600">({services?.length ?? 0})</span>
             </Typography>
             <Form.Item name="services">
               <CheckboxGroup showSearch={false} options={GARAGE_SERVICES} />
@@ -66,7 +67,8 @@ export default function GaragesPage() {
           {displayGarages?.map((garage) => (
             <GarageCard
               key={garage.garageID}
-              image={garage.imagies}
+              id={garage.garageID}
+              image={''}
               title={garage.garageName}
               address={garage.address}
               totalRate={318}

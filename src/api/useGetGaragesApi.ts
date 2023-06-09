@@ -2,7 +2,7 @@ import { BaseQueryApiOptions } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-type GetRagaresData = Array<{
+type GetGaragesData = Array<{
   garageID: number;
   userID: number;
   garageName: string;
@@ -17,13 +17,10 @@ type GetRagaresData = Array<{
   //   openTime: null;
   //   closeTime: null;
   //   logo: null;
-  //   imagies: null;
-  //   latAddress: null;
-  //   lngAddress: null;
 }>;
 
 export function useGetGaragesApi(
-  options?: BaseQueryApiOptions<GetRagaresData>
+  options?: BaseQueryApiOptions<GetGaragesData>
 ) {
   return useBaseQueryApi({
     queryKey: 'garages',

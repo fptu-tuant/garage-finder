@@ -30,6 +30,7 @@ export function AntConfigProvider({ children }: PropsWithChildren) {
           controlHeightSM: 32,
           controlHeight: 40,
           controlHeightLG: 48,
+          fontFamily: 'var(--font-sans)',
         },
       }}
     >

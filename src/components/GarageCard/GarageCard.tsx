@@ -1,9 +1,11 @@
 import { Button, Divider, Rate } from 'antd';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { HeartFilledIcon, PinMapFilledIcon } from '@/icons';
 
 type GarageCardProps = {
+  id: number;
   image: string;
   title: string;
   address: string;
@@ -12,12 +14,19 @@ type GarageCardProps = {
 };
 
 export function GarageCard({
+  id,
   image,
   title,
   address,
   rating,
   totalRate,
 }: GarageCardProps) {
+  const router = useRouter();
+
+  const onGotoDetailPage = () => {
+    router.push(`/garages/${id}`);
+  };
+
   return (
     <div className="rounded-md overflow-hidden shadow-md bg-white">
       <div className="relative aspect-video">
@@ -48,7 +57,7 @@ export function GarageCard({
           </div>
         </div>
 
-        <Button className="mt-8" type="primary">
+        <Button className="mt-8" type="primary" onClick={onGotoDetailPage}>
           Đặt lịch ngay
         </Button>
       </div>

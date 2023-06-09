@@ -1,8 +1,9 @@
-import { Montserrat } from 'next/font/google';
+import { Work_Sans } from 'next/font/google';
 
-export const fontSans = Montserrat({
+export const fontSans = Work_Sans({
+  weight: '400',
   display: 'block',
-  subsets: ['vietnamese'],
+  subsets: ['latin-ext'],
   preload: true,
   variable: '--font-sans',
 });
