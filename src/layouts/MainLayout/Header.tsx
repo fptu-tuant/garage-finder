@@ -1,6 +1,7 @@
 import { LogoutOutlined } from '@ant-design/icons';
 import { Badge, Button, Divider, Dropdown, Typography } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useAuthStore } from '@/context';
 import { BellIcon, EnvelopIcon, UserIcon } from '@/icons';
@@ -10,8 +11,20 @@ type HeaderProps = {
   className?: string;
 };
 
+const NAV_ITEMS = [
+  { href: '/', name: 'Trang chủ' },
+  { href: '/garages', name: 'Danh sách garage' },
+  { href: '/service', name: 'Dịch vụ' },
+  { href: '/about', name: 'Về chúng tôi' },
+  { href: '/contact', name: 'Liên hệ' },
+];
+
 export function Header({ className }: HeaderProps) {
   const [{ user }, dispatch] = useAuthStore();
+
+  const { asPath } = useRouter();
+
+  const [, currentPath] = asPath.split('/');
 
   const onLogout = () => {
     dispatch({ type: 'SIGN_OUT' });
@@ -28,18 +41,18 @@ export function Header({ className }: HeaderProps) {
       </Link>
       <nav className="grow flex justify-end">
         <ul className="flex gap-8">
-          <li>
-            <Link href="/garages">Trang chủ</Link>
-          </li>
-          <li>
-            <Link href="/service">Dịch vụ</Link>
-          </li>
-          <li>
-            <Link href="/about">Về chúng tôi</Link>
-          </li>
-          <li>
-            <Link href="/contact">Liên hệ</Link>
-          </li>
+          {NAV_ITEMS.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className={twcx({
+                  ['text-blue-600']: `/${currentPath}` === item.href,
+                })}
+              >
+                {item.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
 
