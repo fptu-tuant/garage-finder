@@ -1,3 +1,7 @@
-type GetOrdersData = {};
+// type GetOrdersData = {
+//   placeholder: string;
+// };
 
-export function useGetOrdersApi() {}
+// export function useGetOrdersApi() {}
+
+export {};
