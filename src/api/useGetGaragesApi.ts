@@ -6,12 +6,12 @@ type GetGaragesData = Array<{
   garageID: number;
   userID: number;
   garageName: string;
-  address: string;
   emailAddress: string;
   phoneNumber: string;
-  imagies: string;
+  imageGarages: Array<{ imageID: number; garageID: number; imageLink: string }>;
   langAddress: number;
   latAddress: number;
+  addressDetail: string;
   // TODO: get correct schema from BE side
   //   status: null;
   //   openTime: null;

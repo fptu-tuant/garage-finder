@@ -2,7 +2,7 @@ import { Button, Form, Input, Skeleton, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useState } from 'react';
 
-import { useGetGarageByIdApi, useGetGaragesApi } from '@/api';
+import { useGetGaragesApi } from '@/api';
 import { CheckboxGroup, GarageCard } from '@/components';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 
@@ -31,7 +31,7 @@ export default function GaragesPage() {
   );
 
   return (
-    <Skeleton active loading={isLoading}>
+    <>
       <div className="w-2/5 flex gap-2 mx-auto">
         <Input
           placeholder="Tìm kiếm ở đây ..."
@@ -63,20 +63,23 @@ export default function GaragesPage() {
             </Form.Item>
           </Form>
         </div>
-        <div className="grow grid grid-cols-3 gap-x-6 gap-y-5">
-          {displayGarages?.map((garage) => (
-            <GarageCard
-              key={garage.garageID}
-              id={garage.garageID}
-              image={''}
-              title={garage.garageName}
-              address={garage.address}
-              totalRate={318}
-              rating={4.8}
-            />
-          ))}
-        </div>
+
+        <Skeleton active loading={isLoading}>
+          <div className="grow grid grid-cols-3 gap-x-6 gap-y-8">
+            {displayGarages?.map((garage) => (
+              <GarageCard
+                key={garage.garageID}
+                id={garage.garageID}
+                image={''}
+                title={garage.garageName}
+                address={garage.addressDetail}
+                totalRate={318}
+                rating={4.8}
+              />
+            ))}
+          </div>
+        </Skeleton>
       </div>
-    </Skeleton>
+    </>
   );
 }

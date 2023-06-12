@@ -28,12 +28,12 @@ export function GarageCard({
   };
 
   return (
-    <div className="rounded-md overflow-hidden shadow-md bg-white">
+    <div className="rounded-md overflow-hidden shadow-md bg-white flex flex-col">
       <div className="relative aspect-video">
         <Image src={image} fill alt={title} className="object-cover" />
       </div>
 
-      <div className="p-4 flex flex-col gap-3">
+      <div className="p-4 flex flex-col gap-3 grow">
         <div className="flex gap-1 items-center">
           <span className="font-semibold text-lg line-clamp-1 grow">
             {title}
@@ -46,10 +46,8 @@ export function GarageCard({
           <span className="text-neutral-600">{address}</span>
         </div>
 
-        <div className="flex gap-1 text-neutral-600 items-center justify-between text-sm">
+        <div className="flex gap-1 text-neutral-600 items-center justify-between text-sm mt-8 grow">
           <div>({totalRate} đánh giá)</div>
-
-          <Divider type="vertical" />
 
           <div className="flex items-center gap-1">
             <Rate className="text-xs" value={rating} disabled />
