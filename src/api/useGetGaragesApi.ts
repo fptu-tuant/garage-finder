@@ -1,4 +1,4 @@
-import { BaseQueryApiOptions } from '@/types';
+import { BaseQueryApiOptions, Maybe } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
@@ -12,11 +12,7 @@ type GetGaragesData = Array<{
   langAddress: number;
   latAddress: number;
   addressDetail: string;
-  // TODO: get correct schema from BE side
-  //   status: null;
-  //   openTime: null;
-  //   closeTime: null;
-  //   logo: null;
+  thumbnail: Maybe<string>;
 }>;
 
 export function useGetGaragesApi(

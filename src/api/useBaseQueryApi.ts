@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 
 import { BaseApiVariables } from '@/types';
-import { api } from '@/utils';
+import { api, showError } from '@/utils';
 
 type BaseQueryOptions<TData, TVariables extends BaseApiVariables> = Omit<
   UseQueryOptions<TData, unknown, TData, [string, TVariables]>,
@@ -31,14 +31,19 @@ export function useBaseQueryApi<
     queryFn: async (ctx: QueryFunctionContext<[string, TVariables]>) => {
       const [, { body, params }] = ctx.queryKey;
 
-      const { data } = await api<TData>({
-        method: 'GET',
-        url: endpoint,
-        data: body,
-        params,
-      });
+      try {
+        const { data } = await api<TData>({
+          method: 'GET',
+          url: endpoint,
+          data: body,
+          params,
+        });
 
-      return data;
+        return data;
+      } catch (error) {
+        showError(error);
+        throw Error(`Something error: ${error}`);
+      }
     },
   });
 

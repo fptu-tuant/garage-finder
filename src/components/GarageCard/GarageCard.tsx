@@ -1,12 +1,13 @@
-import { Button, Divider, Rate } from 'antd';
+import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { HeartFilledIcon, PinMapFilledIcon } from '@/icons';
+import { Maybe } from '@/types';
 
 type GarageCardProps = {
   id: number;
-  image: string;
+  image: Maybe<string>;
   title: string;
   address: string;
   totalRate: number;
@@ -15,7 +16,7 @@ type GarageCardProps = {
 
 export function GarageCard({
   id,
-  image,
+  image = '',
   title,
   address,
   rating,
@@ -27,10 +28,12 @@ export function GarageCard({
     router.push(`/garages/${id}`);
   };
 
+  const imageUrl = image?.startsWith('http') ? image : '';
+
   return (
     <div className="rounded-md overflow-hidden shadow-md bg-white flex flex-col">
       <div className="relative aspect-video">
-        <Image src={image} fill alt={title} className="object-cover" />
+        <Image src={imageUrl} fill alt={title} className="object-cover" />
       </div>
 
       <div className="p-4 flex flex-col gap-3 grow">

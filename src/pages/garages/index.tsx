@@ -70,7 +70,7 @@ export default function GaragesPage() {
               <GarageCard
                 key={garage.garageID}
                 id={garage.garageID}
-                image={''}
+                image={garage.thumbnail}
                 title={garage.garageName}
                 address={garage.addressDetail}
                 totalRate={318}
