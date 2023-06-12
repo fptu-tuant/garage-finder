@@ -6,7 +6,7 @@ export const required = (message?: string): Rule => ({
 });
 
 export const confirmPassword = (
-  message = 'The two passwords that you entered do not match!'
+  message = 'Nhập lại mật khẩu chưa khớp!'
 ): Rule => {
   return ({ getFieldValue }) => ({
     validator: async (_, value) => {
@@ -19,7 +19,7 @@ export const confirmPassword = (
   });
 };
 
-export const email = (message = 'The input is not valid E-mail!s'): Rule => ({
+export const email = (message = 'Không đúng định dạng email'): Rule => ({
   type: 'email',
   message,
 });

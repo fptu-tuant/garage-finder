@@ -1,4 +1,4 @@
-import { BaseMutationApiOptions, UserRole } from '@/types';
+import { BaseMutationApiOptions } from '@/types';
 
 import { useBaseMutationApi } from './useBaseMutationApi';
 
@@ -10,7 +10,7 @@ type CarOwnerSignUpVariables = {
     phoneNumber: string;
     emailAddress: string;
     password: string;
-    roleID: UserRole;
+    roleID: 0;
   };
 };
 

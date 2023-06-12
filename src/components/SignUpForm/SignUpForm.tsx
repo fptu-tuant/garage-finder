@@ -3,11 +3,10 @@ import styled from '@emotion/styled';
 import { Button, Form, Input, Typography } from 'antd';
 
 import { useCarOwnerRegisterApi } from '@/api';
-import { USER_ROLE } from '@/constants';
 import { confirmPassword, email, required } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
-type CarOwnerSignUpFormValues = {
+type SignUpFormValues = {
   fullName: string;
   phone: string;
   email: string;
@@ -22,10 +21,10 @@ const StyledForm = styled(Form)`
   .tl-form-item-control {
     margin-bottom: 6px;
   }
-` as unknown as typeof Form<CarOwnerSignUpFormValues>;
+` as unknown as typeof Form<SignUpFormValues>;
 
-export function CarOwnerSignUpForm() {
-  const [form] = Form.useForm<CarOwnerSignUpFormValues>();
+export function SignUpForm() {
+  const [form] = Form.useForm<SignUpFormValues>();
 
   const { mutate: signUp, isLoading } = useCarOwnerRegisterApi({
     onError: showError,
@@ -34,7 +33,7 @@ export function CarOwnerSignUpForm() {
     },
   });
 
-  const onFinish = (values: CarOwnerSignUpFormValues) => {
+  const onFinish = (values: SignUpFormValues) => {
     const { email, fullName, password, phone } = values;
 
     signUp({
@@ -43,7 +42,7 @@ export function CarOwnerSignUpForm() {
         emailAddress: email,
         password,
         phoneNumber: phone,
-        roleID: USER_ROLE.CarOwner,
+        roleID: 0,
       },
     });
   };
