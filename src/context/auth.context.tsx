@@ -1,5 +1,8 @@
+import { Dispatch } from 'react';
+
 import { ACCESS_TOKEN_KEY } from '@/constants';
 import { Maybe, User } from '@/types';
+import { api } from '@/utils';
 import { makeContext } from '@/utils/context-builder.util';
 
 type AuthStore = {
@@ -31,13 +34,43 @@ function reducer(state: AuthStore, action: Action): AuthStore {
 }
 
 function initialAuthStore(): AuthStore {
-  // TODO: request api getMe & implement when user already login
-
   return { user: null };
+}
+
+async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
+  const ACCESS_TOKEN = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+  if (!ACCESS_TOKEN) return;
+
+  try {
+    const { data } = await api<{
+      phoneNumber: string;
+      emailAddress: string;
+      name: string;
+    }>({
+      method: 'GET',
+      url: '/api/User/get',
+    });
+
+    dispatch({
+      type: 'SIGN_IN',
+      payload: {
+        user: {
+          email: data.emailAddress,
+          fullName: data.name,
+          phone: data.phoneNumber,
+        },
+        accessToken: ACCESS_TOKEN,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const [AuthProvider, useAuthStore] = makeContext({
   name: 'Auth',
   initial: initialAuthStore,
   reducer,
+  initOnMounted,
 });
