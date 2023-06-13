@@ -11,8 +11,6 @@ api.interceptors.request.use((config) => {
     ACCESS_TOKEN_KEY
   )}`;
 
-  console.log(config.headers);
-
   return config;
 }, Promise.reject);
 

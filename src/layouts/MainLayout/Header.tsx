@@ -11,25 +11,25 @@ type HeaderProps = {
   className?: string;
 };
 
-const NAV_ITEMS = [
-  { href: '/', name: 'Trang chủ' },
-  { href: '/garages', name: 'Danh sách garage' },
-  { href: '/service', name: 'Dịch vụ' },
-  { href: '/about', name: 'Về chúng tôi' },
-  { href: '/contact', name: 'Liên hệ' },
-  { href: '/my-garages', name: 'Garage của tôi' },
-];
-
 export function Header({ className }: HeaderProps) {
   const [{ user }, dispatch] = useAuthStore();
+  const hadLogin = !!user;
 
   const { asPath } = useRouter();
-
   const [, currentPath] = asPath.split('/');
 
   const onLogout = () => {
     dispatch({ type: 'SIGN_OUT' });
   };
+
+  const NAV_ITEMS = [
+    { href: '/', name: 'Trang chủ' },
+    { href: '/garages', name: 'Danh sách garage' },
+    { href: '/service', name: 'Dịch vụ' },
+    { href: '/about', name: 'Về chúng tôi' },
+    { href: '/contact', name: 'Liên hệ' },
+    { href: '/my-garages', name: 'Garage của tôi', hide: !hadLogin },
+  ];
 
   return (
     <header
@@ -48,6 +48,7 @@ export function Header({ className }: HeaderProps) {
                 href={item.href}
                 className={twcx({
                   ['text-blue-600']: `/${currentPath}` === item.href,
+                  ['hidden']: item.hide,
                 })}
               >
                 {item.name}
