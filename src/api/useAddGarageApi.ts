@@ -31,7 +31,7 @@ export const useAddGarageApi = (
   return useBaseMutationApi({
     endpoint: '/api/Garage/Add',
     method: 'POST',
-    mutationKey: ['login'],
+    mutationKey: ['add-garage'],
     ...options,
   });
 };

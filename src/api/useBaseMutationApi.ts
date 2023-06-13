@@ -1,7 +1,14 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { AxiosHeaders, Method, RawAxiosRequestHeaders } from 'axios';
 
 import { BaseApiVariables } from '@/types';
 import { api } from '@/utils';
+
+type MethodsHeaders = Partial<
+  {
+    [Key in Method as Lowercase<Key>]: AxiosHeaders;
+  } & { common: AxiosHeaders }
+>;
 
 type BaseMutationOptions<
   TData = unknown,
@@ -13,6 +20,7 @@ type BaseMutationOptions<
 > & {
   method: 'POST' | 'PUT' | 'DELETE';
   endpoint: string;
+  headers?: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders;
 };
 
 export function useBaseMutationApi<
@@ -22,6 +30,7 @@ export function useBaseMutationApi<
 >({
   method,
   endpoint,
+  headers,
   ...options
 }: BaseMutationOptions<TData, TVariables, TContext>) {
   return useMutation({
@@ -32,6 +41,7 @@ export function useBaseMutationApi<
         url: endpoint,
         data: body,
         params,
+        headers,
       });
 
       return data;

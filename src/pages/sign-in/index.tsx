@@ -38,6 +38,7 @@ export default function LoginPage() {
           phone: data.phoneNumber,
         },
         accessToken: data.accessToken,
+        refreshToken: '',
       },
     });
 

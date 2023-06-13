@@ -1,7 +1,7 @@
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 
 export type BaseApiVariables = {
-  body?: Record<string, unknown>;
+  body?: unknown;
   params?: Record<string, unknown>;
 };
 

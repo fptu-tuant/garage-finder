@@ -15,11 +15,12 @@ export function Header({ className }: HeaderProps) {
   const [{ user }, dispatch] = useAuthStore();
   const hadLogin = !!user;
 
-  const { asPath } = useRouter();
+  const { asPath, push } = useRouter();
   const [, currentPath] = asPath.split('/');
 
   const onLogout = () => {
     dispatch({ type: 'SIGN_OUT' });
+    push('/');
   };
 
   const NAV_ITEMS = [

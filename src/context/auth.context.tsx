@@ -12,7 +12,7 @@ type AuthStore = {
 type Action =
   | {
       type: 'SIGN_IN';
-      payload: { user: User; accessToken: string };
+      payload: { user: User; accessToken: string; refreshToken: string };
     }
   | { type: 'SIGN_OUT' };
 
@@ -61,6 +61,7 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
           phone: data.phoneNumber,
         },
         accessToken: ACCESS_TOKEN,
+        refreshToken: '',
       },
     });
   } catch (error) {
