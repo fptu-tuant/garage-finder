@@ -50,12 +50,12 @@ export default function ForgotPasswordPage() {
           Quên mật khẩu
         </Typography.Title>
         <p className="mb-8">
-          Chúng tôi vừa gửi mã OTP đến SĐT của bạn. Vui lòng xác thực.
+          Đừng lo ! Mã OTP sẽ được gửi đến số điện thoại của bạn.
         </p>
 
-        <Form form={form} onFinish={onFinish}>
+        <Form form={form} onFinish={onFinish} className="w-full max-w-lg">
           <div className="flex gap-2">
-            <Form.Item name="phone" rules={[required()]}>
+            <Form.Item name="phone" rules={[required()]} className="w-full">
               <Input
                 size="large"
                 placeholder="Nhập số điện thoại"
