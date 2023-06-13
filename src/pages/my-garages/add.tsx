@@ -5,8 +5,8 @@ import { UserIcon } from '@/icons';
 import { required } from '@/services';
 
 type AddGarageFormValues = {
-  
-}
+  hello: 'world';
+};
 
 export default function AddGaragePage() {
   return (
