@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   { href: '/service', name: 'Dịch vụ' },
   { href: '/about', name: 'Về chúng tôi' },
   { href: '/contact', name: 'Liên hệ' },
-  { href: '/my-garage', name: 'Garage của tôi' },
+  { href: '/my-garages', name: 'Garage của tôi' },
 ];
 
 export function Header({ className }: HeaderProps) {

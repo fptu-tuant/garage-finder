@@ -31,7 +31,8 @@ export function makeContext<S, A>({
 
     useEffect(() => {
       initOnMounted?.(state, dispatch);
-    }, [state]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
       <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
