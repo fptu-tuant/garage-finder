@@ -10,19 +10,19 @@ import {
 } from '@/icons';
 
 export const GARAGE_SERVICES = [
-  { label: 'Sửa chữa', value: 1 },
-  { label: 'Bảo dưỡng', value: 2 },
-  { label: 'Tân trang', value: 3 },
-  { label: 'Cứu hộ', value: 4 },
+  { value: 1, label: 'Sửa chữa' },
+  { value: 2, label: 'Bảo dưỡng' },
+  { value: 3, label: 'Tân trang' },
+  { value: 4, label: 'Cứu hộ' },
 ];
 
 export const CAR_COMPANIES = [
-  { label: 'Audi', icon: AudiIcon, value: 'audi' },
-  { label: 'BMW', icon: BWMIcon, value: 'bwm' },
-  { label: 'Avia', icon: AviaIcon, value: 'avia' },
-  { label: 'Bently', icon: BentleyIcon, value: 'bently' },
-  { label: 'Bugati', icon: BugatiIcon, value: 'bugati' },
-  { label: 'Buick', icon: BuickIcon, value: 'buick' },
-  { label: 'Cadillac', icon: CadillacIcon, value: 'cadillac' },
-  { label: 'Chevron', icon: ChevroletIcon, value: 'chevron' },
+  { label: 'Audi', icon: AudiIcon, value: 1 },
+  { label: 'BMW', icon: BWMIcon, value: 2 },
+  { label: 'Avia', icon: AviaIcon, value: 3 },
+  { label: 'Bently', icon: BentleyIcon, value: 4 },
+  { label: 'Bugati', icon: BugatiIcon, value: 5 },
+  { label: 'Buick', icon: BuickIcon, value: 6 },
+  { label: 'Cadillac', icon: CadillacIcon, value: 7 },
+  { label: 'Chevron', icon: ChevroletIcon, value: 8 },
 ];
