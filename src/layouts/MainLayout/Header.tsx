@@ -1,10 +1,12 @@
 import { LogoutOutlined } from '@ant-design/icons';
 import { Badge, Button, Divider, Dropdown, Typography } from 'antd';
+import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { MENU_ITEMS } from '@/constants';
 import { useAuthStore } from '@/context';
-import { BellIcon, EnvelopIcon, UserIcon } from '@/icons';
+import { BellIcon, EnvelopIcon, UserEditIcon, UserIcon } from '@/icons';
 import { twcx } from '@/utils';
 
 type HeaderProps = {
@@ -77,6 +79,7 @@ export function Header({ className }: HeaderProps) {
             <Dropdown
               menu={{
                 items: [
+                  ...MENU_ITEMS,
                   {
                     key: 'logout',
                     label: (

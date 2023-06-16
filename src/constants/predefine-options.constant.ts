@@ -9,6 +9,8 @@ import {
   ChevroletIcon,
 } from '@/icons';
 
+import { VIETNAM_PROVINCES } from './vietnam-provine.constant';
+
 export const GARAGE_SERVICES = [
   { value: 1, label: 'Sửa chữa' },
   { value: 2, label: 'Bảo dưỡng' },
@@ -26,3 +28,12 @@ export const CAR_COMPANIES = [
   { label: 'Cadillac', icon: CadillacIcon, value: 7 },
   { label: 'Chevron', icon: ChevroletIcon, value: 8 },
 ];
+
+export const LOCATION_CASCADER_OPTIONS = VIETNAM_PROVINCES.map((province) => ({
+  label: province.name,
+  value: province.code,
+  children: province.districts.map((district) => ({
+    label: district.name,
+    value: district.code,
+  })),
+}));

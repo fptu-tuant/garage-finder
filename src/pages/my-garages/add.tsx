@@ -15,7 +15,13 @@ import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAddGarageApi } from '@/api';
-import { CAR_COMPANIES, GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
+import { RoundedCascader } from '@/components';
+import {
+  CAR_COMPANIES,
+  GARAGE_SERVICES,
+  LOCATION_CASCADER_OPTIONS,
+  VIETNAM_PROVINCES,
+} from '@/constants';
 import { PinMapFilledIcon, UserIcon } from '@/icons';
 import { email, required } from '@/services';
 import { showError, showSuccess } from '@/utils';
@@ -31,24 +37,9 @@ type AddGarageFormValues = {
   openTime: [Dayjs, Dayjs];
 };
 
-const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
-  label: province.name,
-  value: province.code,
-  children: province.districts.map((district) => ({
-    label: district.name,
-    value: district.code,
-  })),
-}));
-
 const RoundedSelect = styled(Select)`
   .tl-select-selector,
   .tl-select-selection-item {
-    border-radius: 999px !important;
-  }
-`;
-
-const RoundedCascader = styled(Cascader)`
-  .tl-select-selector {
     border-radius: 999px !important;
   }
 `;
@@ -186,7 +177,7 @@ export default function AddGaragePage() {
             <RoundedCascader
               size="large"
               className="rounded-full shadow-md"
-              options={locationCascaderOptions}
+              options={LOCATION_CASCADER_OPTIONS}
               placeholder="Địa chỉ"
               showSearch={{
                 filter: (inputValue, path) =>
