@@ -1,3 +1,4 @@
+import { EditFilled } from '@ant-design/icons';
 import {
   Button,
   Cascader,
@@ -10,8 +11,8 @@ import {
 } from 'antd';
 import { useState } from 'react';
 
-import { useGetMe, useUpdateUserApi } from '@/api';
-import { UploadDragger, UserDashboardSider } from '@/components';
+import { useGetMe, useGetSASUriForUploadApi, useUpdateUserApi } from '@/api';
+import { SingleUploadDragger, UserDashboardSider } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { required } from '@/services';
 import { showError, showSuccess } from '@/utils';
@@ -24,6 +25,7 @@ type UserFormValues = {
   phone: string;
   address: [number, number];
   detailAddress: string;
+  avatar?: string;
 };
 
 export default function MyInfoPage() {
@@ -37,9 +39,7 @@ export default function MyInfoPage() {
     onError: showError,
   });
 
-  if (!user) {
-    return 'error';
-  }
+  if (!user) return;
 
   const initFormValues: UserFormValues = {
     address: [1, 2],
@@ -47,17 +47,18 @@ export default function MyInfoPage() {
     email: user.emailAddress,
     fullName: user.name,
     phone: user.phoneNumber,
+    avatar: user.linkImage || undefined,
   };
 
   const onEnableEdit = () => setIsInEditMode(true);
 
   const onUpdateInfo = async () => {
-    const { email, fullName, phone } = form.getFieldsValue();
+    const { email, fullName, phone, avatar } = form.getFieldsValue();
 
     updateUser({
       body: {
         emailAddress: email,
-        linkImage: '',
+        linkImage: avatar || '',
         name: fullName,
         password: user.password || '',
         phoneNumber: phone,
@@ -74,9 +75,22 @@ export default function MyInfoPage() {
       </Sider>
       <Content className="flex flex-col pr-6 pl-10">
         <Skeleton active loading={isLoading}>
-          <Typography.Title level={2} className="mt-0 pt-0 font-bold">
-            Thông tin của tôi
-          </Typography.Title>
+          <div className="flex gap-2">
+            <Typography.Title level={2} className="mt-0 pt-0 font-bold">
+              Thông tin của tôi
+            </Typography.Title>
+            {!isInEditMode && (
+              <Button
+                type="text"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onEnableEdit();
+                }}
+              >
+                <EditFilled className="text-xl text-primary" />
+              </Button>
+            )}
+          </div>
           <p>Quản lý thông tin thông tin để bảo mật tài khoản</p>
 
           <Form
@@ -86,6 +100,7 @@ export default function MyInfoPage() {
             labelCol={{ span: 6 }}
             labelAlign="left"
             onFinish={onUpdateInfo}
+            disabled={!isInEditMode}
           >
             <div className="shrink-0 min-w-[620px]">
               <Form.Item label="Tên" name="fullName" rules={[required()]}>
@@ -131,7 +146,7 @@ export default function MyInfoPage() {
               </Form.Item>
 
               <div className="text-center">
-                {isInEditMode ? (
+                {isInEditMode && (
                   <Button
                     type="primary"
                     htmlType="submit"
@@ -141,24 +156,13 @@ export default function MyInfoPage() {
                   >
                     Lưu
                   </Button>
-                ) : (
-                  <Button
-                    type="primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onEnableEdit();
-                    }}
-                    className="min-w-[150px]"
-                  >
-                    Sửa thông tin
-                  </Button>
                 )}
               </div>
             </div>
 
             <div>
               <Form.Item name="avatar">
-                <UploadDragger />
+                <SingleUploadDragger />
               </Form.Item>
             </div>
           </Form>

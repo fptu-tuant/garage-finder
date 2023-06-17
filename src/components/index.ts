@@ -5,5 +5,5 @@ export * from './GarageOwnerSignUpForm/GarageOwnerSignUpForm';
 export * from './RoundedCascader/RoundedCascader';
 export * from './ServiceCard/ServiceCard';
 export * from './SignUpForm/SignUpForm';
-export * from './UploadDragger/UploadDragger';
+export * from './UploadDragger/SingleUploadDragger';
 export * from './UserDashboardSider/UserDashboardSider';
