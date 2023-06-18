@@ -7,8 +7,10 @@ type UpdateUserVariables = {
     name: string;
     phoneNumber: string;
     emailAddress: string;
-    password: string;
     linkImage: string;
+    provinceId: number;
+    districtId: number;
+    addressDetail: string;
   };
 };
 

@@ -12,6 +12,7 @@ type UploadDraggerProps = {
   value?: string;
   onChange?: (value: string) => void;
   folder?: string;
+  disabled?: boolean;
 };
 
 const StyledDragger = styled(Upload.Dragger)`
@@ -24,6 +25,7 @@ export function SingleUploadDragger({
   value,
   onChange,
   folder = 'no-container',
+  disabled = false,
 }: UploadDraggerProps) {
   const [image, setImage] = useState<string>();
   const { loading, uploadFile } = useUploadFileApi();
@@ -50,8 +52,8 @@ export function SingleUploadDragger({
         ref={ref}
         className="w-60 h-60 flex items-center justify-center relative"
       >
-        {isHovering && computeImage && !loading && (
-          <div className="flex justify-center items-center z-20 w-full h-full absolute bg-gray-400/20 gap-2 text-white">
+        {isHovering && computeImage && !loading && !disabled && (
+          <div className="flex justify-center items-center z-20 w-full h-full absolute bg-gray-400/70 gap-2 text-white">
             <EditFilled />
             <span>Edit Image</span>
           </div>

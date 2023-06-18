@@ -42,7 +42,6 @@ export function useBaseMutationApi<
         data: body,
         params,
         headers,
-        // withCredentials: true,
       });
 
       return data;

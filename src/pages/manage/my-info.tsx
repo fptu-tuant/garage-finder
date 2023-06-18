@@ -1,4 +1,3 @@
-import { EditFilled } from '@ant-design/icons';
 import {
   Button,
   Cascader,
@@ -7,11 +6,10 @@ import {
   Layout,
   Skeleton,
   Typography,
-  Upload,
 } from 'antd';
 import { useState } from 'react';
 
-import { useGetMe, useGetSASUriForUploadApi, useUpdateUserApi } from '@/api';
+import { useGetMe, useUpdateUserApi } from '@/api';
 import { SingleUploadDragger, UserDashboardSider } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { required } from '@/services';
@@ -23,9 +21,9 @@ type UserFormValues = {
   fullName: string;
   email: string;
   phone: string;
-  address: [number, number];
+  address: [number | undefined, number | undefined];
   detailAddress: string;
-  avatar?: string;
+  avatar: string;
 };
 
 export default function MyInfoPage() {
@@ -39,29 +37,32 @@ export default function MyInfoPage() {
     onError: showError,
   });
 
-  if (!user) return;
-
-  const initFormValues: UserFormValues = {
-    address: [1, 2],
-    detailAddress: '',
-    email: user.emailAddress,
-    fullName: user.name,
-    phone: user.phoneNumber,
-    avatar: user.linkImage || undefined,
+  const initFormValues: Partial<UserFormValues> = {
+    address: [user?.provinceId, user?.districtId],
+    detailAddress: user?.addressDetail,
+    email: user?.emailAddress,
+    fullName: user?.name,
+    phone: user?.phoneNumber,
+    avatar: user?.linkImage || undefined,
   };
 
   const onEnableEdit = () => setIsInEditMode(true);
 
   const onUpdateInfo = async () => {
-    const { email, fullName, phone, avatar } = form.getFieldsValue();
+    const { email, fullName, phone, avatar, address, detailAddress } =
+      form.getFieldsValue();
+
+    console.log({ address, detailAddress });
 
     updateUser({
       body: {
         emailAddress: email,
-        linkImage: avatar || '',
+        linkImage: avatar,
         name: fullName,
-        password: user.password || '',
         phoneNumber: phone,
+        provinceId: address[0] || NaN,
+        districtId: address[1] || NaN,
+        addressDetail: detailAddress,
       },
     });
 
@@ -79,17 +80,6 @@ export default function MyInfoPage() {
             <Typography.Title level={2} className="mt-0 pt-0 font-bold">
               Thông tin của tôi
             </Typography.Title>
-            {!isInEditMode && (
-              <Button
-                type="text"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onEnableEdit();
-                }}
-              >
-                <EditFilled className="text-xl text-primary" />
-              </Button>
-            )}
           </div>
           <p>Quản lý thông tin thông tin để bảo mật tài khoản</p>
 
@@ -139,14 +129,14 @@ export default function MyInfoPage() {
 
               <Form.Item
                 label="Chi tiết địa chỉ"
-                name="addressDetail"
+                name="detailAddress"
                 rules={[required()]}
               >
                 <Input />
               </Form.Item>
 
               <div className="text-center">
-                {isInEditMode && (
+                {isInEditMode ? (
                   <Button
                     type="primary"
                     htmlType="submit"
@@ -156,13 +146,27 @@ export default function MyInfoPage() {
                   >
                     Lưu
                   </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    disabled={false}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onEnableEdit();
+                    }}
+                  >
+                    Sửa thông tin
+                  </Button>
                 )}
               </div>
             </div>
 
             <div>
               <Form.Item name="avatar">
-                <SingleUploadDragger />
+                <SingleUploadDragger
+                  disabled={!isInEditMode}
+                  folder={`users/${user?.userID}/images`}
+                />
               </Form.Item>
             </div>
           </Form>

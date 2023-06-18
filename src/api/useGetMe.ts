@@ -9,7 +9,10 @@ type GetMeData = {
   emailAddress: string;
   password: string | null;
   status: null;
+  provinceId: number;
+  districtId: number;
   linkImage: string | null;
+  addressDetail: string;
   roleID: number;
   roleName: {
     roleID: number;
