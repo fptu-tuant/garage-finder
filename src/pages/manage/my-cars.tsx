@@ -1,10 +1,13 @@
-import { Form, Layout, Typography } from 'antd';
+import { Layout, Skeleton, Typography } from 'antd';
 
-import { UserDashboardSider } from '@/components';
+import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
+import { CarManageForm, UserDashboardSider } from '@/components';
 
 const { Sider, Content } = Layout;
 
 export default function MyCarsPage() {
+  const { data: cars, isLoading: fetchingCars } = useGetMyCarsApi();
+
   return (
     <Layout hasSider className="bg-transparent mt-20">
       <Sider className="text-center bg-transparent">
@@ -16,9 +19,13 @@ export default function MyCarsPage() {
             Xe của tôi
           </Typography.Title>
         </div>
-        <p>Thêm xe trước khi thực hiện đặt lịch</p>
+        <p className="mb-20">Thêm xe trước khi thực hiện đặt lịch</p>
 
-        <Form></Form>
+        <Skeleton active loading={fetchingCars}>
+          {(cars ?? []).map((car) => (
+            <CarManageForm key={car.carID} formValues={car} />
+          ))}
+        </Skeleton>
       </Content>
     </Layout>
   );

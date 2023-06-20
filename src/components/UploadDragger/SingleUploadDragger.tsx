@@ -7,12 +7,14 @@ import { useState } from 'react';
 
 import { useUploadFileApi } from '@/api';
 import { useHover } from '@/hooks';
+import { twcx } from '@/utils';
 
 type UploadDraggerProps = {
   value?: string;
   onChange?: (value: string) => void;
   folder?: string;
   disabled?: boolean;
+  className?: string;
 };
 
 const StyledDragger = styled(Upload.Dragger)`
@@ -26,6 +28,7 @@ export function SingleUploadDragger({
   onChange,
   folder = 'no-container',
   disabled = false,
+  className,
 }: UploadDraggerProps) {
   const [image, setImage] = useState<string>();
   const { loading, uploadFile } = useUploadFileApi();
@@ -50,7 +53,10 @@ export function SingleUploadDragger({
     >
       <div
         ref={ref}
-        className="w-60 h-60 flex items-center justify-center relative"
+        className={twcx(
+          'flex items-center justify-center relative min-w-[240px] min-h-[240px] overflow-hidden rounded-lg',
+          className
+        )}
       >
         {isHovering && computeImage && !loading && !disabled && (
           <div className="flex justify-center items-center z-20 w-full h-full absolute bg-gray-400/70 gap-2 text-white">
