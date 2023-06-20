@@ -1,5 +1,5 @@
+import { ClockCircleFilled, LikeFilled,  WalletFilled } from '@ant-design/icons';
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
-import { Fragment } from 'react';
 
 import { CarIllustrate } from '@/components';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
@@ -77,8 +77,8 @@ export default function HomePage() {
           Đề xuất cho bạn
         </Typography.Title>
       </section>
-      <section className="ml-auto mr-auto max-w-[1280px] mt-10 text-center">
-        <h2 className="title text-3xl font-bold mb-10 ">Dịch vụ</h2>
+      <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
+        <h2 className="title text-3xl font-bold mb-[100px] ">Dịch vụ</h2>
         <div className="list-services grid grid-cols-2 gap-10">
           <div className="service-card bg-white shadow-2xl p-5 w-[600px] rounded-xl">
             <div className="flex">
@@ -163,8 +163,32 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>          
-
+      </section>      
+      <section className='ml-auto mr-auto max-w-[1280px] mt-[200px] text-center'>
+      <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
+      <div className='flex gap-10'>
+        <div>
+          <img src='/about-us.png' alt='' className='w-[600px] h-[500px] '></img>
+        </div>
+        <div className='grid grid-cols-1'>
+            <div >
+              <h3 className='text-xl'>Đặt lịch 24/7</h3>
+              <div><ClockCircleFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
+              <p>Đặt bất cứ lúc nào, từ bất cứ đâu chỉ trong vài giây.</p>
+            </div>
+            <div className=''>
+            <h3 className='text-xl'>Không cần thanh toán trước</h3>
+            <div><WalletFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
+            <p>Không cần thanh toán trước. Bạn luôn thanh toán trực tiếp cho nhà xe sau khi họ hoàn thành mọi công việc.</p>
+            </div>
+            <div>
+              <h3 className='text-xl'>Đánh giá trung thực</h3>
+              <div><LikeFilled style={{ fontSize: '40px', color: '#8A79EF' }}/></div>
+              <p>Những đánh giá này chỉ có thể được gửi sau khi cuộc hẹn đã được thực hiện, vì vậy bạn có thể chắc chắn rằng tất cả chúng đều là thật 100%.</p>
+            </div>
+        </div>
+      </div>
+      </section>    
     </div>
   );
 }
