@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['garagefinder.blob.core.windows.net'],
+    domains: ['garagefinder.blob.core.windows.net', 'hips.hearstapps.com'],
   },
   webpack: (config) => {
     // Grab the existing rule that handles SVG imports

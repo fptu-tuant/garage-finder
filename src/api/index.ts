@@ -1,5 +1,7 @@
+export * from './useAddCarApi';
 export * from './useAddGarageApi';
 export * from './useCarOwnerRegisterApi';
+export * from './useDeleteCarApi';
 export * from './useForgotPasswordApi';
 export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';
@@ -9,5 +11,6 @@ export * from './useGetSASUriForUploadApi';
 export * from './useLoginApi';
 export * from './useLoginWithGoogleApi';
 export * from './useSendVerifyCode';
+export * from './useUpdateCarApi';
 export * from './useUpdateUserApi';
 export * from './useUploadFileApi';
