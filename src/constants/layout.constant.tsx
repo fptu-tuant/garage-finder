@@ -1,7 +1,8 @@
+import { HeartOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 
-import { CarIcon, UserEditIcon } from '@/icons';
+import { CarIcon, HeartFilledIcon, UserEditIcon } from '@/icons';
 
 export const MENU_ITEMS: ItemType[] = [
   {
@@ -19,6 +20,15 @@ export const MENU_ITEMS: ItemType[] = [
       <Link href="/manage/my-cars" className="flex gap-2 items-center">
         <CarIcon className="text-lg" />
         <span>Xe của tôi</span>
+      </Link>
+    ),
+  },
+  {
+    key: '/manage/my-favorite',
+    label: (
+      <Link href="/manage/my-favorite" className="flex gap-2 items-center">
+        <HeartOutlined className="text-lg" />
+        <span>Garage yêu thích</span>
       </Link>
     ),
   },

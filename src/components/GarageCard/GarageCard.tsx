@@ -1,3 +1,4 @@
+import { HeartOutlined } from '@ant-design/icons';
 import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -12,6 +13,7 @@ type GarageCardProps = {
   address: string;
   totalRate: number;
   rating: number;
+  isFavorite?: boolean;
 };
 
 export function GarageCard({
@@ -21,6 +23,7 @@ export function GarageCard({
   address,
   rating,
   totalRate,
+  isFavorite = false,
 }: GarageCardProps) {
   const router = useRouter();
 
@@ -41,7 +44,11 @@ export function GarageCard({
           <span className="font-semibold text-lg line-clamp-1 grow">
             {title}
           </span>
-          <HeartFilledIcon className="text-rose-600 text-xl" />
+          {isFavorite ? (
+            <HeartFilledIcon className="text-rose-600 text-xl" />
+          ) : (
+            <HeartOutlined className="text-neutral-600 text-xl" />
+          )}
         </div>
 
         <div className="flex gap-2 items-center">

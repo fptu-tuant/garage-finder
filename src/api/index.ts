@@ -3,6 +3,7 @@ export * from './useAddGarageApi';
 export * from './useCarOwnerRegisterApi';
 export * from './useDeleteCarApi';
 export * from './useForgotPasswordApi';
+export * from './useGetFavoriteGarageApi';
 export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';
 export * from './useGetMe';
