@@ -56,7 +56,10 @@ export function GarageCard({
               onClick={() => removeFromFavorite({})}
             />
           ) : (
-            <HeartOutlined className="text-neutral-600 text-xl" />
+            <HeartOutlined
+              className="text-neutral-600 text-xl"
+              onClick={() => addToFavorite({ body: { garageID: id } })}
+            />
           )}
         </div>
 
