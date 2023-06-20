@@ -12,6 +12,7 @@ type GetMyCarsData = Array<{
 
 export function useGetMyCarsApi() {
   return useBaseQueryApi<GetMyCarsData>({
+    queryKey: 'getCars',
     endpoint: '/api/Car/GetByUser',
   });
 }

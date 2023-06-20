@@ -1,3 +1,4 @@
+export * from './useAddCarApi';
 export * from './useAddGarageApi';
 export * from './useCarOwnerRegisterApi';
 export * from './useDeleteCarApi';

@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select } from 'antd';
 import { useState } from 'react';
 
-import { useDeleteCarApi, useUpdateCarApi } from '@/api';
+import { useAddCarApi, useDeleteCarApi, useUpdateCarApi } from '@/api';
 import { SingleUploadDragger } from '@/components';
 import { CAR_COMPANIES } from '@/constants';
 import { showError, showSuccess } from '@/utils';
@@ -16,23 +16,45 @@ type CarManageFormValues = {
 };
 
 type CarManageFormProps = {
-  formValues: CarManageFormValues;
+  formValues?: CarManageFormValues | Record<string, unknown>;
+  onFinishCallApi?: () => void;
 };
 
-export function CarManageForm({ formValues }: CarManageFormProps) {
-  const { carID, ...initValues } = formValues;
+export function CarManageForm({
+  formValues = {},
+  onFinishCallApi,
+}: CarManageFormProps) {
+  const { carID = null, ...initValues } = formValues;
   const [form] = Form.useForm<CarManageFormValues>();
 
   const [isInEditMode, setInEditMode] = useState(false);
 
   const { mutate: updateCar, isLoading: updatingCar } = useUpdateCarApi({
-    onSuccess: () => showSuccess('Cập nhật thông tin xe thành công!'),
+    onSuccess: () => {
+      showSuccess('Cập nhật thông tin xe thành công!');
+      onFinishCallApi?.();
+    },
     onError: showError,
   });
 
   const { mutate: deleteCar, isLoading: deletingCar } = useDeleteCarApi({
-    carId: carID,
+    carId: Number(carID),
+    onSuccess: () => {
+      showSuccess('Đã xóa xe!');
+      onFinishCallApi?.();
+    },
+    onError: showError,
   });
+
+  const { mutate: addCar, isLoading: addingCar } = useAddCarApi({
+    onSuccess: () => {
+      showSuccess('Thêm xe thành công!');
+      onFinishCallApi?.();
+    },
+    onError: showError,
+  });
+
+  const isAddNew = !carID;
 
   return (
     <Form
@@ -41,11 +63,14 @@ export function CarManageForm({ formValues }: CarManageFormProps) {
       initialValues={initValues}
       labelCol={{ span: 8 }}
       labelAlign="left"
-      disabled={!isInEditMode}
+      disabled={!isInEditMode && !isAddNew}
     >
       <div>
         <Form.Item name="avatar">
-          <SingleUploadDragger className="aspect-video" />
+          <SingleUploadDragger
+            className="aspect-video"
+            disabled={!isInEditMode && !isAddNew}
+          />
         </Form.Item>
       </div>
 
@@ -70,21 +95,30 @@ export function CarManageForm({ formValues }: CarManageFormProps) {
           {!isInEditMode ? (
             <Button
               type="primary"
-              disabled={false}
-              onClick={() => setInEditMode(true)}
+              disabled={addingCar || false}
+              loading={addingCar}
+              onClick={() => {
+                if (isAddNew) {
+                  addCar({
+                    body: form.getFieldsValue(),
+                  });
+                } else {
+                  setInEditMode(true);
+                }
+              }}
             >
-              Chỉnh sửa
+              {isAddNew ? 'Thêm xe' : 'Chỉnh sửa'}
             </Button>
           ) : (
             <div className="flex gap-6 justify-center">
               <Button
                 type="primary"
                 disabled={updatingCar}
-                onClick={async () =>
+                onClick={async () => {
                   updateCar({
-                    body: { ...form.getFieldsValue(), carID },
-                  })
-                }
+                    body: { ...form.getFieldsValue(), carID: Number(carID) },
+                  });
+                }}
               >
                 Cập nhật
               </Button>
