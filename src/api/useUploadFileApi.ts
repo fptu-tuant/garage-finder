@@ -18,6 +18,7 @@ export function useUploadFileApi() {
     const { data: uploadUri, error } = await getUploadUri();
 
     if (!uploadUri) {
+      console.error(error);
       throw Error(String(error));
     }
 

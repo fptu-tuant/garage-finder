@@ -1,6 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Layout, Skeleton, Typography } from 'antd';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
@@ -18,7 +17,7 @@ export default function MyCarsPage() {
       <Sider className="text-center bg-transparent">
         <UserDashboardSider />
       </Sider>
-      <Content className="flex flex-col pr-6 pl-10" key={dayjs().valueOf()}>
+      <Content className="flex flex-col pr-6 pl-10" key={cars?.length}>
         <div className="flex gap-2">
           <Typography.Title level={2} className="mt-0 pt-0 font-bold">
             Xe của tôi
