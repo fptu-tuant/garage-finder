@@ -17,7 +17,7 @@ export default function MyCarsPage() {
       <Sider className="text-center bg-transparent">
         <UserDashboardSider />
       </Sider>
-      <Content className="flex flex-col pr-6 pl-10" key={cars?.length}>
+      <Content className="flex flex-col pr-6 pl-10">
         <div className="flex gap-2">
           <Typography.Title level={2} className="mt-0 pt-0 font-bold">
             Xe của tôi

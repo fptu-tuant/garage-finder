@@ -2,6 +2,7 @@ import { HeartOutlined } from '@ant-design/icons';
 import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import { useAddFavoriteGarageApi } from '@/api';
 import useDeleteFavoriteGarageApi from '@/api/useDeleteFavoriteGarageApi';
@@ -37,6 +38,10 @@ export function GarageCard({
     router.push(`/garages/${id}`);
   };
 
+  const [isLove, setIsLove] = useState(false);
+
+  const showRedHeart = isFavorite || isLove;
+
   const imageUrl = image?.startsWith('http') ? image : '';
 
   return (
@@ -50,15 +55,21 @@ export function GarageCard({
           <span className="font-semibold text-lg line-clamp-1 grow">
             {title}
           </span>
-          {isFavorite ? (
+          {showRedHeart ? (
             <HeartFilledIcon
-              className="text-rose-600 text-xl"
-              onClick={() => removeFromFavorite({})}
+              className="text-rose-600 text-xl cursor-pointer"
+              onClick={() => {
+                setIsLove(false);
+                removeFromFavorite({});
+              }}
             />
           ) : (
             <HeartOutlined
-              className="text-neutral-600 text-xl"
-              onClick={() => addToFavorite({ body: { garageID: id } })}
+              className="text-neutral-600 text-xl cursor-pointer"
+              onClick={() => {
+                setIsLove(true);
+                addToFavorite({ body: { garageID: id } });
+              }}
             />
           )}
         </div>
