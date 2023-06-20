@@ -1,7 +1,8 @@
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
+import { Fragment } from 'react';
+
 import { CarIllustrate } from '@/components';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
-import { Fragment } from 'react';
 
 export default function HomePage() {
   const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
