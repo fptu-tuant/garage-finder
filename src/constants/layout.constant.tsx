@@ -2,7 +2,7 @@ import { HeartOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 
-import { CarIcon, HeartFilledIcon, UserEditIcon } from '@/icons';
+import { CarIcon, UserEditIcon } from '@/icons';
 
 export const MENU_ITEMS: ItemType[] = [
   {

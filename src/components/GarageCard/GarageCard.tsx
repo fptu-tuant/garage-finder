@@ -3,6 +3,8 @@ import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { useAddFavoriteGarageApi } from '@/api';
+import useDeleteFavoriteGarageApi from '@/api/useDeleteFavoriteGarageApi';
 import { HeartFilledIcon, PinMapFilledIcon } from '@/icons';
 import { Maybe } from '@/types';
 
@@ -27,6 +29,10 @@ export function GarageCard({
 }: GarageCardProps) {
   const router = useRouter();
 
+  const { mutate: addToFavorite } = useAddFavoriteGarageApi();
+
+  const { mutate: removeFromFavorite } = useDeleteFavoriteGarageApi(id);
+
   const onGotoDetailPage = () => {
     router.push(`/garages/${id}`);
   };
@@ -45,7 +51,10 @@ export function GarageCard({
             {title}
           </span>
           {isFavorite ? (
-            <HeartFilledIcon className="text-rose-600 text-xl" />
+            <HeartFilledIcon
+              className="text-rose-600 text-xl"
+              onClick={() => removeFromFavorite({})}
+            />
           ) : (
             <HeartOutlined className="text-neutral-600 text-xl" />
           )}
