@@ -166,11 +166,11 @@ export default function HomePage() {
       </section>      
       <section className='ml-auto mr-auto max-w-[1280px] mt-[200px] text-center'>
       <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
-      <div className='flex gap-10'>
+      <div className='flex gap-10 justify-between'>
         <div>
-          <img src='/about-us.png' alt='' className='w-[600px] h-[500px] '></img>
+          <img src='/about-us.png' alt='about-us' className='w-[600px] h-[500px] '></img>
         </div>
-        <div className='grid grid-cols-1'>
+        <div className='grid grid-cols-1 w-[500px]'>
             <div >
               <h3 className='text-xl'>Đặt lịch 24/7</h3>
               <div><ClockCircleFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
@@ -179,7 +179,7 @@ export default function HomePage() {
             <div className=''>
             <h3 className='text-xl'>Không cần thanh toán trước</h3>
             <div><WalletFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
-            <p>Không cần thanh toán trước. Bạn luôn thanh toán trực tiếp cho nhà xe sau khi họ hoàn thành mọi công việc.</p>
+            <p className=''>Không cần thanh toán trước. Bạn luôn thanh toán trực tiếp cho nhà xe sau khi họ hoàn thành mọi công việc.</p>
             </div>
             <div>
               <h3 className='text-xl'>Đánh giá trung thực</h3>
@@ -189,6 +189,7 @@ export default function HomePage() {
         </div>
       </div>
       </section>    
+      
     </div>
   );
 }
