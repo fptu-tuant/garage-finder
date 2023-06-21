@@ -28,6 +28,10 @@ const nextConfig = {
 
     return config;
   },
+  i18n: {
+    locales: ['en', 'vi'],
+    defaultLocale: 'vi',
+  },
 };
 
 module.exports = nextConfig;
