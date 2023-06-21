@@ -13,6 +13,7 @@
     "@ant-design/cssinjs": "^1.9.1",
     "@ant-design/icons": "^5.1.0",
     "@azure/storage-blob": "^12.14.0",
+    "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@microsoft/signalr": "^7.0.5",

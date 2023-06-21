@@ -26,6 +26,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".contentlayer/generated"
-  ],
+, "src/components/Contact/Contact.jsx"  ],
   "exclude": ["node_modules"]
 }

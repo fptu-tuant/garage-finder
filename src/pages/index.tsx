@@ -2,6 +2,7 @@ import { ClockCircleFilled, LikeFilled,  WalletFilled } from '@ant-design/icons'
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
 
 import { CarIllustrate } from '@/components';
+import Contact from '@/components/Contact/Contact';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 
 export default function HomePage() {
@@ -168,7 +169,7 @@ export default function HomePage() {
       <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
       <div className='flex gap-10 justify-between'>
         <div>
-          <img src='/about-us.png' alt='about-us' className='w-[600px] h-[500px] '></img>
+          <img src='/about-us.png' alt='about-us' className='w-[600px] h-[450px] '></img>
         </div>
         <div className='grid grid-cols-1 w-[500px]'>
             <div >
@@ -188,7 +189,8 @@ export default function HomePage() {
             </div>
         </div>
       </div>
-      </section>    
+      </section>  
+      <Contact></Contact>
       
     </div>
   );
