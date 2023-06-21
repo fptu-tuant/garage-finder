@@ -12,6 +12,7 @@ import { fontMono, fontSans } from '@/assets/fonts';
 import { AntConfigProvider } from '@/configs';
 import { AuthProvider } from '@/context';
 import { MainLayout } from '@/layouts';
+import { TranslateIntlProvider } from '@/providers/TranslateIntlProvider';
 import { twcx } from '@/utils';
 
 export default function App({ Component, pageProps }: CustomAppProps) {
@@ -31,30 +32,32 @@ export default function App({ Component, pageProps }: CustomAppProps) {
         <title>{title}</title>
       </Head>
 
-      <AntConfigProvider>
-        {contextHolder}
-        <QueryClientProvider client={new QueryClient()}>
-          <AuthProvider>
-            <GoogleOAuthProvider
-              clientId={process.env.NEXT_PUBLIC_CLIENT_ID as string}
-            >
-              <div
-                className={twcx(
-                  fontMono.variable,
-                  fontSans.variable,
-                  fontSans.className
-                )}
+      <TranslateIntlProvider>
+        <AntConfigProvider>
+          {contextHolder}
+          <QueryClientProvider client={new QueryClient()}>
+            <AuthProvider>
+              <GoogleOAuthProvider
+                clientId={process.env.NEXT_PUBLIC_CLIENT_ID as string}
               >
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </div>
-            </GoogleOAuthProvider>
-          </AuthProvider>
+                <div
+                  className={twcx(
+                    fontMono.variable,
+                    fontSans.variable,
+                    fontSans.className
+                  )}
+                >
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </div>
+              </GoogleOAuthProvider>
+            </AuthProvider>
 
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </AntConfigProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </AntConfigProvider>
+      </TranslateIntlProvider>
     </>
   );
 }

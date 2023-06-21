@@ -1,12 +1,14 @@
 import { LogoutOutlined } from '@ant-design/icons';
 import { Badge, Button, Divider, Dropdown, Typography } from 'antd';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 
+import FlagUK from '@/assets/images/flag-uk.svg';
+import FlagVN from '@/assets/images/flag-vn.svg';
 import { MENU_ITEMS } from '@/constants';
-import { useAuthStore } from '@/context';
-import { BellIcon, EnvelopIcon, UserEditIcon, UserIcon } from '@/icons';
+import { useAuthStore, useTranslateStore } from '@/context';
+import { BellIcon, EnvelopIcon, UserIcon } from '@/icons';
 import { twcx } from '@/utils';
 
 type HeaderProps = {
@@ -14,20 +16,23 @@ type HeaderProps = {
 };
 
 export function Header({ className }: HeaderProps) {
-  const [{ user }, dispatch] = useAuthStore();
+  const t = useTranslations();
+  const [{ lang }, translateDispatch] = useTranslateStore();
+
+  const [{ user }, authDispatch] = useAuthStore();
   const hadLogin = !!user;
 
   const { asPath, push } = useRouter();
   const [, currentPath] = asPath.split('/');
 
   const onLogout = () => {
-    dispatch({ type: 'SIGN_OUT' });
+    authDispatch({ type: 'SIGN_OUT' });
     push('/');
   };
 
   const NAV_ITEMS = [
-    { href: '/', name: 'Trang chủ' },
-    { href: '/garages', name: 'Danh sách garage' },
+    { href: '/', name: t('header.home') },
+    { href: '/garages', name: t('header.listGarages') },
     { href: '/service', name: 'Dịch vụ' },
     { href: '/about', name: 'Về chúng tôi' },
     { href: '/contact', name: 'Liên hệ' },
@@ -109,6 +114,22 @@ export function Header({ className }: HeaderProps) {
             <Button className="border-primary text-primary">Đăng Nhập</Button>
           </Link>
         )}
+      </div>
+
+      <div
+        className="ml-4 h-[30px] rounded overflow-hidden cursor-pointer"
+        role="button"
+        tabIndex={0}
+        onMouseDown={() =>
+          translateDispatch({
+            type: 'CHANGE_LANG',
+            payload: {
+              lang: lang === 'vi' ? 'en' : 'vi',
+            },
+          })
+        }
+      >
+        {lang === 'vi' ? <FlagVN /> : <FlagUK />}
       </div>
     </header>
   );
