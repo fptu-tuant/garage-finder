@@ -32,7 +32,7 @@ export function Header({ className }: HeaderProps) {
 
   const NAV_ITEMS = [
     { href: '/', name: t('header.home') },
-    { href: '/garages', name: 'Danh sách garage' },
+    { href: '/garages', name: t('header.listGarages') },
     { href: '/service', name: 'Dịch vụ' },
     { href: '/about', name: 'Về chúng tôi' },
     { href: '/contact', name: 'Liên hệ' },
