@@ -2,7 +2,8 @@ import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Cascader, Form, Input, Select, Tag, Typography } from 'antd';
 
-import { CAR_COMPANIES, GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
+import { CarBrandSelect, ServicesSelect } from '@/components';
+import { CAR_COMPANIES, VIETNAM_PROVINCES } from '@/constants';
 import { useStep } from '@/hooks';
 
 type GarageOwnerSignUpFormValues = {
@@ -112,45 +113,11 @@ export function GarageOwnerSignUpForm() {
       {currentStep === 2 && (
         <>
           <Form.Item name="services">
-            <RoundedSelect
-              size="large"
-              mode="multiple"
-              maxTagCount={3}
-              tagRender={(props) => (
-                <Tag
-                  {...props}
-                  className="rounded-full flex h-8  bg-gray-200 items-center"
-                >
-                  {props.label}
-                </Tag>
-              )}
-              className="rounded-full shadow-md"
-              options={GARAGE_SERVICES}
-              placeholder="Loại dịch vụ cung cấp"
-            />
+            <ServicesSelect />
           </Form.Item>
 
           <Form.Item name="carCompanies">
-            <RoundedSelect
-              size="large"
-              maxTagCount={3}
-              mode="multiple"
-              tagRender={(props) => (
-                <Tag {...props} className="rounded-full flex">
-                  {props.label}
-                </Tag>
-              )}
-              className="rounded-full shadow-md"
-              options={CAR_COMPANIES.map(({ icon: Icon, label, value }) => ({
-                label: (
-                  <div className="flex items-center gap-2">
-                    <Icon className="text-4xl" /> <span>{label}</span>
-                  </div>
-                ),
-                value,
-              }))}
-              placeholder="Hãng xe sửa chữa"
-            />
+            <CarBrandSelect rounded />
           </Form.Item>
 
           <Form.Item name="address">

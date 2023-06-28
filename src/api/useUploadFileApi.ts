@@ -30,7 +30,7 @@ export function useUploadFileApi() {
     setLoading(false);
 
     return {
-      fileUrl: `https://garagefinder.blob.core.windows.net/garage-finder/${container}/${fileName}`,
+      fileUrl: `https://garagefinder2.blob.core.windows.net/garage-finder/${container}/${fileName}`,
     };
   };
 

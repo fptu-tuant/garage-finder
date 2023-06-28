@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['garagefinder.blob.core.windows.net', 'hips.hearstapps.com'],
+    domains: [
+      'garagefinder2.blob.core.windows.net',
+      'garagefinder.blob.core.windows.net',
+    ],
   },
   webpack: (config) => {
     // Grab the existing rule that handles SVG imports
@@ -29,8 +32,9 @@ const nextConfig = {
     return config;
   },
   i18n: {
-    locales: ['en', 'vi'],
+    locales: ['vi', 'en'],
     defaultLocale: 'vi',
+    localeDetection: false,
   },
 };
 

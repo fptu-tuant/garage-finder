@@ -2,7 +2,7 @@ import { Button, Form, Input, Select } from 'antd';
 import { useState } from 'react';
 
 import { useAddCarApi, useDeleteCarApi, useUpdateCarApi } from '@/api';
-import { SingleUploadDragger } from '@/components';
+import { CarBrandSelect, SingleUploadDragger } from '@/components';
 import { CAR_COMPANIES } from '@/constants';
 import { showError, showSuccess } from '@/utils';
 
@@ -76,7 +76,7 @@ export function CarManageForm({
 
       <div className="min-w-[400px]">
         <Form.Item label="Hãng xe" name="brandID">
-          <Select options={CAR_COMPANIES} />
+          <CarBrandSelect />
         </Form.Item>
 
         <Form.Item label="Màu xe" name="color">

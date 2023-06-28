@@ -1,26 +1,16 @@
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  Tag,
-  Typography,
-} from 'antd';
+import { Button, DatePicker, Form, Input, Select, Tag, Typography } from 'antd';
 import { Dayjs } from 'dayjs';
 import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAddGarageApi } from '@/api';
-import { RoundedCascader } from '@/components';
+import { CarBrandSelect, RoundedCascader, ServicesSelect } from '@/components';
 import {
   CAR_COMPANIES,
   GARAGE_SERVICES,
   LOCATION_CASCADER_OPTIONS,
-  VIETNAM_PROVINCES,
 } from '@/constants';
 import { PinMapFilledIcon, UserIcon } from '@/icons';
 import { email, required } from '@/services';
@@ -132,45 +122,11 @@ export default function AddGaragePage() {
 
         <div>
           <Form.Item className="w-[450px]" name="services" rules={[required()]}>
-            <RoundedSelect
-              size="large"
-              mode="multiple"
-              maxTagCount={3}
-              tagRender={(props) => (
-                <Tag
-                  {...props}
-                  className="rounded-full flex h-8  bg-gray-200 items-center"
-                >
-                  {props.label}
-                </Tag>
-              )}
-              className="rounded-full shadow-md"
-              options={GARAGE_SERVICES}
-              placeholder="Loại dịch vụ cung cấp"
-            />
+            <ServicesSelect rounded />
           </Form.Item>
 
           <Form.Item name="carCompanies" rules={[required()]}>
-            <RoundedSelect
-              size="large"
-              maxTagCount={3}
-              mode="multiple"
-              tagRender={(props) => (
-                <Tag {...props} className="rounded-full flex">
-                  {props.label}
-                </Tag>
-              )}
-              className="rounded-full shadow-md"
-              options={CAR_COMPANIES.map(({ icon: Icon, label, value }) => ({
-                label: (
-                  <div className="flex items-center gap-2">
-                    <Icon className="text-4xl" /> <span>{label}</span>
-                  </div>
-                ),
-                value,
-              }))}
-              placeholder="Hãng xe sửa chữa"
-            />
+            <CarBrandSelect rounded />
           </Form.Item>
 
           <Form.Item name="address" rules={[required()]}>
