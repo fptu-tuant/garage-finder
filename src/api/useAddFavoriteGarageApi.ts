@@ -2,18 +2,17 @@ import { BaseMutationApiOptions } from '@/types';
 
 import { useBaseMutationApi } from './useBaseMutationApi';
 
-type AddFavoriteGarageVariables = {
-  body: {
-    garageID: number;
-  };
+type UseAddFavoriteGarageApi = BaseMutationApiOptions<string> & {
+  garageId: number;
 };
 
-export function useAddFavoriteGarageApi(
-  options?: BaseMutationApiOptions<string, AddFavoriteGarageVariables>
-) {
+export function useAddFavoriteGarageApi({
+  garageId,
+  ...options
+}: UseAddFavoriteGarageApi) {
   return useBaseMutationApi({
     method: 'POST',
-    endpoint: '/api/FavoriteList/Add',
+    endpoint: `/api/FavoriteList/Add/${garageId}`,
     ...options,
   });
 }

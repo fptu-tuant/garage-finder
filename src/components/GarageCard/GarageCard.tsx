@@ -30,7 +30,7 @@ export function GarageCard({
 }: GarageCardProps) {
   const router = useRouter();
 
-  const { mutate: addToFavorite } = useAddFavoriteGarageApi();
+  const { mutate: addToFavorite } = useAddFavoriteGarageApi({ garageId: id });
 
   const { mutate: removeFromFavorite } = useDeleteFavoriteGarageApi(id);
 
@@ -66,9 +66,9 @@ export function GarageCard({
           ) : (
             <HeartOutlined
               className="text-neutral-600 text-xl cursor-pointer"
-              onClick={() => {
+              onClick={async () => {
+                addToFavorite({});
                 setIsLove(true);
-                addToFavorite({ body: { garageID: id } });
               }}
             />
           )}
