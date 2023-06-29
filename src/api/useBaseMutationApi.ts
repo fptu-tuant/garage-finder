@@ -35,10 +35,10 @@ export function useBaseMutationApi<
 }: BaseMutationOptions<TData, TVariables, TContext>) {
   return useMutation({
     ...options,
-    mutationFn: async ({ body, params }: TVariables) => {
+    mutationFn: async ({ body, params, id }: TVariables) => {
       const { data } = await api<TData>({
         method,
-        url: endpoint,
+        url: id ? `${endpoint}/${id}` : endpoint,
         data: body,
         params,
         headers,

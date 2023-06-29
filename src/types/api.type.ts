@@ -3,6 +3,7 @@ import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 export type BaseApiVariables = {
   body?: unknown;
   params?: Record<string, unknown>;
+  id?: number;
 };
 
 export type BaseMutationApiOptions<

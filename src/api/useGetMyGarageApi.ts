@@ -1,6 +1,6 @@
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-type GetMyGarageData = Array<{
+export type GetMyGarageData = Array<{
   garageID: number;
   garageName: string;
   addressDetail: string;
