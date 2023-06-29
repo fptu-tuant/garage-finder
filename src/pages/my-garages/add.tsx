@@ -5,7 +5,12 @@ import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAddGarageApi } from '@/api';
-import { CarBrandSelect, RoundedCascader, ServicesSelect } from '@/components';
+import {
+  CarBrandSelect,
+  RoundedCascader,
+  ServicesSelect,
+  SingleUploadDragger,
+} from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { PinMapFilledIcon, UserIcon } from '@/icons';
 import { email, required } from '@/services';
@@ -20,6 +25,7 @@ type AddGarageFormValues = {
   address: [number, number];
   detailAddress: string;
   openTime: [Dayjs, Dayjs];
+  thumbnail: string;
 };
 
 export default function AddGaragePage() {
@@ -50,6 +56,7 @@ export default function AddGaragePage() {
         garageName: values.name,
         phoneNumber: values.phone,
         imageLink: [''],
+        thumbnail: values.thumbnail,
       },
     });
   };
@@ -65,6 +72,12 @@ export default function AddGaragePage() {
         className="grid grid-cols-2 gap-10 mx-auto w-max"
         onFinish={onFinish}
       >
+        <div className="col-span-2">
+          <Form.Item name="thumbnail">
+            <SingleUploadDragger />
+          </Form.Item>
+        </div>
+
         <div>
           <Form.Item className="w-[450px]" name="name" rules={[required()]}>
             <Input
