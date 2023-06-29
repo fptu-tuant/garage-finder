@@ -1,17 +1,12 @@
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { Button, DatePicker, Form, Input, Select, Tag, Typography } from 'antd';
+import { Button, DatePicker, Form, Input, Typography } from 'antd';
 import { Dayjs } from 'dayjs';
 import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAddGarageApi } from '@/api';
 import { CarBrandSelect, RoundedCascader, ServicesSelect } from '@/components';
-import {
-  CAR_COMPANIES,
-  GARAGE_SERVICES,
-  LOCATION_CASCADER_OPTIONS,
-} from '@/constants';
+import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { PinMapFilledIcon, UserIcon } from '@/icons';
 import { email, required } from '@/services';
 import { showError, showSuccess } from '@/utils';
@@ -26,13 +21,6 @@ type AddGarageFormValues = {
   detailAddress: string;
   openTime: [Dayjs, Dayjs];
 };
-
-const RoundedSelect = styled(Select)`
-  .tl-select-selector,
-  .tl-select-selection-item {
-    border-radius: 999px !important;
-  }
-`;
 
 export default function AddGaragePage() {
   const router = useRouter();

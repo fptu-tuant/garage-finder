@@ -1,9 +1,9 @@
 import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Button, Cascader, Form, Input, Select, Tag, Typography } from 'antd';
+import { Button, Cascader, Form, Input, Typography } from 'antd';
 
 import { CarBrandSelect, ServicesSelect } from '@/components';
-import { CAR_COMPANIES, VIETNAM_PROVINCES } from '@/constants';
+import { VIETNAM_PROVINCES } from '@/constants';
 import { useStep } from '@/hooks';
 
 type GarageOwnerSignUpFormValues = {
@@ -16,13 +16,6 @@ type GarageOwnerSignUpFormValues = {
   carCompanies?: string[];
   address?: number[];
 };
-
-const RoundedSelect = styled(Select)`
-  .tl-select-selector,
-  .tl-select-selection-item {
-    border-radius: 999px !important;
-  }
-`;
 
 const RoundedCascader = styled(Cascader)`
   .tl-select-selector {

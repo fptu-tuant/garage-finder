@@ -38,7 +38,7 @@ export function CarBrandSelect({
       placeholder="Hãng xe sửa chữa"
       size="large"
       mode="multiple"
-      maxTagCount={3}
+      maxTagCount={2}
       tagRender={(props) => (
         <Tag
           {...props}

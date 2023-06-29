@@ -2,9 +2,13 @@ import { Button, Form, Input, Skeleton, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useState } from 'react';
 
-import { useGetGaragesApi } from '@/api';
+import {
+  useGetCarCompaniesApi,
+  useGetGaragesApi,
+  useGetServicesApi,
+} from '@/api';
 import { CheckboxGroup, GarageCard } from '@/components';
-import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
+import { VIETNAM_PROVINCES } from '@/constants';
 
 type GarageFilterFormProps = {
   places: CheckboxValueType[];
@@ -16,15 +20,32 @@ export default function GaragesPage() {
 
   const [keyword, setKeyword] = useState('');
 
-  const { data: garages, isLoading } = useGetGaragesApi();
+  const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi();
+
+  const { data: servicesResponseData, isLoading: fetchingServices } =
+    useGetServicesApi();
+
+  const { data: carBrands, isLoading: fetchingCarBrands } =
+    useGetCarCompaniesApi();
 
   const provineOptions = VIETNAM_PROVINCES.map((provine) => ({
     label: provine.name,
     value: provine.code,
   }));
 
+  const servicesOptions = servicesResponseData?.map((service) => ({
+    label: service.categoryName,
+    value: service.categoryID,
+  }));
+
+  const carBrandsOptions = carBrands?.map((brand) => ({
+    label: brand.brandName,
+    value: brand.brandID,
+  }));
+
   const places = Form.useWatch(['places'], form);
   const services = Form.useWatch(['services'], form);
+  const brands = Form.useWatch(['brands'], form);
 
   const displayGarages = garages?.filter((garage) =>
     garage.garageName.toLowerCase().includes(keyword.toLowerCase())
@@ -58,13 +79,25 @@ export default function GaragesPage() {
               Loại dịch vụ{' '}
               <span className="text-red-600">({services?.length ?? 0})</span>
             </Typography>
-            <Form.Item name="services">
-              <CheckboxGroup showSearch={false} options={GARAGE_SERVICES} />
-            </Form.Item>
+            <Skeleton active loading={fetchingServices}>
+              <Form.Item name="services">
+                <CheckboxGroup showSearch={false} options={servicesOptions} />
+              </Form.Item>
+            </Skeleton>
+
+            <Typography className="uppercase text-xs tracking-wider text-gray-500 font-semibold mb-3">
+              Hãng xe{' '}
+              <span className="text-red-600">({brands?.length ?? 0})</span>
+            </Typography>
+            <Skeleton active loading={fetchingCarBrands}>
+              <Form.Item name="brands">
+                <CheckboxGroup showSearch={false} options={carBrandsOptions} />
+              </Form.Item>
+            </Skeleton>
           </Form>
         </div>
 
-        <Skeleton active loading={isLoading}>
+        <Skeleton active loading={fetchingGarages}>
           <div className="grow grid grid-cols-3 gap-x-6 gap-y-8">
             {displayGarages?.map((garage) => (
               <GarageCard

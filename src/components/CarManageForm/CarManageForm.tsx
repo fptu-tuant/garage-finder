@@ -1,9 +1,8 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 
 import { useAddCarApi, useDeleteCarApi, useUpdateCarApi } from '@/api';
 import { CarBrandSelect, SingleUploadDragger } from '@/components';
-import { CAR_COMPANIES } from '@/constants';
 import { showError, showSuccess } from '@/utils';
 
 type CarManageFormValues = {
