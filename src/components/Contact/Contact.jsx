@@ -17,9 +17,9 @@ function Contact() {
   };
 
   return (
-    <section className="text-center contact section  mt-[200px]" id="contact">
+    <section className="text-center contact section  mt-[200px] " id="contact">
       <h2 className="section__title text-center text-3xl mb-[50px]">Liên hệ</h2>
-      <div className="contact__container container grid">
+      <div className="contact__container container">
         <div className="contact__content">
           <h3 className="contact__title mb-10">
             Để lại lời nhắn cho chúng tôi
@@ -50,7 +50,7 @@ function Contact() {
                 name="message"
               />
             </div>
-            <button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white ">
+            <button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white cursor-pointer">
               Gửi
             </button>
           </form>

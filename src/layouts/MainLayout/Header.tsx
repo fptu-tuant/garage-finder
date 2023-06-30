@@ -33,9 +33,9 @@ export function Header({ className }: HeaderProps) {
   const NAV_ITEMS = [
     { href: '/', name: t('header.home') },
     { href: '/garages', name: t('header.listGarages') },
-    { href: '/service', name: 'Dịch vụ' },
-    { href: '/about', name: 'Về chúng tôi' },
-    { href: '/contact', name: 'Liên hệ' },
+    { href: '/service', name: t('header.services') },
+    { href: '/about', name: t('header.aboutUs') },
+    { href: '/contact', name: t('header.contact') },
     { href: '/my-garages', name: 'Garage của tôi', hide: !hadLogin },
   ];
 
@@ -111,7 +111,7 @@ export function Header({ className }: HeaderProps) {
           </div>
         ) : (
           <Link href="/sign-in">
-            <Button className="border-primary text-primary">Đăng Nhập</Button>
+            <Button className="border-primary text-primary">Đăng nhập</Button>
           </Link>
         )}
       </div>
