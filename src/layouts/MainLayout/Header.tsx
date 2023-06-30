@@ -36,7 +36,7 @@ export function Header({ className }: HeaderProps) {
     { href: '/service', name: t('header.services') },
     { href: '/about', name: t('header.aboutUs') },
     { href: '/contact', name: t('header.contact') },
-    { href: '/my-garages', name: 'Garage của tôi', hide: !hadLogin },
+    { href: '/my-garages', name: t('header.myGarage'), hide: !hadLogin },
   ];
 
   return (
