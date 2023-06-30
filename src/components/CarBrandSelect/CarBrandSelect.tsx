@@ -2,6 +2,7 @@ import { Select, SelectProps, Tag } from 'antd';
 import Image from 'next/image';
 
 import { useGetCarCompaniesApi } from '@/api';
+import { twcx } from '@/utils';
 
 import { RoundedSelect } from '../RoundSelect/RoundSelect';
 
@@ -47,7 +48,7 @@ export function CarBrandSelect({
           {props.label}
         </Tag>
       )}
-      className="rounded-full shadow-md"
+      className={twcx({ 'rounded-full shadow-md': rounded })}
       {...rest}
     />
   );

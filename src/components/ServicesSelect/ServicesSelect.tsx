@@ -1,6 +1,7 @@
 import { Select, SelectProps, Tag } from 'antd';
 
 import { useGetServicesApi } from '@/api';
+import { twcx } from '@/utils';
 
 import { RoundedSelect } from '../RoundSelect/RoundSelect';
 
@@ -32,7 +33,7 @@ export function ServicesSelect({
           {props.label}
         </Tag>
       )}
-      className="rounded-full shadow-md"
+      className={twcx({ 'rounded-full shadow-md': rounded })}
       options={options}
       placeholder="Loại dịch vụ cung cấp"
       loading={isLoading}
