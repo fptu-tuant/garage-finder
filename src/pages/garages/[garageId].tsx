@@ -50,9 +50,13 @@ export default function GarageDetailPage() {
   });
 
   const { mutate: addOrderFromGuest, isLoading: addingOrderGuest } =
-    useAddOrderFromGuest();
+    useAddOrderFromGuest({
+      onSuccess: () => showSuccess('Booking thành công'),
+    });
 
-  const { mutate: addOrder, isLoading: addingOrder } = useAddOrder();
+  const { mutate: addOrder, isLoading: addingOrder } = useAddOrder({
+    onSuccess: () => showSuccess('Booking thành công'),
+  });
 
   const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi();
 
@@ -103,7 +107,7 @@ export default function GarageDetailPage() {
           brandCarID: brand,
           typeCar,
           licensePlates,
-          categoryGargeId: services?.[0],
+          categoryGargeId: services,
           timeAppointment: dayjs(date).toISOString(),
         },
       });
@@ -113,7 +117,7 @@ export default function GarageDetailPage() {
           garageId: Number(garageId),
           phoneNumber: phone,
           verificationCode: verifyCode,
-          categorygarageId: services?.[0],
+          categorygarageId: services,
           carId,
           timeAppointment: dayjs(date).toISOString(),
         },
@@ -283,7 +287,12 @@ export default function GarageDetailPage() {
                   name="services"
                   rules={[requiredRule()]}
                 >
-                  <ServicesSelect />
+                  <Select
+                    options={garage.categoryGarages.map((item) => ({
+                      label: item.categoryGarageID,
+                      value: item.categoryGarageID,
+                    }))}
+                  />
                 </Form.Item>
 
                 <Form.Item

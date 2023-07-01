@@ -16,7 +16,12 @@ type GetGarageData = {
   thumbnail: null;
   latAddress: number;
   lngAddress: number;
-  categoryGarages: number[];
+  categoryGarages: Array<{
+    categoryGarageID: number;
+    garageID: number;
+    categoryID: number;
+    services: [];
+  }>;
   garageBrands: number[];
   imageGarages: Array<{
     imageID: number;
