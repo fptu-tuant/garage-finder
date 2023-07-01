@@ -31,10 +31,13 @@ export default function ManageGarageInfoPage() {
   const { query } = useRouter();
 
   const { mutate: updateGarage, isLoading: updatingGarage } = useUpdateGarage();
-  const { data: garage, isLoading: fetchingGarage } = useGetGarageByIdApi(
+  const {
+    data: garage,
+    isLoading: fetchingGarage,
+    isError,
+  } = useGetGarageByIdApi(
     {
       enabled: !isNaN(Number(query?.garageId)),
-      onSuccess: () => showSuccess('Cập nhật thông tin thành công!'),
     },
     { id: Number(query?.garageId) }
   );
@@ -45,12 +48,17 @@ export default function ManageGarageInfoPage() {
     updateGarage({
       body: {
         ...values,
+        garageID: query?.garageId,
         provinceID: first(values?.address),
         districtsID: last(values?.address),
         openTime: (first(values?.time) as Dayjs).toISOString(),
         closeTime: (last(values?.time) as Dayjs).toISOString(),
+        address: undefined,
+        time: undefined,
       },
     });
+
+    !isError && showSuccess('Cập nhật thông tin thành công!');
   };
 
   const initValues = {
