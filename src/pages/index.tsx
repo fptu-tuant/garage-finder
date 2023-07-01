@@ -95,7 +95,7 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <img src="/repair.png" alt="hehe"></img>
+              <img src="/repair.png" alt="repair"></img>
             </div>
           </div>
           <div className="service-card bg-white shadow-2xl p-5 w-[600px] rounded-xl">

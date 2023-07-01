@@ -1,5 +1,11 @@
 {
   "header": {
-    "home": "Home"
+    "home": "Home",
+    "listGarages": "List Garages",
+    "services": "Services",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "myGarage": "My Garage"
   }
+
 }
