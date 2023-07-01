@@ -20,5 +20,6 @@ export * from './useLoginApi';
 export * from './useLoginWithGoogleApi';
 export * from './useSendVerifyCode';
 export * from './useUpdateCarApi';
+export * from './useUpdateGarage';
 export * from './useUpdateUserApi';
 export * from './useUploadFileApi';

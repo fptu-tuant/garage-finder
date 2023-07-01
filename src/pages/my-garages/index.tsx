@@ -22,15 +22,26 @@ export default function MyGaragePage() {
     {
       title: 'Hành động',
       render: (garage: GetMyGarageData[number]) => (
-        <div>
+        <div className="flex gap-4">
           <Button
-            type="text"
+            className="text-white bg-green-500 border-none hover:bg-green-500/50"
+            onClick={() => {
+              router.push(
+                `/my-garages/manage/info?garageId=${garage.garageID}`
+              );
+            }}
+          >
+            Quản lý garage
+          </Button>
+          <Button
             icon={<DeleteFilled />}
-            className="text-red-500"
+            className="text-white bg-red-500 border-none hover:bg-red-500/50"
             onClick={() => {
               mutate({ id: garage.garageID });
             }}
-          />
+          >
+            Xóa
+          </Button>
         </div>
       ),
     },
