@@ -5,6 +5,7 @@ import {
   Form,
   Input,
   Result,
+  Select,
   Skeleton,
   Typography,
 } from 'antd';
@@ -13,10 +14,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import {
+  useAddOrder,
   useAddOrderFromGuest,
   useGetGarageByIdApi,
   useSendVerifyCode,
 } from '@/api';
+import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
 import { CarBrandSelect, ServiceCard, ServicesSelect } from '@/components';
 import { REGEX_VIETNAM_PHONE } from '@/constants';
 import { ClockIcon, PinMapFilledIcon } from '@/icons';
@@ -49,6 +52,10 @@ export default function GarageDetailPage() {
   const { mutate: addOrderFromGuest, isLoading: addingOrderGuest } =
     useAddOrderFromGuest();
 
+  const { mutate: addOrder, isLoading: addingOrder } = useAddOrder();
+
+  const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi();
+
   if (!garage && !isLoading)
     return (
       <Result
@@ -63,7 +70,56 @@ export default function GarageDetailPage() {
   const openTime = dayjs(garage.openTime, 'hh:mm:ss').format('hh:mm');
   const closeTime = dayjs(garage.closeTime, 'hh:mm:ss').format('hh:mm');
 
-  const ordering = addingOrderGuest;
+  const ordering = addingOrderGuest || addingOrder;
+
+  const hasCar = !!myCars?.length;
+
+  console.log({ hasCar });
+
+  const onFinish = (values: any) => {
+    console.log('values', values);
+
+    const {
+      brand,
+      date,
+      email,
+      name,
+      phone,
+      services,
+      verifyCode,
+      typeCar,
+      licensePlates,
+      carId,
+    } = values;
+
+    if (!hasCar) {
+      addOrderFromGuest({
+        body: {
+          garageId: Number(garageId),
+          name,
+          email,
+          phoneNumber: phone,
+          verificationCode: verifyCode,
+          brandCarID: brand,
+          typeCar,
+          licensePlates,
+          categoryGargeId: services?.[0],
+          timeAppointment: dayjs(date).toISOString(),
+        },
+      });
+    } else {
+      addOrder({
+        body: {
+          garageId: Number(garageId),
+          phoneNumber: phone,
+          verificationCode: verifyCode,
+          categorygarageId: services?.[0],
+          carId,
+          timeAppointment: dayjs(date).toISOString(),
+        },
+      });
+    }
+  };
 
   return (
     <Skeleton active loading={isLoading}>
@@ -133,145 +189,139 @@ export default function GarageDetailPage() {
             </Button>
           </div>
 
-          <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col gap-4 mt-16">
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={(values) => {
-                console.log('values', values);
+          <Skeleton active loading={fetchingMyCars}>
+            <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col gap-4 mt-16">
+              <Form form={form} layout="vertical" onFinish={onFinish}>
+                {!hasCar && (
+                  <Form.Item
+                    label="Họ Tên"
+                    name="name"
+                    rules={[requiredRule()]}
+                  >
+                    <Input />
+                  </Form.Item>
+                )}
 
-                const {
-                  brand,
-                  date,
-                  email,
-                  name,
-                  phone,
-                  services,
-                  verifyCode,
-                  typeCar,
-                  licensePlates,
-                } = values;
-
-                addOrderFromGuest({
-                  body: {
-                    garageId: Number(garageId),
-                    name,
-                    email,
-                    phoneNumber: phone,
-                    verificationCode: verifyCode,
-                    brandCarID: brand,
-                    typeCar,
-                    licensePlates,
-                    categoryGargeId: services?.[0],
-                    timeAppointment: dayjs(date).toISOString(),
-                  },
-                });
-              }}
-            >
-              <Form.Item label="Họ Tên" name="name" rules={[requiredRule()]}>
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Số điện thoại"
-                name="phone"
-                rules={[requiredRule(), phoneRule()]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item>
-                <Button
-                  type="primary"
-                  disabled={
-                    sendingCode || !String(phone).match(REGEX_VIETNAM_PHONE)
-                  }
-                  loading={sendingCode}
-                  onClick={() => sendCode({ body: phone })}
+                <Form.Item
+                  label="Số điện thoại"
+                  name="phone"
+                  rules={[requiredRule(), phoneRule()]}
                 >
-                  Xác thực SMS
-                </Button>
-              </Form.Item>
+                  <Input />
+                </Form.Item>
 
-              <Form.Item
-                label="Mã xác thực"
-                name="verifyCode"
-                rules={[requiredRule()]}
-              >
-                <Input />
-              </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    disabled={
+                      sendingCode || !String(phone).match(REGEX_VIETNAM_PHONE)
+                    }
+                    loading={sendingCode}
+                    onClick={() => sendCode({ body: phone })}
+                  >
+                    Xác thực SMS
+                  </Button>
+                </Form.Item>
 
-              <Form.Item
-                label="Email"
-                rules={[requiredRule(), emailRule()]}
-                name="email"
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item label="Hãng xe" name="brand" rules={[requiredRule()]}>
-                <CarBrandSelect mode={undefined} />
-              </Form.Item>
-
-              <Form.Item
-                label="Dòng xe"
-                name="typeCar"
-                rules={[requiredRule()]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Biển số xe"
-                name="licensePlates"
-                rules={[requiredRule()]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Chọn loại dịch vụ"
-                name="services"
-                rules={[requiredRule()]}
-              >
-                <ServicesSelect />
-              </Form.Item>
-
-              <Form.Item
-                label="Chọn thời gian"
-                name="date"
-                rules={[requiredRule()]}
-              >
-                <DatePicker showTime className="w-full" />
-              </Form.Item>
-
-              <div className="w-full flex flex-col items-center my-10">
-                <div className="w-4/5 flex gap-1 items-center">
-                  <CheckOutlined />
-                  <span>Đặt lịch 24/7</span>
-                </div>
-                <div className="w-4/5 flex gap-1 items-center">
-                  <CheckOutlined />
-                  <span>Không cần thanh toán</span>
-                </div>
-                <div className="w-4/5 flex gap-1 items-center">
-                  <CheckOutlined />
-                  <span>Đánh giá trung thực</span>
-                </div>
-              </div>
-
-              <Form.Item className="text-center">
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  disabled={ordering}
-                  loading={ordering}
+                <Form.Item
+                  label="Mã xác thực"
+                  name="verifyCode"
+                  rules={[requiredRule()]}
                 >
-                  Đặt lịch
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
+                  <Input />
+                </Form.Item>
+
+                {!hasCar && (
+                  <Form.Item
+                    label="Email"
+                    rules={[requiredRule(), emailRule()]}
+                    name="email"
+                  >
+                    <Input />
+                  </Form.Item>
+                )}
+
+                {hasCar ? (
+                  <Form.Item name="carId" label="Chọn xe của bạn">
+                    <Select
+                      options={myCars.map((item) => ({
+                        label: `${item.licensePlates}`,
+                        value: item.carID,
+                      }))}
+                    />
+                  </Form.Item>
+                ) : (
+                  <>
+                    <Form.Item
+                      label="Hãng xe"
+                      name="brand"
+                      rules={[requiredRule()]}
+                    >
+                      <CarBrandSelect mode={undefined} />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Dòng xe"
+                      name="typeCar"
+                      rules={[requiredRule()]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Biển số xe"
+                      name="licensePlates"
+                      rules={[requiredRule()]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </>
+                )}
+
+                <Form.Item
+                  label="Chọn loại dịch vụ"
+                  name="services"
+                  rules={[requiredRule()]}
+                >
+                  <ServicesSelect />
+                </Form.Item>
+
+                <Form.Item
+                  label="Chọn thời gian"
+                  name="date"
+                  rules={[requiredRule()]}
+                >
+                  <DatePicker showTime className="w-full" />
+                </Form.Item>
+
+                <div className="w-full flex flex-col items-center my-10">
+                  <div className="w-4/5 flex gap-1 items-center">
+                    <CheckOutlined />
+                    <span>Đặt lịch 24/7</span>
+                  </div>
+                  <div className="w-4/5 flex gap-1 items-center">
+                    <CheckOutlined />
+                    <span>Không cần thanh toán</span>
+                  </div>
+                  <div className="w-4/5 flex gap-1 items-center">
+                    <CheckOutlined />
+                    <span>Đánh giá trung thực</span>
+                  </div>
+                </div>
+
+                <Form.Item className="text-center">
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    disabled={ordering}
+                    loading={ordering}
+                  >
+                    Đặt lịch
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          </Skeleton>
         </div>
       </div>
     </Skeleton>
