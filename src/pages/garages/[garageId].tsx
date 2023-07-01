@@ -71,8 +71,8 @@ export default function GarageDetailPage() {
 
   if (!garage) return <Skeleton active loading={true} />;
 
-  const openTime = dayjs(garage.openTime, 'hh:mm:ss').format('hh:mm');
-  const closeTime = dayjs(garage.closeTime, 'hh:mm:ss').format('hh:mm');
+  const openTime = dayjs(garage.openTime).format('hh:mm');
+  const closeTime = dayjs(garage.closeTime).format('hh:mm');
 
   const ordering = addingOrderGuest || addingOrder;
 
