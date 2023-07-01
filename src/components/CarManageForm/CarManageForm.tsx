@@ -75,7 +75,7 @@ export function CarManageForm({
 
       <div className="min-w-[400px]">
         <Form.Item label="Hãng xe" name="brandID">
-          <CarBrandSelect />
+          <CarBrandSelect mode={undefined} />
         </Form.Item>
 
         <Form.Item label="Màu xe" name="color">
