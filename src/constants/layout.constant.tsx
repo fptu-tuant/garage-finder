@@ -1,4 +1,4 @@
-import { HeartOutlined } from '@ant-design/icons';
+import { HeartOutlined, LockOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 
@@ -29,6 +29,15 @@ export const MENU_ITEMS: ItemType[] = [
       <Link href="/manage/my-favorite" className="flex gap-2 items-center">
         <HeartOutlined className="text-lg" />
         <span>Garage yêu thích</span>
+      </Link>
+    ),
+  },
+  {
+    key: '/manage/change-password',
+    label: (
+      <Link href="/manage/change-password" className="flex gap-2 items-center">
+        <LockOutlined className="text-lg" />
+        <span>Đổi mật khẩu</span>
       </Link>
     ),
   },

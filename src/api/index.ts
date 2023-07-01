@@ -4,6 +4,7 @@ export * from './useAddGarageApi';
 export * from './useAddOrder';
 export * from './useAddOrderFromGuest';
 export * from './useCarOwnerRegisterApi';
+export * from './useChangePassword';
 export * from './useDeleteCarApi';
 export * from './useDeleteFavoriteGarageApi';
 export * from './useDeleteGarageApi';

@@ -8,11 +8,12 @@ export const requiredRule = (message?: string): Rule => ({
 });
 
 export const confirmPasswordRule = (
-  message = 'Nhập lại mật khẩu chưa khớp!'
+  message = 'Nhập lại mật khẩu chưa khớp!',
+  passwordField = 'password'
 ): Rule => {
   return ({ getFieldValue }) => ({
     validator: async (_, value) => {
-      if (!value || getFieldValue('password') === value) {
+      if (!value || getFieldValue(passwordField) === value) {
         return;
       }
 

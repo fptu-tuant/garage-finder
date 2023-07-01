@@ -28,5 +28,5 @@ export function showError(error: unknown) {
 }
 
 export function showSuccess(message: string) {
-  notification.success({ message, closeIcon: <CloseIcon /> });
+  notification.success({ message, closeIcon: <CloseIcon />, duration: 100 });
 }
