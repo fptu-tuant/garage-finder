@@ -33,8 +33,6 @@ export function useGetGarageByIdApi(
   options?: BaseQueryApiOptions<GetGarageData>,
   context?: GetGarageContext
 ) {
-  console.log('context.id', context?.id, `api/Garage/GetByID/${context?.id}`);
-
   return useBaseQueryApi({
     queryKey: `garages-${context?.id}`,
     endpoint: `api/Garage/GetByID/${context?.id}`,

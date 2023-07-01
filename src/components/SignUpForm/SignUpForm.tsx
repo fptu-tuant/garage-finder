@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Button, Form, Input, Typography } from 'antd';
 
 import { useCarOwnerRegisterApi } from '@/api';
-import { confirmPassword, email, required } from '@/services';
+import { confirmPasswordRule, emailRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 type SignUpFormValues = {
@@ -53,7 +53,7 @@ export function SignUpForm() {
         Đăng ký
       </Typography.Title>
 
-      <Form.Item name="fullName" rules={[required()]}>
+      <Form.Item name="fullName" rules={[requiredRule()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -62,7 +62,7 @@ export function SignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="phone" rules={[required()]}>
+      <Form.Item name="phone" rules={[requiredRule()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -71,7 +71,7 @@ export function SignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="email" rules={[required(), email()]}>
+      <Form.Item name="email" rules={[requiredRule(), emailRule()]}>
         <Input
           size="large"
           className="rounded-full shadow-md"
@@ -80,7 +80,7 @@ export function SignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="password" rules={[required()]}>
+      <Form.Item name="password" rules={[requiredRule()]}>
         <Input.Password
           size="large"
           className="rounded-full shadow-md"
@@ -88,7 +88,10 @@ export function SignUpForm() {
         />
       </Form.Item>
 
-      <Form.Item name="confirmPassword" rules={[required(), confirmPassword()]}>
+      <Form.Item
+        name="confirmPassword"
+        rules={[requiredRule(), confirmPasswordRule()]}
+      >
         <Input.Password
           size="large"
           className="rounded-full shadow-md"

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useForgotPasswordApi, useSendVerifyCode } from '@/api';
 import { CarIllustrate } from '@/components';
-import { confirmPassword, required } from '@/services';
+import { confirmPasswordRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 type FormForgotPasswordValues = {
@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
 
         <Form form={form} onFinish={onFinish} className="w-full max-w-lg">
           <div className="flex gap-2">
-            <Form.Item name="phone" rules={[required()]} className="w-full">
+            <Form.Item name="phone" rules={[requiredRule()]} className="w-full">
               <Input
                 size="large"
                 placeholder="Nhập số điện thoại"
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
                 />
               </Form.Item>
 
-              <Form.Item name="password" rules={[required()]}>
+              <Form.Item name="password" rules={[requiredRule()]}>
                 <Input.Password
                   size="large"
                   className="rounded-full shadow-md"
@@ -101,7 +101,7 @@ export default function ForgotPasswordPage() {
 
               <Form.Item
                 name="confirmPassword"
-                rules={[required(), confirmPassword()]}
+                rules={[requiredRule(), confirmPasswordRule()]}
               >
                 <Input.Password
                   size="large"

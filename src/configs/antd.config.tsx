@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 const formConfig: ConfigProviderProps['form'] = {
   validateMessages: {
-    required: 'Không được để trống!',
+    required: 'Không được để trống',
     whitespace: 'Không được để trống!',
     string: {
       min: 'Trường này phải có ít nhất ${min} ký tự',

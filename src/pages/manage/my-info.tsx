@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useGetMe, useUpdateUserApi } from '@/api';
 import { SingleUploadDragger, UserDashboardSider } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
-import { required } from '@/services';
+import { requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 const { Sider, Content } = Layout;
@@ -51,8 +51,6 @@ export default function MyInfoPage() {
   const onUpdateInfo = async () => {
     const { email, fullName, phone, avatar, address, detailAddress } =
       form.getFieldsValue();
-
-    console.log({ address, detailAddress });
 
     updateUser({
       body: {
@@ -93,23 +91,27 @@ export default function MyInfoPage() {
             disabled={!isInEditMode}
           >
             <div className="shrink-0 min-w-[620px]">
-              <Form.Item label="Tên" name="fullName" rules={[required()]}>
+              <Form.Item label="Tên" name="fullName" rules={[requiredRule()]}>
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Email" name="email" rules={[required()]}>
+              <Form.Item label="Email" name="email" rules={[requiredRule()]}>
                 <Input />
               </Form.Item>
 
               <Form.Item
                 label="Số điện thoại"
                 name="phone"
-                rules={[required()]}
+                rules={[requiredRule()]}
               >
                 <Input />
               </Form.Item>
 
-              <Form.Item name="address" rules={[required()]} label="Địa chỉ">
+              <Form.Item
+                name="address"
+                rules={[requiredRule()]}
+                label="Địa chỉ"
+              >
                 <Cascader
                   size="large"
                   options={LOCATION_CASCADER_OPTIONS}
@@ -130,7 +132,7 @@ export default function MyInfoPage() {
               <Form.Item
                 label="Chi tiết địa chỉ"
                 name="detailAddress"
-                rules={[required()]}
+                rules={[requiredRule()]}
               >
                 <Input />
               </Form.Item>

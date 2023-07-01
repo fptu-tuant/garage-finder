@@ -13,7 +13,7 @@ import {
 } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { PinMapFilledIcon, UserIcon } from '@/icons';
-import { email, required } from '@/services';
+import { emailRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 type AddGarageFormValues = {
@@ -79,7 +79,7 @@ export default function AddGaragePage() {
         </div>
 
         <div>
-          <Form.Item className="w-[450px]" name="name" rules={[required()]}>
+          <Form.Item className="w-[450px]" name="name" rules={[requiredRule()]}>
             <Input
               size="large"
               placeholder="Tên Garage"
@@ -88,7 +88,11 @@ export default function AddGaragePage() {
             />
           </Form.Item>
 
-          <Form.Item className="w-[450px]" name="phone" rules={[required()]}>
+          <Form.Item
+            className="w-[450px]"
+            name="phone"
+            rules={[requiredRule()]}
+          >
             <Input
               size="large"
               placeholder="Số điện thoại"
@@ -100,7 +104,7 @@ export default function AddGaragePage() {
           <Form.Item
             className="w-[450px]"
             name="email"
-            rules={[required(), email()]}
+            rules={[requiredRule(), emailRule()]}
           >
             <Input
               size="large"
@@ -110,7 +114,11 @@ export default function AddGaragePage() {
             />
           </Form.Item>
 
-          <Form.Item className="w-[450px]" name="openTime" rules={[required()]}>
+          <Form.Item
+            className="w-[450px]"
+            name="openTime"
+            rules={[requiredRule()]}
+          >
             <DatePicker.RangePicker
               className="w-full rounded-full shadow-md"
               size="large"
@@ -122,15 +130,19 @@ export default function AddGaragePage() {
         </div>
 
         <div>
-          <Form.Item className="w-[450px]" name="services" rules={[required()]}>
+          <Form.Item
+            className="w-[450px]"
+            name="services"
+            rules={[requiredRule()]}
+          >
             <ServicesSelect rounded />
           </Form.Item>
 
-          <Form.Item name="carCompanies" rules={[required()]}>
+          <Form.Item name="carCompanies" rules={[requiredRule()]}>
             <CarBrandSelect rounded />
           </Form.Item>
 
-          <Form.Item name="address" rules={[required()]}>
+          <Form.Item name="address" rules={[requiredRule()]}>
             <RoundedCascader
               size="large"
               className="rounded-full shadow-md"
@@ -149,7 +161,7 @@ export default function AddGaragePage() {
             />
           </Form.Item>
 
-          <Form.Item name="detailAddress" rules={[required()]}>
+          <Form.Item name="detailAddress" rules={[requiredRule()]}>
             <Input
               size="large"
               className="rounded-full shadow-md"

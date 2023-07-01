@@ -1,11 +1,13 @@
 import { Rule } from 'antd/es/form';
 
-export const required = (message?: string): Rule => ({
+import { REGEX_VIETNAM_PHONE } from '@/constants';
+
+export const requiredRule = (message?: string): Rule => ({
   required: true,
   message,
 });
 
-export const confirmPassword = (
+export const confirmPasswordRule = (
   message = 'Nhập lại mật khẩu chưa khớp!'
 ): Rule => {
   return ({ getFieldValue }) => ({
@@ -19,7 +21,14 @@ export const confirmPassword = (
   });
 };
 
-export const email = (message = 'Không đúng định dạng email'): Rule => ({
+export const emailRule = (message = 'Không đúng định dạng email'): Rule => ({
   type: 'email',
   message,
+});
+
+export const phoneRule = (
+  message = 'Không đúng định dạng số điện thoại'
+): Rule => ({
+  message,
+  pattern: new RegExp(REGEX_VIETNAM_PHONE),
 });

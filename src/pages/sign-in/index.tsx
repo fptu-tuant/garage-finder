@@ -13,7 +13,7 @@ import {
 import { CarIllustrate } from '@/components';
 import { useAuthStore } from '@/context/auth.context';
 import { GoogleIcon } from '@/icons';
-import { required } from '@/services';
+import { requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 type SignInFormProps = {
@@ -87,7 +87,7 @@ export default function LoginPage() {
             Đăng nhập
           </Typography.Title>
 
-          <Form.Item name="email" rules={[required()]}>
+          <Form.Item name="email" rules={[requiredRule()]}>
             <Input
               size="large"
               className="rounded-full shadow-md"
@@ -96,7 +96,7 @@ export default function LoginPage() {
             />
           </Form.Item>
 
-          <Form.Item name="password" rules={[required()]}>
+          <Form.Item name="password" rules={[requiredRule()]}>
             <Input.Password
               size="large"
               className="rounded-full shadow-md"
