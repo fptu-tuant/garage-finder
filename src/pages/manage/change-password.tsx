@@ -3,14 +3,18 @@ import { Button, Form, Input, Layout, Typography } from 'antd';
 import { useChangePassword } from '@/api';
 import { UserDashboardSider } from '@/components';
 import { confirmPasswordRule, requiredRule } from '@/services';
-import { showSuccess } from '@/utils';
+import { showError, showSuccess } from '@/utils';
 
 const { Sider, Content } = Layout;
 
 export default function ChangePassword() {
   const [form] = Form.useForm();
 
-  const { mutate: changePassword, isLoading, isError } = useChangePassword();
+  const {
+    mutateAsync: changePassword,
+    isLoading,
+    isError,
+  } = useChangePassword();
 
   return (
     <Layout hasSider className="bg-transparent mt-20">
@@ -27,10 +31,14 @@ export default function ChangePassword() {
           className="max-w-lg"
           labelCol={{ span: 9 }}
           labelAlign="left"
-          onFinish={() => {
+          onFinish={async () => {
             const values = form.getFieldsValue();
-            changePassword({ body: values });
-            !isLoading && !isError && showSuccess('Đổi mật khẩu thành công');
+            try {
+              await changePassword({ body: values });
+              showSuccess('Đổi mật khẩu thành công');
+            } catch (error) {
+              showError(error);
+            }
           }}
         >
           <Form.Item
