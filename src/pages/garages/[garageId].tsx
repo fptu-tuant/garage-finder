@@ -20,7 +20,7 @@ import {
   useSendVerifyCode,
 } from '@/api';
 import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
-import { CarBrandSelect, ServiceCard, ServicesSelect } from '@/components';
+import { CarBrandSelect, ServiceCard } from '@/components';
 import { REGEX_VIETNAM_PHONE } from '@/constants';
 import { ClockIcon, PinMapFilledIcon } from '@/icons';
 import { emailRule, phoneRule, requiredRule } from '@/services';
@@ -80,9 +80,7 @@ export default function GarageDetailPage() {
 
   console.log({ hasCar });
 
-  const onFinish = (values: any) => {
-    console.log('values', values);
-
+  const onFinish = () => {
     const {
       brand,
       date,
@@ -94,7 +92,7 @@ export default function GarageDetailPage() {
       typeCar,
       licensePlates,
       carId,
-    } = values;
+    } = form.getFieldsValue();
 
     if (!hasCar) {
       addOrderFromGuest({

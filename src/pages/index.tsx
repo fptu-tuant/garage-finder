@@ -1,5 +1,6 @@
-import { ClockCircleFilled, LikeFilled,  WalletFilled } from '@ant-design/icons';
+import { ClockCircleFilled, LikeFilled, WalletFilled } from '@ant-design/icons';
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
+import Image from 'next/image';
 
 import { CarIllustrate } from '@/components';
 import Contact from '@/components/Contact/Contact';
@@ -16,7 +17,7 @@ export default function HomePage() {
   }));
 
   return (
-    <div className='bg-[#FAF8FC]'>
+    <div className="bg-[#FAF8FC]">
       <section className="grid grid-cols-5 min-h-[500px] ml-10">
         <div className="flex flex-col justify-center col-span-2">
           <Typography.Title className="uppercase text-slate-800 w-4/5 ml-10 mb-5">
@@ -95,7 +96,7 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <img src="/repair.png" alt="repair"></img>
+              <Image src="/repair.png" alt="repair" width={241} height={192} />
             </div>
           </div>
           <div className="service-card bg-white shadow-2xl p-5 w-[600px] rounded-xl">
@@ -113,9 +114,11 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <img
+              <Image
                 src="/refurbished.png"
                 alt="hehe"
+                width={241}
+                height={192}
                 className="w-[200px] h-[200px]"
               />
             </div>
@@ -134,11 +137,13 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <img
+              <Image
                 src="/maintenance.png"
                 alt="hehe"
+                width={241}
+                height={192}
                 className="h-[170px] w-[200px]"
-              ></img>
+              />
             </div>
           </div>
           <div className="service-card bg-white shadow-2xl p-5 w-[600px] rounded-xl">
@@ -156,42 +161,64 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-              <img
+              <Image
                 src="/rescue.png"
                 alt="hehe"
+                width={241}
+                height={192}
                 className="w-[241px] h-[192px]"
-              ></img>
+              />
             </div>
           </div>
         </div>
-      </section>      
-      <section className='ml-auto mr-auto max-w-[1280px] mt-[200px] text-center'>
-      <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
-      <div className='flex gap-10 justify-between'>
-        <div>
-          <img src='/about-us.png' alt='about-us' className='w-[600px] h-[450px] '></img>
-        </div>
-        <div className='grid grid-cols-1 w-[500px]'>
-            <div >
-              <h3 className='text-xl'>Đặt lịch 24/7</h3>
-              <div><ClockCircleFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
+      </section>
+      <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
+        <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
+        <div className="flex gap-10 justify-between">
+          <div>
+            <Image
+              src="/about-us.png"
+              alt="about-us"
+              width={600}
+              height={540}
+              className="w-[600px] h-[450px] "
+            />
+          </div>
+          <div className="grid grid-cols-1 w-[500px]">
+            <div>
+              <h3 className="text-xl">Đặt lịch 24/7</h3>
+              <div>
+                <ClockCircleFilled
+                  style={{ fontSize: '35px', color: '#8A79EF' }}
+                />
+              </div>
               <p>Đặt bất cứ lúc nào, từ bất cứ đâu chỉ trong vài giây.</p>
             </div>
-            <div className=''>
-            <h3 className='text-xl'>Không cần thanh toán trước</h3>
-            <div><WalletFilled style={{ fontSize: '35px', color: '#8A79EF' }}/></div>
-            <p className=''>Không cần thanh toán trước. Bạn luôn thanh toán trực tiếp cho nhà xe sau khi họ hoàn thành mọi công việc.</p>
+            <div className="">
+              <h3 className="text-xl">Không cần thanh toán trước</h3>
+              <div>
+                <WalletFilled style={{ fontSize: '35px', color: '#8A79EF' }} />
+              </div>
+              <p className="">
+                Không cần thanh toán trước. Bạn luôn thanh toán trực tiếp cho
+                nhà xe sau khi họ hoàn thành mọi công việc.
+              </p>
             </div>
             <div>
-              <h3 className='text-xl'>Đánh giá trung thực</h3>
-              <div><LikeFilled style={{ fontSize: '40px', color: '#8A79EF' }}/></div>
-              <p>Những đánh giá này chỉ có thể được gửi sau khi cuộc hẹn đã được thực hiện, vì vậy bạn có thể chắc chắn rằng tất cả chúng đều là thật 100%.</p>
+              <h3 className="text-xl">Đánh giá trung thực</h3>
+              <div>
+                <LikeFilled style={{ fontSize: '40px', color: '#8A79EF' }} />
+              </div>
+              <p>
+                Những đánh giá này chỉ có thể được gửi sau khi cuộc hẹn đã được
+                thực hiện, vì vậy bạn có thể chắc chắn rằng tất cả chúng đều là
+                thật 100%.
+              </p>
             </div>
+          </div>
         </div>
-      </div>
-      </section>  
+      </section>
       <Contact></Contact>
-      
     </div>
   );
 }
