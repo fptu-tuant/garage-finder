@@ -12,7 +12,7 @@ type AddOrderFromGuestVariables = {
     brandCarID: number;
     typeCar: string;
     licensePlates: string;
-    categoryGargeId: number;
+    categoryGargeId: number[];
     timeAppointment: string;
   };
 };

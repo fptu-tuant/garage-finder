@@ -8,7 +8,7 @@ type AddOrderVariables = {
     verificationCode: string;
     carId: number;
     garageId: number;
-    categorygarageId: number;
+    categorygarageId: number[];
     timeAppointment: string;
   };
 };

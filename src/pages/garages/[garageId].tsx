@@ -153,10 +153,7 @@ export default function GarageDetailPage() {
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-2">
           {garage.imageGarages?.slice(0, 4)?.map((image) => (
-            <div
-              className="border border-rose-400 border-solid relative"
-              key={image.imageID}
-            >
+            <div className="relative" key={image.imageID}>
               <Image alt="sub Image" src="" fill />
             </div>
           ))}
@@ -296,6 +293,7 @@ export default function GarageDetailPage() {
                       label: item.categoryName || '!# error',
                       value: item.categoryGarageID,
                     }))}
+                    mode="multiple"
                   />
                 </Form.Item>
 
