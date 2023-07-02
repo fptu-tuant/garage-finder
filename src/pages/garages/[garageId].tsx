@@ -32,13 +32,13 @@ type RouteParams = {
 
 export default function GarageDetailPage() {
   const router = useRouter();
-  const { garageId = null } = router.query as RouteParams;
+  const { garageId } = router.query as RouteParams;
 
   const [form] = Form.useForm();
   const phone = Form.useWatch('phone', form);
 
   const { data: garage, isLoading } = useGetGarageByIdApi(
-    {},
+    { enabled: !isNaN(Number(garageId)) },
     { id: Number(garageId) }
   );
 
@@ -50,13 +50,9 @@ export default function GarageDetailPage() {
   });
 
   const { mutateAsync: addOrderFromGuest, isLoading: addingOrderGuest } =
-    useAddOrderFromGuest({
-      onSuccess: () => showSuccess('Booking thành công'),
-    });
+    useAddOrderFromGuest();
 
-  const { mutateAsync: addOrder, isLoading: addingOrder } = useAddOrder({
-    onSuccess: () => showSuccess('Booking thành công'),
-  });
+  const { mutateAsync: addOrder, isLoading: addingOrder } = useAddOrder();
 
   const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi();
 
@@ -77,8 +73,6 @@ export default function GarageDetailPage() {
   const ordering = addingOrderGuest || addingOrder;
 
   const hasCar = !!myCars?.length;
-
-  console.log({ hasCar });
 
   const onFinish = async () => {
     const {
@@ -116,7 +110,7 @@ export default function GarageDetailPage() {
             garageId: Number(garageId),
             phoneNumber: phone,
             verificationCode: verifyCode,
-            categorygarageId: services,
+            categoryGarageId: services,
             carId,
             timeAppointment: dayjs(date).toISOString(),
           },
