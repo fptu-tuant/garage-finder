@@ -16,6 +16,7 @@ export default function ManageGarageOrderPage() {
   const { query } = useRouter();
 
   const [status, setStatus] = useState('all');
+  const [currentOrderId, setCurrentOrderId] = useState<number | null>(null);
 
   const { data, isLoading, refetch } = useGetOrderByGarageId(
     Number(query?.garageId)
@@ -80,17 +81,23 @@ export default function ManageGarageOrderPage() {
         <div className="flex gap-4">
           <Button
             className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
-            onClick={() => approve.mutateAsync({ id: item.gfOrderID })}
+            onClick={() => {
+              approve.mutateAsync({ id: item.gfOrderID });
+              setCurrentOrderId(item.gfOrderID);
+            }}
             disabled={approve.isLoading || reject.isLoading}
-            loading={approve.isLoading}
+            loading={approve.isLoading && currentOrderId === item.gfOrderID}
           >
             Xác nhận
           </Button>
           <Button
             className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
-            onClick={() => reject.mutateAsync({ id: item.gfOrderID })}
+            onClick={() => {
+              reject.mutateAsync({ id: item.gfOrderID });
+              setCurrentOrderId(item.gfOrderID);
+            }}
             disabled={approve.isLoading || reject.isLoading}
-            loading={reject.isLoading}
+            loading={reject.isLoading && currentOrderId === item.gfOrderID}
           >
             Từ chối
           </Button>
@@ -111,10 +118,10 @@ export default function ManageGarageOrderPage() {
           <Radio.Button value="confirmed" className="text-green-500">
             Đã xác nhận
           </Radio.Button>
-          <Radio.Button value="reject" className="text-gray-500">
+          <Radio.Button value="reject" className="text-red-500">
             Đã từ chối
           </Radio.Button>
-          <Radio.Button value="cancelled" className="text-red-500">
+          <Radio.Button value="cancelled" className="text-gray-500">
             Đã hủy
           </Radio.Button>
           <Radio.Button value="done" className="text-cyan-500">
