@@ -21,6 +21,7 @@ type GetGarageData = {
     garageID: number;
     categoryID: number;
     services: [];
+    categoryName: string;
   }>;
   garageBrands: number[];
   imageGarages: Array<{

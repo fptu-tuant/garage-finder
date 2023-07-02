@@ -15,6 +15,7 @@ export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';
 export * from './useGetMe';
 export * from './useGetMyGarageApi';
+export * from './useGetOrderByGarageId';
 export * from './useGetSASUriForUploadApi';
 export * from './useGetServicesApi';
 export * from './useLoginApi';

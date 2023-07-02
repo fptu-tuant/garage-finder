@@ -287,7 +287,7 @@ export default function GarageDetailPage() {
                 >
                   <Select
                     options={garage.categoryGarages.map((item) => ({
-                      label: item.categoryGarageID,
+                      label: item.categoryName || '!# error',
                       value: item.categoryGarageID,
                     }))}
                   />
