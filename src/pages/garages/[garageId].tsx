@@ -49,12 +49,12 @@ export default function GarageDetailPage() {
     onError: showError,
   });
 
-  const { mutate: addOrderFromGuest, isLoading: addingOrderGuest } =
+  const { mutateAsync: addOrderFromGuest, isLoading: addingOrderGuest } =
     useAddOrderFromGuest({
       onSuccess: () => showSuccess('Booking thành công'),
     });
 
-  const { mutate: addOrder, isLoading: addingOrder } = useAddOrder({
+  const { mutateAsync: addOrder, isLoading: addingOrder } = useAddOrder({
     onSuccess: () => showSuccess('Booking thành công'),
   });
 
@@ -80,7 +80,7 @@ export default function GarageDetailPage() {
 
   console.log({ hasCar });
 
-  const onFinish = () => {
+  const onFinish = async () => {
     const {
       brand,
       date,
@@ -94,32 +94,38 @@ export default function GarageDetailPage() {
       carId,
     } = form.getFieldsValue();
 
-    if (!hasCar) {
-      addOrderFromGuest({
-        body: {
-          garageId: Number(garageId),
-          name,
-          email,
-          phoneNumber: phone,
-          verificationCode: verifyCode,
-          brandCarID: brand,
-          typeCar,
-          licensePlates,
-          categoryGargeId: services,
-          timeAppointment: dayjs(date).toISOString(),
-        },
-      });
-    } else {
-      addOrder({
-        body: {
-          garageId: Number(garageId),
-          phoneNumber: phone,
-          verificationCode: verifyCode,
-          categorygarageId: services,
-          carId,
-          timeAppointment: dayjs(date).toISOString(),
-        },
-      });
+    try {
+      if (!hasCar) {
+        await addOrderFromGuest({
+          body: {
+            garageId: Number(garageId),
+            name,
+            email,
+            phoneNumber: phone,
+            verificationCode: verifyCode,
+            brandCarID: brand,
+            typeCar,
+            licensePlates,
+            categoryGargeId: services,
+            timeAppointment: dayjs(date).toISOString(),
+          },
+        });
+      } else {
+        await addOrder({
+          body: {
+            garageId: Number(garageId),
+            phoneNumber: phone,
+            verificationCode: verifyCode,
+            categorygarageId: services,
+            carId,
+            timeAppointment: dayjs(date).toISOString(),
+          },
+        });
+      }
+
+      showSuccess('Tạo yêu cầu thành công');
+    } catch (error) {
+      showError(error);
     }
   };
 
