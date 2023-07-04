@@ -1,5 +1,15 @@
-import { Button, Form, Input, Skeleton, Typography } from 'antd';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import styled from '@emotion/styled';
+import {
+  Button,
+  Empty,
+  Form,
+  Input,
+  Pagination,
+  Skeleton,
+  Spin,
+  Typography,
+} from 'antd';
+import { debounce, isEmpty } from 'lodash-es';
 import { useState } from 'react';
 
 import {
@@ -9,18 +19,42 @@ import {
 } from '@/api';
 import { CheckboxGroup, GarageCard } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
+import { usePagination } from '@/hooks';
 
 type GarageFilterFormProps = {
-  places: CheckboxValueType[];
-  services: CheckboxValueType[];
+  places: number[];
+  services: number[];
+  brands: number[];
 };
+
+const ContentWrapper = styled.div`
+  .tl-spin-nested-loading {
+    width: 100%;
+  }
+`;
 
 export default function GaragesPage() {
   const [form] = Form.useForm<GarageFilterFormProps>();
 
-  const [keyword, setKeyword] = useState('');
+  const places = Form.useWatch(['places'], form);
+  const services = Form.useWatch(['services'], form);
+  const brands = Form.useWatch(['brands'], form);
 
-  const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi();
+  const [keyword, setKeyword] = useState('');
+  const pagination = usePagination({ currentPage: 1, pageSize: 9 });
+
+  const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi({
+    variables: {
+      body: {
+        keyword,
+        provinceID: isEmpty(places) ? undefined : places,
+        brandsID: isEmpty(brands) ? undefined : brands,
+        categoriesID: isEmpty(services) ? undefined : services,
+        pageNumber: pagination.currentPage,
+        pageSize: pagination.pageSize,
+      },
+    },
+  });
 
   const { data: servicesResponseData, isLoading: fetchingServices } =
     useGetServicesApi();
@@ -43,23 +77,15 @@ export default function GaragesPage() {
     value: brand.brandID,
   }));
 
-  const places = Form.useWatch(['places'], form);
-  const services = Form.useWatch(['services'], form);
-  const brands = Form.useWatch(['brands'], form);
-
-  const displayGarages = garages?.filter((garage) =>
-    garage.garageName.toLowerCase().includes(keyword.toLowerCase())
-  );
-
   return (
     <>
       <div className="w-2/5 flex gap-2 mx-auto">
         <Input
           placeholder="Tìm kiếm ở đây ..."
           value={keyword}
-          onChange={(e) => setKeyword(e.currentTarget.value)}
+          onChange={debounce((e) => setKeyword(e.currentTarget.value))}
         />
-        <Button type="primary" className="min-w-[100px">
+        <Button type="primary" className="min-w-[100px]">
           Tìm
         </Button>
       </div>
@@ -97,21 +123,33 @@ export default function GaragesPage() {
           </Form>
         </div>
 
-        <Skeleton active loading={fetchingGarages}>
-          <div className="grow grid grid-cols-3 gap-x-6 gap-y-8">
-            {displayGarages?.map((garage) => (
-              <GarageCard
-                key={garage.garageID}
-                id={garage.garageID}
-                image={garage.thumbnail}
-                title={garage.garageName}
-                address={garage.addressDetail}
-                totalRate={318}
-                rating={4.8}
-              />
-            ))}
-          </div>
-        </Skeleton>
+        <ContentWrapper className="grow flex justify-center">
+          <Spin spinning={fetchingGarages}>
+            <div className="grid grid-cols-3 gap-x-6 gap-y-8">
+              {garages?.map((garage) => (
+                <GarageCard
+                  key={garage.garageID}
+                  id={garage.garageID}
+                  image={garage.thumbnail}
+                  title={garage.garageName}
+                  address={garage.addressDetail}
+                  totalRate={318}
+                  rating={4.8}
+                />
+              ))}
+
+              {isEmpty(garages) && <Empty className="col-span-3" />}
+            </div>
+
+            <Pagination
+              className="mt-10 text-center"
+              // total={pagination.totalItem}
+              total={50}
+              current={pagination.currentPage}
+              onChange={(pageNumber) => pagination.goPage(pageNumber)}
+            />
+          </Spin>
+        </ContentWrapper>
       </div>
     </>
   );

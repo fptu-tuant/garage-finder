@@ -24,6 +24,7 @@ export function showError(error: unknown) {
     message: <span className="font-semibold">{errorCode}</span>,
     closeIcon: <CloseIcon />,
     description: errorMessage,
+    duration: 0.8,
   });
 }
 

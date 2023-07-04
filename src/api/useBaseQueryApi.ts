@@ -11,6 +11,7 @@ type BaseQueryOptions<TData, TVariables extends BaseApiVariables> = Omit<
   UseQueryOptions<TData, unknown, TData, [string, TVariables]>,
   'queryFn' | 'queryKey'
 > & {
+  method?: string;
   endpoint: string;
   queryKey?: string;
   variables?: TVariables;
@@ -21,6 +22,7 @@ export function useBaseQueryApi<
   TVariables extends BaseApiVariables = BaseApiVariables
 >({
   endpoint,
+  method = 'GET',
   queryKey = 'unknown-query',
   variables = {} as TVariables,
   ...options
@@ -31,9 +33,11 @@ export function useBaseQueryApi<
     queryFn: async (ctx: QueryFunctionContext<[string, TVariables]>) => {
       const [, { body, params }] = ctx.queryKey;
 
+      console.log({ body });
+
       try {
         const { data } = await api<TData>({
-          method: 'GET',
+          method,
           url: endpoint,
           data: body,
           params,

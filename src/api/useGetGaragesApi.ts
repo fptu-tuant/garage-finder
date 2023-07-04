@@ -15,12 +15,25 @@ type GetGaragesData = Array<{
   thumbnail: Maybe<string>;
 }>;
 
+type GetGaragesVariables = {
+  body: {
+    keyword?: string;
+    provinceID?: number[];
+    districtsID?: number[];
+    categoriesID?: number[];
+    brandsID?: number[];
+    pageNumber: number;
+    pageSize: number;
+  };
+};
+
 export function useGetGaragesApi(
-  options?: BaseQueryApiOptions<GetGaragesData>
+  options?: BaseQueryApiOptions<GetGaragesData, GetGaragesVariables>
 ) {
   return useBaseQueryApi({
+    method: 'POST',
     queryKey: 'garages',
-    endpoint: '/api/Garage/GetAll',
+    endpoint: '/api/Garage/GetByKeyWord',
     ...options,
   });
 }

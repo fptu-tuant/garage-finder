@@ -60,7 +60,6 @@ export function CheckboxGroup({
         />
       )}
       <VerticalCheckboxGroup
-        className="trungluc"
         options={currentOptions}
         value={value}
         onChange={(value) => {
