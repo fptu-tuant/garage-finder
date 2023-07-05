@@ -36,9 +36,7 @@ export default function ManageGarageInfoPage() {
     isLoading: fetchingGarage,
     isError,
   } = useGetGarageByIdApi(
-    {
-      enabled: !isNaN(Number(query?.garageId)),
-    },
+    { enabled: !isNaN(Number(query?.garageId)) },
     { id: Number(query?.garageId) }
   );
 
