@@ -1,4 +1,4 @@
-import { CalendarOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Layout, Menu, Skeleton, Typography } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
@@ -15,11 +15,7 @@ const { Sider, Content } = Layout;
 export function ManageGarageLayout({ children }: PropsWithChildren) {
   const router = useRouter();
 
-  const {
-    data: garage,
-    isLoading: fetchingGarage,
-    isError,
-  } = useGetGarageByIdApi(
+  const { data: garage, isLoading: fetchingGarage } = useGetGarageByIdApi(
     { enabled: !isNaN(Number(router.query?.garageId)) },
     { id: Number(router.query?.garageId) }
   );
@@ -46,6 +42,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <CalendarOutlined className="text-lg" />
           <span>Quản lý lịch đặt</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/services',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/services',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <ScheduleOutlined className="text-lg" />
+          <span>Quản lý dịch vụ</span>
         </Link>
       ),
     },
