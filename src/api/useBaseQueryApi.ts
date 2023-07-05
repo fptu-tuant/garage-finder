@@ -33,8 +33,6 @@ export function useBaseQueryApi<
     queryFn: async (ctx: QueryFunctionContext<[string, TVariables]>) => {
       const [, { body, params }] = ctx.queryKey;
 
-      console.log({ body });
-
       try {
         const { data } = await api<TData>({
           method,

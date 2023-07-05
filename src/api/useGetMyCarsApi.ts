@@ -1,3 +1,5 @@
+import { ACCESS_TOKEN_KEY } from '@/constants';
+
 import { useBaseQueryApi } from './useBaseQueryApi';
 
 type GetMyCarsData = Array<{

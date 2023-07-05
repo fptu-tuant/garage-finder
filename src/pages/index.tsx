@@ -1,12 +1,16 @@
 import { ClockCircleFilled, LikeFilled, WalletFilled } from '@ant-design/icons';
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
+import { first } from 'lodash-es';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { CarIllustrate } from '@/components';
 import Contact from '@/components/Contact/Contact';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 
 export default function HomePage() {
+  const router = useRouter();
+
   const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
     label: province.name,
     value: province.code,
@@ -36,12 +40,24 @@ export default function HomePage() {
 
       <section className="px-6">
         <div className="rounded-lg shadow-lg p-10 -translate-y-4 bg-white border">
-          <Form layout="vertical" className="flex justify-between gap-4">
-            <Form.Item label="Garage" className="grow">
+          <Form
+            layout="vertical"
+            className="flex justify-between gap-4"
+            onFinish={(values) => {
+              const { keyword, places, categoriesID } = values;
+
+              router.push(
+                `/garages?keyword=${keyword || ''}&provineID=${
+                  first(places) || ''
+                }&categoriesID=${categoriesID || ''}`
+              );
+            }}
+          >
+            <Form.Item label="Garage" className="grow" name="keyword">
               <Input placeholder="Nhập tên garage" />
             </Form.Item>
 
-            <Form.Item label="Địa điểm" className="grow">
+            <Form.Item label="Địa điểm" className="grow" name="places">
               <Cascader
                 options={locationCascaderOptions}
                 placeholder="Tỉnh  / Thành phố - Quận / Huyện"
@@ -58,10 +74,15 @@ export default function HomePage() {
               />
             </Form.Item>
 
-            <Form.Item label="Loại dịch vụ" className="grow">
+            <Form.Item
+              label="Loại dịch vụ"
+              className="grow"
+              name="categoriesID"
+            >
               <Select
                 placeholder="Chọn loại dịch vụ"
                 options={GARAGE_SERVICES}
+                mode="multiple"
               />
             </Form.Item>
 

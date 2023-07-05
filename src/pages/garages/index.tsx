@@ -6,11 +6,11 @@ import {
   Input,
   Pagination,
   Skeleton,
-  Spin,
   Typography,
 } from 'antd';
 import { debounce, isEmpty } from 'lodash-es';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import {
   useGetCarCompaniesApi,
@@ -34,6 +34,8 @@ const ContentWrapper = styled.div`
 `;
 
 export default function GaragesPage() {
+  const { query } = useRouter();
+
   const [form] = Form.useForm<GarageFilterFormProps>();
 
   const places = Form.useWatch(['places'], form);
@@ -76,6 +78,17 @@ export default function GaragesPage() {
     label: brand.brandName,
     value: brand.brandID,
   }));
+
+  useEffect(() => {
+    form.setFieldsValue({
+      places: query?.provineID ? [Number(query?.provineID)] : undefined,
+      services: query?.categoriesID
+        ? (query?.categoriesID as string).split(',').map(Number)
+        : undefined,
+    });
+
+    setKeyword(query?.keyword?.toString() || '');
+  }, [form, query?.categoriesID, query?.keyword, query?.provineID]);
 
   return (
     <>
@@ -123,8 +136,8 @@ export default function GaragesPage() {
           </Form>
         </div>
 
-        <ContentWrapper className="grow flex justify-center">
-          <Spin spinning={fetchingGarages}>
+        <ContentWrapper className="flex flex-col">
+          <Skeleton active loading={fetchingGarages}>
             <div className="grid grid-cols-3 gap-x-6 gap-y-8">
               {garages?.map((garage) => (
                 <GarageCard
@@ -148,7 +161,7 @@ export default function GaragesPage() {
               current={pagination.currentPage}
               onChange={(pageNumber) => pagination.goPage(pageNumber)}
             />
-          </Spin>
+          </Skeleton>
         </ContentWrapper>
       </div>
     </>
