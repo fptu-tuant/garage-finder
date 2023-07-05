@@ -22,6 +22,7 @@ import {
 import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
 import { CarBrandSelect, ServiceCard } from '@/components';
 import { ACCESS_TOKEN_KEY, REGEX_VIETNAM_PHONE } from '@/constants';
+import { useAuthStore } from '@/context';
 import { ClockIcon, PinMapFilledIcon } from '@/icons';
 import { emailRule, phoneRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
@@ -31,6 +32,7 @@ type RouteParams = {
 };
 
 export default function GarageDetailPage() {
+  const [{ user }] = useAuthStore();
   const router = useRouter();
   const { garageId } = router.query as RouteParams;
 
@@ -54,7 +56,9 @@ export default function GarageDetailPage() {
 
   const { mutateAsync: addOrder, isLoading: addingOrder } = useAddOrder();
 
-  const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi();
+  const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi({
+    enabled: !!user,
+  });
 
   if (!garage && !isLoading)
     return (
@@ -188,7 +192,7 @@ export default function GarageDetailPage() {
             </Button>
           </div>
 
-          <Skeleton active loading={fetchingMyCars}>
+          <Skeleton active loading={!!user && fetchingMyCars}>
             <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col gap-4 mt-16">
               <Form form={form} layout="vertical" onFinish={onFinish}>
                 {!hasCar && (

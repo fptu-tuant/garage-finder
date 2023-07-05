@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_KEY } from '@/constants';
+import { BaseQueryApiOptions } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
@@ -12,9 +12,10 @@ type GetMyCarsData = Array<{
   avatar: string;
 }>;
 
-export function useGetMyCarsApi() {
-  return useBaseQueryApi<GetMyCarsData>({
+export function useGetMyCarsApi(options?: BaseQueryApiOptions<GetMyCarsData>) {
+  return useBaseQueryApi({
     queryKey: 'getCars',
     endpoint: '/api/Car/GetByUser',
+    ...options,
   });
 }

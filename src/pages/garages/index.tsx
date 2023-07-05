@@ -136,7 +136,7 @@ export default function GaragesPage() {
           </Form>
         </div>
 
-        <ContentWrapper className="flex flex-col">
+        <ContentWrapper className="flex flex-col grow">
           <Skeleton active loading={fetchingGarages}>
             <div className="grid grid-cols-3 gap-x-6 gap-y-8">
               {garages?.map((garage) => (
