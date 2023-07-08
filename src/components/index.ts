@@ -3,6 +3,7 @@ export * from './CarIllustrate/CarIllustrate';
 export * from './CarManageForm/CarManageForm';
 export * from './CheckboxGroup/CheckboxGroup';
 export * from './GarageCard/GarageCard';
+export * from './GarageOrderCard/GarageOrderCard';
 export * from './GarageOwnerSignUpForm/GarageOwnerSignUpForm';
 export * from './RoundedCascader/RoundedCascader';
 export * from './ServiceCard/ServiceCard';
