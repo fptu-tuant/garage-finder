@@ -8,9 +8,10 @@ import {
   Skeleton,
   Typography,
 } from 'antd';
-import { debounce, isEmpty } from 'lodash-es';
+import { isEmpty } from 'lodash-es';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   useGetCarCompaniesApi,
@@ -30,6 +31,10 @@ type GarageFilterFormProps = {
 const ContentWrapper = styled.div`
   .tl-spin-nested-loading {
     width: 100%;
+  }
+
+  .tl-checkbox-wrapper {
+    align-items: center;
   }
 `;
 
@@ -75,7 +80,14 @@ export default function GaragesPage() {
   }));
 
   const carBrandsOptions = carBrands?.map((brand) => ({
-    label: brand.brandName,
+    label: (
+      <div className="flex gap-2 items-center">
+        <div className="relative w-10 h-10">
+          <Image src={brand.imageLink} alt="" fill className="object-contain" />
+        </div>
+        <span>{brand.brandName}</span>
+      </div>
+    ),
     value: brand.brandID,
   }));
 
@@ -92,7 +104,7 @@ export default function GaragesPage() {
 
   return (
     <>
-      <div className="w-2/5 flex gap-2 mx-auto">
+      <ContentWrapper className="w-2/5 flex gap-2 mx-auto">
         <Input
           placeholder="Tìm kiếm ở đây ..."
           value={keyword}
@@ -101,7 +113,7 @@ export default function GaragesPage() {
         <Button type="primary" className="min-w-[100px]">
           Tìm
         </Button>
-      </div>
+      </ContentWrapper>
 
       <div className="flex gap-6 my-5">
         <div className="w-1/4 bg-white">
@@ -130,13 +142,16 @@ export default function GaragesPage() {
             </Typography>
             <Skeleton active loading={fetchingCarBrands}>
               <Form.Item name="brands">
-                <CheckboxGroup showSearch={false} options={carBrandsOptions} />
+                <CheckboxGroup
+                  showSearch={false}
+                  options={carBrandsOptions as any}
+                />
               </Form.Item>
             </Skeleton>
           </Form>
         </div>
 
-        <ContentWrapper className="flex flex-col grow">
+        <div className="flex flex-col grow">
           <Skeleton active loading={fetchingGarages}>
             <div className="grid grid-cols-3 gap-x-6 gap-y-8">
               {garages?.map((garage) => (
@@ -162,7 +177,7 @@ export default function GaragesPage() {
               onChange={(pageNumber) => pagination.goPage(pageNumber)}
             />
           </Skeleton>
-        </ContentWrapper>
+        </div>
       </div>
     </>
   );
