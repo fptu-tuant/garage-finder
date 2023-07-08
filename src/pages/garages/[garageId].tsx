@@ -10,6 +10,7 @@ import {
   Typography,
 } from 'antd';
 import dayjs from 'dayjs';
+import { range } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -306,6 +307,22 @@ export default function GarageDetailPage() {
                     disabledDate={(current) =>
                       current.isBefore(dayjs().subtract(1, 'day'))
                     }
+                    disabledTime={() => {
+                      const now = dayjs();
+
+                      return {
+                        disabledHours: () =>
+                          range(24).filter((hour) => hour < now.get('hour')),
+                        disabledMinutes: (hour) =>
+                          range(60).filter((minute) =>
+                            hour > now.get('hour')
+                              ? true
+                              : minute < now.get('minute')
+                          ),
+                        // disabledSeconds: () => [55, 56],
+                      };
+                    }}
+                    showSecond={false}
                   />
                 </Form.Item>
 
