@@ -35,7 +35,7 @@ export default function ManageGarageOrderPage() {
     { title: 'Tên chủ xe', render: (_, item) => item.name },
     { title: 'Số điện thoại', render: (_, item) => item.phoneNumber },
     { title: 'Loại xe', render: (_, item) => item.typeCar },
-    { title: 'Hãng xe', render: (_, item) => item.brandID },
+    { title: 'Hãng xe', render: (_, item) => item.brand },
     { title: 'Biển số', render: (_, item) => item.licensePlates },
     { title: 'Loại dịch vụ', render: (_, item) => item.category.join(', ') },
     {

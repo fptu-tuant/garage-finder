@@ -14,7 +14,7 @@ export type GetOrderGarageData = Array<{
   content: null;
   phoneNumber: string;
   email: string;
-  brandID: number;
+  brand: string;
   typeCar: string;
   licensePlates: string;
   color: string;
