@@ -62,7 +62,10 @@ export default function ManageGarageInfoPage() {
   const initValues = {
     ...garage,
     address: [garage?.provinceID, garage?.districtsID],
-    time: [dayjs(garage?.openTime), dayjs(garage?.closeTime)],
+    time: [
+      dayjs(garage?.openTime, 'hh:mm A'),
+      dayjs(garage?.closeTime, 'hh:mm A'),
+    ],
   };
 
   return (
@@ -105,7 +108,7 @@ export default function ManageGarageInfoPage() {
                   className="w-full"
                   picker="time"
                   placeholder={['Giờ mở cửa', 'Giờ đóng cửa']}
-                  format="hh:mm"
+                  format="hh:mm A"
                 />
               </Form.Item>
 

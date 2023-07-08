@@ -72,8 +72,7 @@ export default function GarageDetailPage() {
 
   if (!garage) return <Skeleton active loading={true} />;
 
-  const openTime = dayjs(garage.openTime).format('hh:mm');
-  const closeTime = dayjs(garage.closeTime).format('hh:mm');
+  const { openTime, closeTime } = garage;
 
   const ordering = addingOrderGuest || addingOrder;
 
@@ -321,7 +320,7 @@ export default function GarageDetailPage() {
                         disabledMinutes: (hour) =>
                           range(60).filter((minute) =>
                             hour > computeNow.get('hour')
-                              ? true
+                              ? false
                               : minute < computeNow.get('minute')
                           ),
                         // disabledSeconds: () => [55, 56],
