@@ -300,7 +300,13 @@ export default function GarageDetailPage() {
                   name="date"
                   rules={[requiredRule()]}
                 >
-                  <DatePicker showTime className="w-full" />
+                  <DatePicker
+                    showTime
+                    className="w-full"
+                    disabledDate={(current) =>
+                      current.isBefore(dayjs().subtract(1, 'day'))
+                    }
+                  />
                 </Form.Item>
 
                 <div className="w-full flex flex-col items-center my-10">
