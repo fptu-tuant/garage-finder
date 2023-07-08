@@ -1,7 +1,7 @@
 import { Button, Radio, Skeleton, Spin, Table, Tag, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { capitalize } from 'lodash-es';
+import { capitalize, lowerCase } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -79,28 +79,45 @@ export default function ManageGarageOrderPage() {
       title: 'Hành động',
       render: (_, item) => (
         <div className="flex gap-4">
-          <Button
-            className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
-            onClick={() => {
-              approve.mutateAsync({ id: item.gfOrderID });
-              setCurrentOrderId(item.gfOrderID);
-            }}
-            disabled={approve.isLoading || reject.isLoading}
-            loading={approve.isLoading && currentOrderId === item.gfOrderID}
-          >
-            Xác nhận
-          </Button>
-          <Button
-            className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
-            onClick={() => {
-              reject.mutateAsync({ id: item.gfOrderID });
-              setCurrentOrderId(item.gfOrderID);
-            }}
-            disabled={approve.isLoading || reject.isLoading}
-            loading={reject.isLoading && currentOrderId === item.gfOrderID}
-          >
-            Từ chối
-          </Button>
+          {lowerCase(item.status) === 'open' && (
+            <>
+              <Button
+                className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
+                onClick={() => {
+                  approve.mutateAsync({ id: item.gfOrderID });
+                  setCurrentOrderId(item.gfOrderID);
+                }}
+                disabled={approve.isLoading || reject.isLoading}
+                loading={approve.isLoading && currentOrderId === item.gfOrderID}
+              >
+                Xác nhận
+              </Button>
+              <Button
+                className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
+                onClick={() => {
+                  reject.mutateAsync({ id: item.gfOrderID });
+                  setCurrentOrderId(item.gfOrderID);
+                }}
+                disabled={approve.isLoading || reject.isLoading}
+                loading={reject.isLoading && currentOrderId === item.gfOrderID}
+              >
+                Từ chối
+              </Button>
+            </>
+          )}
+          {lowerCase(item.status) === 'confirmed' && (
+            <Button
+              className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
+              onClick={() => {
+                approve.mutateAsync({ id: item.gfOrderID });
+                setCurrentOrderId(item.gfOrderID);
+              }}
+              disabled={approve.isLoading || reject.isLoading}
+              loading={approve.isLoading && currentOrderId === item.gfOrderID}
+            >
+              Hoàn thành
+            </Button>
+          )}
         </div>
       ),
     },
@@ -121,7 +138,7 @@ export default function ManageGarageOrderPage() {
           <Radio.Button value="reject" className="text-red-500">
             Đã từ chối
           </Radio.Button>
-          <Radio.Button value="cancelled" className="text-gray-500">
+          <Radio.Button value="canceled" className="text-gray-500">
             Đã hủy
           </Radio.Button>
           <Radio.Button value="done" className="text-cyan-500">
