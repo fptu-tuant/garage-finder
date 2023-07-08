@@ -1,17 +1,26 @@
 import { PhoneFilled } from '@ant-design/icons';
 import { Button, Tag } from 'antd';
+import dayjs from 'dayjs';
 import { capitalize } from 'lodash-es';
+import Image from 'next/image';
 
-import { useCancelOrderByUser } from '@/api';
+import {
+  useCancelOrderByUser,
+  useGetGarageByIdApi,
+  useGetGaragesApi,
+} from '@/api';
 import { PinMapFilledIcon } from '@/icons';
 import { twcx } from '@/utils';
 
 type GarageOrderCardProps = {
   id: number;
+  garageId: number;
   name: string;
   address: string;
   phone: string;
   carBrand: string;
+  carType: string;
+  carLicensePlates: string;
   category: string[];
   time: string;
   status: string;
@@ -42,9 +51,12 @@ const getStatusColor = (status: string) => {
 
 export default function GarageOrderCard({
   id,
+  garageId,
   name,
   address,
   carBrand,
+  carType,
+  carLicensePlates,
   category,
   phone,
   time,
@@ -55,12 +67,22 @@ export default function GarageOrderCard({
     onSuccess: onMutated,
   });
 
+  const { data: garageInfo } = useGetGarageByIdApi({}, { id: garageId });
+
   return (
     <div className="grid grid-cols-5 grid-rows-1 gap-4 mb-8">
-      <div className="col-span-2 rounded-lg bg-gray-200 p-6">image here</div>
+      <div className="col-span-2 rounded-lg bg-gray-200 p-6 relative overflow-hidden">
+        <Image
+          src={garageInfo?.thumbnail || ''}
+          alt={garageInfo?.garageName || ''}
+          fill
+        />
+      </div>
       <div className="col-span-3 pb-4">
         <div className="flex gap-3">
-          <h3 className="text-xl font-bold mb-2 mt-0 grow">{name}</h3>
+          <h3 className="text-xl font-bold mb-2 mt-0 grow">
+            {garageInfo?.garageName}
+          </h3>
           <div>
             <Tag color={getStatusColor(status)} className="rounded-full">
               {capitalize(status)}
@@ -70,17 +92,19 @@ export default function GarageOrderCard({
 
         <div className="flex gap-2 items-center">
           <PinMapFilledIcon className="text-rose-600" />
-          <span>{address}</span>
+          <span>{garageInfo?.addressDetail}</span>
         </div>
 
         <div className="flex gap-2 items-center">
           <PhoneFilled className="text-rose-600" />
-          <span>{phone}</span>
+          <span>{garageInfo?.phoneNumber}</span>
         </div>
 
         <div className="mt-6 flex gap-2">
           <div className="font-bold">Xe: </div>
-          <div>{carBrand}</div>
+          <div>
+            {carBrand} - {carType} - {carLicensePlates}
+          </div>
         </div>
 
         <div className="flex gap-2 mt-2">
@@ -90,7 +114,7 @@ export default function GarageOrderCard({
 
         <div className="flex gap-2 mt-2">
           <div className="font-bold">Thời gian: </div>
-          <div>{time}</div>
+          <div>{dayjs(time).format('hh:mm A, DD-MM-YYYY')}</div>
         </div>
 
         <Button

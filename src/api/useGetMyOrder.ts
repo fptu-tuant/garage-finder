@@ -14,7 +14,7 @@ type GetMyOrderData = Array<{
   content: null;
   phoneNumber: string;
   email: string;
-  brand: null;
+  brand: string;
   typeCar: string;
   licensePlates: string;
   color: string;

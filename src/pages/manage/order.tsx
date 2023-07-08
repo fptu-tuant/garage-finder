@@ -26,13 +26,16 @@ export default function MyOrderPage() {
             {data?.map((item) => (
               <GarageOrderCard
                 id={item.gfOrderID}
+                garageId={item.garageID}
                 key={item.orderID}
                 name={'ggarage name'}
                 address={'garage address'}
-                carBrand={'my car brand'}
+                carBrand={item.brand}
+                carType={item.typeCar}
+                carLicensePlates={item.licensePlates}
                 category={item.category}
                 phone={'garage phone'}
-                time={'time order'}
+                time={item.timeAppointment}
                 status={item.status}
                 onMutated={refetch}
               />
