@@ -12,8 +12,9 @@ import { showSuccess } from '@/utils';
 
 function AddCategoryModal({
   garageId,
+  currentCategories,
   ...rest
-}: ModalProps & { garageId: number }) {
+}: ModalProps & { garageId: number; currentCategories: string[] }) {
   const [category, setCategory] = useState<number[]>([]);
 
   const { mutateAsync: addCategory, isLoading } = useAddCategoryForGarge({
@@ -40,6 +41,11 @@ function AddCategoryModal({
         className="w-full"
         onChange={setCategory}
         value={category}
+        modifyOptions={(options) =>
+          (options ?? []).filter(
+            (item) => !currentCategories.includes(item.label as string)
+          )
+        }
       />
     </Modal>
   );
@@ -101,6 +107,9 @@ export default function ManageGarageServicePage() {
 
       <AddCategoryModal
         garageId={garage?.garageID || 0}
+        currentCategories={(garage?.categoryGarages || []).map(
+          (item) => item.categoryName
+        )}
         open={showAddModal}
         onCancel={() => setShowAddModal(false)}
         onOk={() => refetch()}
