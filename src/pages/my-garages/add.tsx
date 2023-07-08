@@ -48,8 +48,8 @@ export default function AddGaragePage() {
         addressDetail: values.detailAddress,
         brandsID: values.carCompanies,
         categoriesID: values.services,
-        openTime: first(values.openTime)?.toISOString(),
-        closeTime: last(values.openTime)?.toISOString(),
+        openTime: first(values.openTime)?.format('hh:mm A'),
+        closeTime: last(values.openTime)?.format('hh:mm A'),
         provinceID: first(values.address),
         districtsID: last(values.address),
         emailAddress: values.email,
@@ -124,7 +124,7 @@ export default function AddGaragePage() {
               size="large"
               picker="time"
               placeholder={['Giờ mở cửa', 'Giờ đóng cửa']}
-              format="hh:mm"
+              format="hh:mm A"
             />
           </Form.Item>
         </div>
