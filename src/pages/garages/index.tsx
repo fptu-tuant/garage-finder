@@ -10,7 +10,7 @@ import {
 } from 'antd';
 import { debounce, isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 
 import {
   useGetCarCompaniesApi,
@@ -96,7 +96,7 @@ export default function GaragesPage() {
         <Input
           placeholder="Tìm kiếm ở đây ..."
           value={keyword}
-          onChange={debounce((e) => setKeyword(e.currentTarget.value))}
+          onChange={(e) => setKeyword(e.currentTarget.value)}
         />
         <Button type="primary" className="min-w-[100px]">
           Tìm
