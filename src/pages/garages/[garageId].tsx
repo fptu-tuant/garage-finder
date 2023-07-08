@@ -309,19 +309,24 @@ export default function GarageDetailPage() {
                     disabledTime={() => {
                       const now = dayjs();
                       const openTime = dayjs(garage.openTime, 'hh:mm A');
+                      const closeTime = dayjs(garage.closeTime, 'hh:mm A');
 
-                      const computeNow = now.isAfter(openTime) ? now : openTime;
+                      const openTimenNow = now.isAfter(openTime)
+                        ? now
+                        : openTime;
 
                       return {
                         disabledHours: () =>
                           range(24).filter(
-                            (hour) => hour < computeNow.get('hour')
+                            (hour) =>
+                              hour < openTimenNow.get('hour') ||
+                              hour > closeTime.get('hour')
                           ),
                         disabledMinutes: (hour) =>
                           range(60).filter((minute) =>
-                            hour > computeNow.get('hour')
+                            hour > openTimenNow.get('hour')
                               ? false
-                              : minute < computeNow.get('minute')
+                              : minute < openTimenNow.get('minute')
                           ),
                         // disabledSeconds: () => [55, 56],
                       };
