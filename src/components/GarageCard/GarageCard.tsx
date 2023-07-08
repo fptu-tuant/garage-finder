@@ -38,9 +38,9 @@ export function GarageCard({
     router.push(`/garages/${id}`);
   };
 
-  const [isLove, setIsLove] = useState(false);
+  const [isLove, setIsLove] = useState(isFavorite);
 
-  const showRedHeart = isFavorite || isLove;
+  const showRedHeart =  isLove;
 
   const imageUrl = image?.startsWith('http') ? image : '';
 
