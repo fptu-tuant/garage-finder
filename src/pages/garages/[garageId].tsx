@@ -78,7 +78,7 @@ export default function GarageDetailPage() {
 
   const { openTime, closeTime } = garage;
 
-  const ordering = addingOrderGuest || addingOrder;
+  const ordering = addingOrderGuest || addingOrder || addingOrderWithoutCar;
 
   const hasLogin = !!user;
   const hasCar = !!myCars?.length;
