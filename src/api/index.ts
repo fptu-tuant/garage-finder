@@ -10,6 +10,7 @@ export * from './useCarOwnerRegisterApi';
 export * from './useChangeOrderStatus';
 export * from './useChangePassword';
 export * from './useDeleteCarApi';
+export * from './useDeleteCategory';
 export * from './useDeleteFavoriteGarageApi';
 export * from './useDeleteGarageApi';
 export * from './useForgotPasswordApi';

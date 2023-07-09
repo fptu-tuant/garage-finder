@@ -5,7 +5,11 @@ import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { useAddCategoryForGarge, useGetGarageByIdApi } from '@/api';
+import {
+  useAddCategoryForGarge,
+  useDeleteCategory,
+  useGetGarageByIdApi,
+} from '@/api';
 import { ServicesSelect } from '@/components';
 import { ManageGarageLayout } from '@/layouts';
 import { showSuccess } from '@/utils';
@@ -52,7 +56,7 @@ function AddCategoryModal({
 }
 
 export default function ManageGarageServicePage() {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   const {
     data: garage,
@@ -63,11 +67,18 @@ export default function ManageGarageServicePage() {
     { id: Number(query?.garageId) }
   );
 
+  const [currentDeleteId, setCurrentDeleteId] = useState<number>();
+  const { mutateAsync: deleteCategory, isLoading: deletingCategory } =
+    useDeleteCategory({
+      onSuccess: () => refetch(),
+    });
+
   const [showAddModal, setShowAddModal] = useState(false);
 
   const columns: ColumnsType<{
     categoryID: number;
     categoryName: string;
+    categoryGarageID: number;
   }> = [
     { title: 'ID', render: (_, item) => item.categoryID },
     { title: 'Hạng mục', render: (_, item) => item.categoryName },
@@ -76,10 +87,28 @@ export default function ManageGarageServicePage() {
       title: 'Hành động',
       render: (_, item) => (
         <div className="flex gap-4">
-          <Button className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full">
+          <Button
+            className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
+            onClick={() =>
+              push(`/my-garages/manage/services/detail?id=${item.categoryID}`)
+            }
+          >
             Chi tiết
           </Button>
-          <Button className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full">
+          <Button
+            className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
+            onClick={async () => {
+              setCurrentDeleteId(item.categoryGarageID);
+              await deleteCategory({ id: item.categoryGarageID });
+              setCurrentDeleteId(undefined);
+            }}
+            disabled={
+              currentDeleteId === item.categoryGarageID && deletingCategory
+            }
+            loading={
+              currentDeleteId === item.categoryGarageID && deletingCategory
+            }
+          >
             Xóa
           </Button>
         </div>

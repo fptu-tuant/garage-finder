@@ -215,7 +215,12 @@ export default function GarageDetailPage() {
 
           <Skeleton active loading={!!user && fetchingMyCars}>
             <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col gap-4 mt-16">
-              <Form form={form} layout="vertical" onFinish={onFinish}>
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                onValuesChange={console.log}
+              >
                 {!hasCar && (
                   <Form.Item
                     label="Họ Tên"
@@ -330,25 +335,29 @@ export default function GarageDetailPage() {
                     disabledTime={() => {
                       const now = dayjs();
                       const openTime = dayjs(garage.openTime, 'hh:mm A');
-                      const closeTime = dayjs(garage.closeTime, 'hh:mm A');
 
-                      const openTimenNow = now.isAfter(openTime)
-                        ? now
-                        : openTime;
+                      const start = now.isAfter(openTime) ? now : openTime;
+                      const end = dayjs(garage.closeTime, 'hh:mm A');
+
+                      const disabledHours = () => {
+                        return range(24).filter(
+                          (hour) => hour < start.get('h') || hour > end.get('h')
+                        );
+                      };
+
+                      const disabledMinutes = (hour: number) => {
+                        if (hour < end.get('h')) {
+                          return range(60).filter(
+                            (m) => m < start.get('minute')
+                          );
+                        }
+
+                        return range(60).filter((m) => m > end.get('minute'));
+                      };
 
                       return {
-                        disabledHours: () =>
-                          range(24).filter(
-                            (hour) =>
-                              hour < openTimenNow.get('hour') ||
-                              hour > closeTime.get('hour')
-                          ),
-                        disabledMinutes: (hour) =>
-                          range(60).filter((minute) =>
-                            hour > openTimenNow.get('hour')
-                              ? false
-                              : minute < openTimenNow.get('minute')
-                          ),
+                        disabledHours,
+                        disabledMinutes,
                         // disabledSeconds: () => [55, 56],
                       };
                     }}
