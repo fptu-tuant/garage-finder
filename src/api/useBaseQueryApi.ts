@@ -43,7 +43,6 @@ export function useBaseQueryApi<
 
         return data;
       } catch (error) {
-        showError(error);
         console.error(error);
         throw Error(`Something error: ${error}`);
       }

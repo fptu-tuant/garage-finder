@@ -1,5 +1,5 @@
 import { CalendarOutlined, ScheduleOutlined } from '@ant-design/icons';
-import { Layout, Menu, Skeleton, Typography } from 'antd';
+import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -62,6 +62,8 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     },
   ];
 
+  const selectedKey = router.pathname.split('/').slice(0, 4).join('/');
+
   return (
     <MainLayout>
       <Layout hasSider className="bg-transparent mt-20">
@@ -76,7 +78,7 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
             </Skeleton>
           </div>
 
-          <Menu selectedKeys={[router.pathname]} items={MENU_ITEMS} />
+          <Menu selectedKeys={[selectedKey]} items={MENU_ITEMS} />
         </Sider>
         <Content className="flex flex-col pr-6 pl-10">{children}</Content>
       </Layout>

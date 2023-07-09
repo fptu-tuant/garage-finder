@@ -90,7 +90,9 @@ export default function ManageGarageServicePage() {
           <Button
             className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
             onClick={() =>
-              push(`/my-garages/manage/services/detail?id=${item.categoryID}`)
+              push(
+                `/my-garages/manage/services/detail?categoryId=${item.categoryGarageID}&garageId=${garage?.garageID}`
+              )
             }
           >
             Chi tiết
