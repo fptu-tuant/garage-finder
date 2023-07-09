@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import {
   useAddOrder,
   useAddOrderFromGuest,
+  useAddOrderWithoutCar,
   useGetGarageByIdApi,
   useSendVerifyCode,
 } from '@/api';
@@ -57,6 +58,9 @@ export default function GarageDetailPage() {
 
   const { mutateAsync: addOrder, isLoading: addingOrder } = useAddOrder();
 
+  const { mutateAsync: addOrderWithoutCar, isLoading: addingOrderWithoutCar } =
+    useAddOrderWithoutCar();
+
   const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi({
     enabled: !!user,
   });
@@ -76,6 +80,7 @@ export default function GarageDetailPage() {
 
   const ordering = addingOrderGuest || addingOrder;
 
+  const hasLogin = !!user;
   const hasCar = !!myCars?.length;
 
   const onFinish = async () => {
@@ -93,7 +98,34 @@ export default function GarageDetailPage() {
     } = form.getFieldsValue();
 
     try {
-      if (!hasCar) {
+      if (hasLogin) {
+        if (hasCar) {
+          await addOrder({
+            body: {
+              garageId: Number(garageId),
+              phoneNumber: phone,
+              verificationCode: verifyCode,
+              categoryGarageId: services,
+              carId,
+              timeAppointment: dayjs(date).toISOString(),
+            },
+          });
+        } else {
+          await addOrderWithoutCar({
+            body: {
+              garageId: Number(garageId),
+              name,
+              phoneNumber: phone,
+              verificationCode: verifyCode,
+              brandCarID: brand,
+              typeCar,
+              licensePlates,
+              categoryGargeId: services,
+              timeAppointment: dayjs(date).toISOString(),
+            },
+          });
+        }
+      } else {
         await addOrderFromGuest({
           body: {
             garageId: Number(garageId),
@@ -105,17 +137,6 @@ export default function GarageDetailPage() {
             typeCar,
             licensePlates,
             categoryGargeId: services,
-            timeAppointment: dayjs(date).toISOString(),
-          },
-        });
-      } else {
-        await addOrder({
-          body: {
-            garageId: Number(garageId),
-            phoneNumber: phone,
-            verificationCode: verifyCode,
-            categoryGarageId: services,
-            carId,
             timeAppointment: dayjs(date).toISOString(),
           },
         });
