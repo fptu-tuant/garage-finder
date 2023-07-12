@@ -35,8 +35,6 @@ export default function GarageGalleryManagementPage() {
     (item) => !isEmpty(item.imageLink)
   );
 
-  console.log(validImages);
-
   return (
     <div>
       <Typography.Title level={3}>Thư viện ảnh</Typography.Title>

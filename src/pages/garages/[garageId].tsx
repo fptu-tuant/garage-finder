@@ -10,7 +10,7 @@ import {
   Typography,
 } from 'antd';
 import dayjs from 'dayjs';
-import { range } from 'lodash-es';
+import { isEmpty, range, take } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -148,6 +148,10 @@ export default function GarageDetailPage() {
     }
   };
 
+  const validImages = garage?.imageGarages.filter(
+    (item) => !isEmpty(item.imageLink)
+  );
+
   return (
     <Skeleton active loading={isLoading}>
       <Typography.Title level={3}>{garage.garageName}</Typography.Title>
@@ -167,13 +171,16 @@ export default function GarageDetailPage() {
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-2 min-h-[500px]">
-        <div className="relative">
+        <div className="relative rounded overflow-hidden">
           <Image alt="Main Image" src={garage?.thumbnail || ''} fill />
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-2">
-          {garage.imageGarages?.slice(0, 4)?.map((image) => (
-            <div className="relative" key={image.imageID}>
-              <Image alt="sub Image" src="" fill />
+          {take(validImages, 4).map((image) => (
+            <div
+              className="relative rounded overflow-hidden"
+              key={image.imageID}
+            >
+              <Image alt="sub Image" src={image.imageLink} fill />
             </div>
           ))}
         </div>
@@ -182,11 +189,32 @@ export default function GarageDetailPage() {
       <div className="mt-5 flex gap-6">
         <div className="w-3/5 pr-3">
           <Typography.Title level={4}>Các dịch vụ cung cấp</Typography.Title>
-          <div className="grid grid-cols-2 grid-rows-2 gap-4">
-            <ServiceCard image="" title="Sữa chữa" />
-            <ServiceCard image="" title="Tân trang" />
-            <ServiceCard image="" title="Bão dưỡng" />
-            <ServiceCard image="" title="Cứu hộ" />
+          <div className="grid grid-cols-2 gap-4">
+            {garage.categoryGarages.map((item) => (
+              <ServiceCard
+                key={item.categoryGarageID}
+                id={item.categoryGarageID}
+                title={item.categoryName}
+                image={(() => {
+                  switch (item.categoryName) {
+                    case 'Sửa chữa':
+                      return '/repair.png';
+
+                    case 'Bảo dưỡng':
+                      return '/maintenance.png';
+
+                    case 'Tân trang':
+                      return '/refurbished.png';
+
+                    case 'Cứu hộ':
+                      return '/rescue.png';
+
+                    default:
+                      return '';
+                  }
+                })()}
+              />
+            ))}
           </div>
 
           <Typography.Title level={4}>Bản đồ</Typography.Title>
