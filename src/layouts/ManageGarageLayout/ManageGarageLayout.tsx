@@ -1,4 +1,8 @@
-import { CalendarOutlined, ScheduleOutlined } from '@ant-design/icons';
+import {
+  CalendarOutlined,
+  FileImageOutlined,
+  ScheduleOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
@@ -30,6 +34,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <UserEditIcon className="text-lg" />
           <span>Thông tin Garage</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/gallery',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/gallery',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <FileImageOutlined className="text-lg" />
+          <span>Thư viện ảnh</span>
         </Link>
       ),
     },

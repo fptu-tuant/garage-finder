@@ -83,7 +83,14 @@ export default function GaragesPage() {
     label: (
       <div className="flex gap-2 items-center">
         <div className="relative w-10 h-10">
-          <Image src={brand.imageLink} alt="" fill className="object-contain" />
+          {brand.imageLink.startsWith('http') && (
+            <Image
+              src={brand.imageLink}
+              alt=""
+              fill
+              className="object-contain"
+            />
+          )}
         </div>
         <span>{brand.brandName}</span>
       </div>

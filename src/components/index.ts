@@ -9,5 +9,6 @@ export * from './RoundedCascader/RoundedCascader';
 export * from './ServiceCard/ServiceCard';
 export * from './ServicesSelect/ServicesSelect';
 export * from './SignUpForm/SignUpForm';
+export * from './UploadDragger/MultipleUpload';
 export * from './UploadDragger/SingleUploadDragger';
 export * from './UserDashboardSider/UserDashboardSider';
