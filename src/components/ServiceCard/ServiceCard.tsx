@@ -12,8 +12,11 @@ type ServiceCardProps = {
 
 export function ServiceCard({ id, image, title }: ServiceCardProps) {
   const { data } = useGetServices({
+    queryKey: `${id}`,
     id,
   });
+
+  console.log({ id });
 
   const [open, setOpen] = useState(false);
 
