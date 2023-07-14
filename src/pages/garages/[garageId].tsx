@@ -360,7 +360,7 @@ export default function GarageDetailPage() {
                     disabledDate={(current) =>
                       current.isBefore(dayjs().subtract(1, 'day'))
                     }
-                    disabledTime={() => {
+                    disabledTime={(date) => {
                       const now = dayjs();
                       const openTime = dayjs(garage.openTime, 'hh:mm A');
 
@@ -368,6 +368,13 @@ export default function GarageDetailPage() {
                       const end = dayjs(garage.closeTime, 'hh:mm A');
 
                       const disabledHours = () => {
+                        if (date?.get('D') !== now.get('D')) {
+                          return range(24).filter(
+                            (hour) =>
+                              hour < openTime.get('h') || hour > end.get('h')
+                          );
+                        }
+
                         return range(24).filter(
                           (hour) => hour < start.get('h') || hour > end.get('h')
                         );
