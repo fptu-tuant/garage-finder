@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
-import { PinMapFilledIcon, UserEditIcon } from '@/icons';
+import { PinMapFilledIcon, UserEditIcon, UsersIcon } from '@/icons';
 
 import { MainLayout } from '../MainLayout/Layout';
 
@@ -33,7 +33,7 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
           className="flex gap-2 items-center"
         >
           <UserEditIcon className="text-lg" />
-          <span>Thông tin Garage</span>
+          <span className="ms-[18px]">Thông tin Garage</span>
         </Link>
       ),
     },
@@ -76,6 +76,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <ScheduleOutlined className="text-lg" />
           <span>Quản lý dịch vụ</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/staff',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/staff',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <UsersIcon className="text-lg" />
+          <span className="ms-[18px]">Quản lý nhân viên</span>
         </Link>
       ),
     },

@@ -24,3 +24,4 @@ export { default as TypescriptReactIcon } from './tsx.svg';
 export { default as TextFileIcon } from './txt.svg';
 export { default as UserIcon } from './user.svg';
 export { default as UserEditIcon } from './user-edit.svg';
+export { default as UsersIcon } from './users.svg';
