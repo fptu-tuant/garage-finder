@@ -48,7 +48,7 @@ export default function MyGaragePage() {
   ];
 
   return (
-    <Skeleton active loading={isLoading}>
+    <>
       <Button
         type="primary"
         className="mb-3"
@@ -57,10 +57,11 @@ export default function MyGaragePage() {
         <PlusOutlined />
         Thêm garage
       </Button>
+      <Skeleton active loading={isLoading}>
+        {!hasGarage && <Empty />}
 
-      {!hasGarage && <Empty />}
-
-      {hasGarage && <Table columns={columns} dataSource={data} />}
-    </Skeleton>
+        {hasGarage && <Table columns={columns} dataSource={data} />}
+      </Skeleton>
+    </>
   );
 }

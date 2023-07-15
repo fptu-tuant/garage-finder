@@ -8,7 +8,7 @@ import {
   Skeleton,
   Typography,
 } from 'antd';
-import { isEmpty } from 'lodash-es';
+import { has, isEmpty, round } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -39,7 +39,7 @@ const ContentWrapper = styled.div`
 `;
 
 export default function GaragesPage() {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   const [form] = Form.useForm<GarageFilterFormProps>();
 
@@ -55,6 +55,9 @@ export default function GaragesPage() {
       body: {
         keyword,
         provinceID: isEmpty(places) ? undefined : places,
+        districtsID: isNaN(Number(query?.districtsID))
+          ? undefined
+          : [Number(query?.districtsID)],
         brandsID: isEmpty(brands) ? undefined : brands,
         categoriesID: isEmpty(services) ? undefined : services,
         pageNumber: pagination.currentPage,
@@ -124,7 +127,14 @@ export default function GaragesPage() {
 
       <div className="flex gap-6 my-5">
         <div className="w-1/4 bg-white">
-          <Form form={form} onValuesChange={(_, all) => console.log(all)}>
+          <Form
+            form={form}
+            onValuesChange={(changesValue) => {
+              if (has(changesValue, 'places')) {
+                push({}, undefined, { shallow: true });
+              }
+            }}
+          >
             <Typography className="uppercase text-xs tracking-wider text-gray-500 font-semibold">
               Địa điểm{' '}
               <span className="text-red-600">({places?.length ?? 0})</span>

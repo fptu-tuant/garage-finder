@@ -1,6 +1,6 @@
 import { ClockCircleFilled, LikeFilled, WalletFilled } from '@ant-design/icons';
 import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
-import { first } from 'lodash-es';
+import { first, last } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -49,7 +49,9 @@ export default function HomePage() {
               router.push(
                 `/garages?keyword=${keyword || ''}&provineID=${
                   first(places) || ''
-                }&categoriesID=${categoriesID || ''}`
+                }&categoriesID=${categoriesID || ''}&districtsID=${last(
+                  places
+                )}`
               );
             }}
           >
