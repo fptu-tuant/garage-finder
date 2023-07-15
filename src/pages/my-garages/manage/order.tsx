@@ -101,9 +101,9 @@ export default function ManageGarageOrderPage() {
     onSuccess: () => refetch(),
   });
 
-  const filteredData = data?.filter((item) =>
-    status === 'all' ? true : item.status === status
-  );
+  const filteredData = data
+    ?.filter((item) => (status === 'all' ? true : item.status === status))
+    ?.filter((item) => item.status !== 'done');
 
   const [doneDetail, setDoneDetail] = useState<GetOrderGarageData[number]>();
 

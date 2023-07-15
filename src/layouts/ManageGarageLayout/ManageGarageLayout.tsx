@@ -1,6 +1,7 @@
 import {
   CalendarOutlined,
   FileImageOutlined,
+  HistoryOutlined,
   ScheduleOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Skeleton } from 'antd';
@@ -76,6 +77,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <ScheduleOutlined className="text-lg" />
           <span>Quản lý dịch vụ</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/history',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/history',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <HistoryOutlined className="text-lg" />
+          <span>Lịch sử sữa chữa</span>
         </Link>
       ),
     },
