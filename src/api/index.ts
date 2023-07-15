@@ -1,6 +1,7 @@
 export * from './useAddCarApi';
 export * from './useAddCategoryForGarge';
 export * from './useAddFavoriteGarageApi';
+export * from './useAddFeedback';
 export * from './useAddGarageApi';
 export * from './useAddGargeImages';
 export * from './useAddOrder';

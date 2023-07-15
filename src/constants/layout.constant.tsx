@@ -54,4 +54,13 @@ export const MENU_ITEMS: ItemType[] = [
       </Link>
     ),
   },
+  {
+    key: '/manage/history',
+    label: (
+      <Link href="/manage/history" className="flex gap-2 items-center">
+        <ScheduleOutlined className="text-lg" />
+        <span className="m-0">Lịch sử sửa chữa</span>
+      </Link>
+    ),
+  },
 ];
