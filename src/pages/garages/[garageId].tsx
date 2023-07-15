@@ -387,7 +387,7 @@ export default function GarageDetailPage() {
                           );
                         }
 
-                        return range(60).filter((m) => m > end.get('minute'));
+                        return [];
                       };
 
                       return {
