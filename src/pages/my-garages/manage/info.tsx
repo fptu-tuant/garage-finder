@@ -15,6 +15,7 @@ import { useGetGarageByIdApi, useUpdateGarage } from '@/api';
 import { SingleUploadDragger } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
 import { ManageGarageLayout } from '@/layouts';
+import { phoneRule, requiredRule } from '@/services';
 import { showSuccess } from '@/utils';
 
 const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
@@ -83,27 +84,51 @@ export default function ManageGarageInfoPage() {
             onFinish={onFinish}
           >
             <div className="col-span-2">
-              <Form.Item label="Tên Garage" name="garageName">
+              <Form.Item
+                label="Tên Garage"
+                name="garageName"
+                rules={[requiredRule()]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Email" name="emailAddress">
+              <Form.Item
+                label="Email"
+                name="emailAddress"
+                rules={[requiredRule()]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Số điện thoại" name="phoneNumber">
+              <Form.Item
+                label="Số điện thoại"
+                name="phoneNumber"
+                rules={[requiredRule(), phoneRule()]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Địa chỉ" name="address">
+              <Form.Item
+                label="Địa chỉ"
+                name="address"
+                rules={[requiredRule()]}
+              >
                 <Cascader options={locationCascaderOptions} />
               </Form.Item>
 
-              <Form.Item label="Chi tiết địa chỉ" name="addressDetail">
+              <Form.Item
+                label="Chi tiết địa chỉ"
+                name="addressDetail"
+                rules={[requiredRule()]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item name="time" label="Giờ mở cửa">
+              <Form.Item
+                name="time"
+                label="Giờ mở cửa"
+                rules={[requiredRule()]}
+              >
                 <DatePicker.RangePicker
                   className="w-full"
                   picker="time"
