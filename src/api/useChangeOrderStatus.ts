@@ -15,6 +15,12 @@ export function useChangeOrderStatus(options?: BaseMutationApiOptions<string>) {
     ...options,
   });
 
+  const cancel = useBaseMutationApi({
+    method: 'POST',
+    endpoint: '/GarageCancelOrder',
+    ...options,
+  });
+
   const done = useBaseMutationApi({
     method: 'POST',
     endpoint: '/GarageDoneOrder',
@@ -31,5 +37,5 @@ export function useChangeOrderStatus(options?: BaseMutationApiOptions<string>) {
     >),
   });
 
-  return { approve, reject, done };
+  return { approve, reject, done, cancel };
 }

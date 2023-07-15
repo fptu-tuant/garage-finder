@@ -22,6 +22,7 @@ export * from './useDeleteService';
 export * from './useForgotPasswordApi';
 export * from './useGetCarCompaniesApi';
 export * from './useGetFavoriteGarageApi';
+export * from './useGetFeedbackById';
 export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';
 export * from './useGetMe';

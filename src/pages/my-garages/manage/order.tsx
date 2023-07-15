@@ -97,7 +97,7 @@ export default function ManageGarageOrderPage() {
     Number(query?.garageId)
   );
 
-  const { approve, reject, done } = useChangeOrderStatus({
+  const { approve, reject, done, cancel } = useChangeOrderStatus({
     onSuccess: () => refetch(),
   });
 
@@ -170,7 +170,7 @@ export default function ManageGarageOrderPage() {
             </Button>
           )}
 
-          {['open', 'confirmed'].includes(lowerCase(item.status)) && (
+          {lowerCase(item.status) === 'open' && (
             <Button
               className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
               onClick={() => {
@@ -181,6 +181,20 @@ export default function ManageGarageOrderPage() {
               loading={reject.isLoading && currentOrderId === item.gfOrderID}
             >
               Từ chối
+            </Button>
+          )}
+
+          {lowerCase(item.status) === 'confirmed' && (
+            <Button
+              className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
+              onClick={() => {
+                cancel.mutateAsync({ id: item.gfOrderID });
+                setCurrentOrderId(item.gfOrderID);
+              }}
+              disabled={cancel.isLoading}
+              loading={cancel.isLoading && currentOrderId === item.gfOrderID}
+            >
+              Hủy lịch
             </Button>
           )}
 

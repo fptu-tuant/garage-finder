@@ -4,6 +4,7 @@ import {
   DatePicker,
   Form,
   Input,
+  Rate,
   Result,
   Select,
   Skeleton,
@@ -18,6 +19,7 @@ import {
   useAddOrder,
   useAddOrderFromGuest,
   useAddOrderWithoutCar,
+  useGetFeedbackById,
   useGetGarageByIdApi,
   useSendVerifyCode,
 } from '@/api';
@@ -64,6 +66,10 @@ export default function GarageDetailPage() {
   const { data: myCars, isLoading: fetchingMyCars } = useGetMyCarsApi({
     enabled: !!user,
   });
+
+  const { data: feebacks, isLoading: fetchingFeedback } = useGetFeedbackById(
+    +garageId
+  );
 
   if (!garage && !isLoading)
     return (
@@ -428,6 +434,46 @@ export default function GarageDetailPage() {
               </Form>
             </div>
           </Skeleton>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex gap-3 items-center">
+          <Rate
+            value={
+              (feebacks ?? []).reduce((acc, cur) => acc + cur.star, 0) /
+              (feebacks?.length || 1)
+            }
+          />
+
+          <span>{feebacks?.length || 0} đánh giá từ khách hàng</span>
+        </div>
+
+        <div className="mt-10">
+          {feebacks?.map((item) => (
+            <div key={item.feedbackID}>
+              <div className="flex gap-4 items-center">
+                <div className="w-16 h-16 relative rounded-full overflow-hidden bg-gray-200 border-none">
+                  <Image
+                    src={item.linkImage || ''}
+                    alt=""
+                    fill
+                    className="border-none object-cover"
+                  />
+                </div>
+
+                <div>
+                  <h4 className="m-0">ten nguoi danh gia</h4>
+                  <div>
+                    <span>{dayjs(item.dateTime).format('DD MMMM, YYYY')}</span>
+                    <Rate className="scale-75" value={item.star} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 text-neutral-800">{item.content}</div>
+            </div>
+          ))}
         </div>
       </div>
     </Skeleton>
