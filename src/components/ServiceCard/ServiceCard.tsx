@@ -16,8 +16,6 @@ export function ServiceCard({ id, image, title }: ServiceCardProps) {
     id,
   });
 
-  console.log({ id });
-
   const [open, setOpen] = useState(false);
 
   return (

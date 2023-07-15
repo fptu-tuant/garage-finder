@@ -15,5 +15,21 @@ export function useChangeOrderStatus(options?: BaseMutationApiOptions<string>) {
     ...options,
   });
 
-  return { approve, reject };
+  const done = useBaseMutationApi({
+    method: 'POST',
+    endpoint: '/GarageDoneOrder',
+    ...(options as BaseMutationApiOptions<
+      string,
+      {
+        body: {
+          gfOrderId: number;
+          content: string;
+          imageLinks: string[];
+          fileLinks: string[];
+        };
+      }
+    >),
+  });
+
+  return { approve, reject, done };
 }

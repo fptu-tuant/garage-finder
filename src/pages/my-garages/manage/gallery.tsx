@@ -41,9 +41,12 @@ export default function GarageGalleryManagementPage() {
 
       <div className="mb-10">
         <MultipleUpload
-          onChange={async (imageLink) => {
+          onChange={async (imageLinks) => {
             await addGarageImage({
-              body: [{ imageLink, garageID: Number(query?.garageId) }],
+              body: imageLinks.map((imageLink) => ({
+                imageLink,
+                garageID: Number(query?.garageId),
+              })),
             });
             refetch();
           }}

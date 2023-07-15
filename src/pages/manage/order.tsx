@@ -9,8 +9,6 @@ const { Sider, Content } = Layout;
 export default function MyOrderPage() {
   const { data, isLoading, refetch } = useGetMyOrder();
 
-  console.log(data);
-
   return (
     <Layout hasSider className="bg-transparent mt-20">
       <Sider className="text-center bg-transparent">

@@ -3,7 +3,7 @@ import { Button, Modal, ModalProps, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   useAddCategoryForGarge,

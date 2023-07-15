@@ -1,7 +1,18 @@
-import { Button, Radio, Skeleton, Spin, Table, Tag, Typography } from 'antd';
+import {
+  Button,
+  Descriptions,
+  Form,
+  Input,
+  Modal,
+  Radio,
+  Spin,
+  Table,
+  Tag,
+  Typography,
+} from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { capitalize, lowerCase } from 'lodash-es';
+import { capitalize, isUndefined, lowerCase } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -10,7 +21,71 @@ import {
   useChangeOrderStatus,
   useGetOrderByGarageId,
 } from '@/api';
+import { MultipleUpload } from '@/components';
 import { ManageGarageLayout } from '@/layouts';
+import { requiredRule } from '@/services';
+
+function ModalContent({
+  brand,
+  name,
+  phoneNumber,
+  typeCar,
+  licensePlates,
+  color,
+  onSubmit,
+}: GetOrderGarageData[number] & { onSubmit: (value: any) => void }) {
+  return (
+    <>
+      <Descriptions layout="vertical">
+        <Descriptions.Item label="Tên khách hàng">{name}</Descriptions.Item>
+        <Descriptions.Item label="Số điện thoại">
+          {phoneNumber}
+        </Descriptions.Item>
+        <Descriptions.Item label="Hãng xe">{brand}</Descriptions.Item>
+        <Descriptions.Item label="Dòng xe">{typeCar}</Descriptions.Item>
+        <Descriptions.Item label="Biển số">{licensePlates}</Descriptions.Item>
+        <Descriptions.Item label="Màu sắc">{color}</Descriptions.Item>
+        <Descriptions.Item label="Ngày hoàn thành">
+          {dayjs().format('DD/MM/YYYY')}
+        </Descriptions.Item>
+      </Descriptions>
+
+      <Form layout="vertical" onFinish={onSubmit}>
+        <Form.Item
+          label="Chi tiết dịch vụ"
+          name="content"
+          rules={[requiredRule()]}
+        >
+          <Input.TextArea />
+        </Form.Item>
+
+        <div className="grid grid-cols-2 gap-6">
+          <Form.Item
+            name="fileLinks"
+            label="Tệp đính kèm"
+            rules={[requiredRule()]}
+          >
+            <MultipleUpload />
+          </Form.Item>
+
+          <Form.Item
+            name="imageLinks"
+            label="Hình ảnh"
+            rules={[requiredRule()]}
+          >
+            <MultipleUpload />
+          </Form.Item>
+        </div>
+
+        <div className="mt-4 text-center">
+          <Button htmlType="submit" type="primary">
+            Hoàn thành
+          </Button>
+        </div>
+      </Form>
+    </>
+  );
+}
 
 export default function ManageGarageOrderPage() {
   const { query } = useRouter();
@@ -22,13 +97,15 @@ export default function ManageGarageOrderPage() {
     Number(query?.garageId)
   );
 
-  const { approve, reject } = useChangeOrderStatus({
+  const { approve, reject, done } = useChangeOrderStatus({
     onSuccess: () => refetch(),
   });
 
   const filteredData = data?.filter((item) =>
     status === 'all' ? true : item.status === status
   );
+
+  const [doneDetail, setDoneDetail] = useState<GetOrderGarageData[number]>();
 
   const columns: ColumnsType<GetOrderGarageData[number]> = [
     { title: 'ID', render: (_, item) => item.orderID },
@@ -80,37 +157,38 @@ export default function ManageGarageOrderPage() {
       render: (_, item) => (
         <div className="flex gap-4">
           {lowerCase(item.status) === 'open' && (
-            <>
-              <Button
-                className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
-                onClick={() => {
-                  approve.mutateAsync({ id: item.gfOrderID });
-                  setCurrentOrderId(item.gfOrderID);
-                }}
-                disabled={approve.isLoading || reject.isLoading}
-                loading={approve.isLoading && currentOrderId === item.gfOrderID}
-              >
-                Xác nhận
-              </Button>
-              <Button
-                className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
-                onClick={() => {
-                  reject.mutateAsync({ id: item.gfOrderID });
-                  setCurrentOrderId(item.gfOrderID);
-                }}
-                disabled={approve.isLoading || reject.isLoading}
-                loading={reject.isLoading && currentOrderId === item.gfOrderID}
-              >
-                Từ chối
-              </Button>
-            </>
-          )}
-          {lowerCase(item.status) === 'confirmed' && (
             <Button
               className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
               onClick={() => {
                 approve.mutateAsync({ id: item.gfOrderID });
                 setCurrentOrderId(item.gfOrderID);
+              }}
+              disabled={approve.isLoading || reject.isLoading}
+              loading={approve.isLoading && currentOrderId === item.gfOrderID}
+            >
+              Xác nhận
+            </Button>
+          )}
+
+          {['open', 'confirmed'].includes(lowerCase(item.status)) && (
+            <Button
+              className="bg-red-500 hover:bg-red-500/70 border-none text-white rounded-full"
+              onClick={() => {
+                reject.mutateAsync({ id: item.gfOrderID });
+                setCurrentOrderId(item.gfOrderID);
+              }}
+              disabled={approve.isLoading || reject.isLoading}
+              loading={reject.isLoading && currentOrderId === item.gfOrderID}
+            >
+              Từ chối
+            </Button>
+          )}
+
+          {lowerCase(item.status) === 'confirmed' && (
+            <Button
+              className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
+              onClick={() => {
+                setDoneDetail(item);
               }}
               disabled={approve.isLoading || reject.isLoading}
               loading={approve.isLoading && currentOrderId === item.gfOrderID}
@@ -141,14 +219,35 @@ export default function ManageGarageOrderPage() {
           <Radio.Button value="canceled" className="text-gray-500">
             Đã hủy
           </Radio.Button>
-          <Radio.Button value="done" className="text-cyan-500">
+          {/* <Radio.Button value="done" className="text-cyan-500">
             Đã hoàn thành
-          </Radio.Button>
+          </Radio.Button> */}
         </Radio.Group>
       </div>
       <Spin spinning={isLoading}>
         <Table columns={columns} dataSource={filteredData} />
       </Spin>
+
+      <Modal
+        open={!isUndefined(doneDetail)}
+        title="Chi tiết sử dụng dịch vụ"
+        onCancel={() => setDoneDetail(undefined)}
+        destroyOnClose
+        width={800}
+        footer={null}
+      >
+        <ModalContent
+          onSubmit={async (values) => {
+            {
+              await done.mutateAsync({
+                body: { ...values, gfOrderId: doneDetail?.gfOrderID },
+              });
+              setDoneDetail(undefined);
+            }
+          }}
+          {...(doneDetail as GetOrderGarageData[number])}
+        />
+      </Modal>
     </div>
   );
 }
