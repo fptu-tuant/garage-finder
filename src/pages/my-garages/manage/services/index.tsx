@@ -3,7 +3,7 @@ import { Button, Modal, ModalProps, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   useAddCategoryForGarge,
@@ -38,6 +38,10 @@ function AddCategoryModal({
 
         rest.onCancel?.(e);
         rest.onOk?.(e);
+      }}
+      onCancel={(e) => {
+        setCategory([]);
+        rest.onCancel?.(e);
       }}
     >
       <h2>Thêm hạng mục</h2>
