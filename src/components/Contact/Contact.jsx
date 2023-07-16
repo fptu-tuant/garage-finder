@@ -18,7 +18,12 @@ function Contact() {
 
   return (
     <section className="text-center contact section  mt-[200px] " id="contact">
-      <h2 className="section__title text-center text-3xl mb-[50px]">Liên hệ</h2>
+      <h2
+        id="contact"
+        className="section__title text-center text-3xl mb-[50px]"
+      >
+        Liên hệ
+      </h2>
       <div className="contact__container container">
         <div className="contact__content">
           <h3 className="contact__title mb-10">

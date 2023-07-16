@@ -185,7 +185,9 @@ export default function HomePage() {
         </div>
       </section>
       <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
-        <h2 className="title text-3xl font-bold mb-[100px] ">Về chúng tôi</h2>
+        <h2 id="about" className="title text-3xl font-bold mb-[100px] ">
+          Về chúng tôi
+        </h2>
         <div className="flex gap-10 justify-between">
           <div>
             <Image
