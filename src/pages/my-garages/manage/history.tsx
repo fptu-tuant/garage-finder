@@ -99,7 +99,7 @@ export default function HistoryPage() {
     },
     {
       title: 'Giờ',
-      render: (_, item) => dayjs(item.timeAppointment).format('hh:mm'),
+      render: (_, item) => dayjs(item.timeAppointment).format('hh:mm A'),
     },
     {
       title: 'Hành động',
