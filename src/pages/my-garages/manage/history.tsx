@@ -120,7 +120,10 @@ export default function HistoryPage() {
 
       <div>
         <Skeleton active loading={isLoading}>
-          <Table columns={columns} dataSource={data} />
+          <Table
+            columns={columns}
+            dataSource={data?.filter((item) => item.status === 'done')}
+          />
         </Skeleton>
       </div>
 

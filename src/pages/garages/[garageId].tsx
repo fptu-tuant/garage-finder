@@ -442,7 +442,7 @@ export default function GarageDetailPage() {
           <Rate
             value={
               (feebacks ?? []).reduce((acc, cur) => acc + cur.star, 0) /
-              (feebacks?.length || 1)
+              (feebacks?.length ?? 1)
             }
           />
 
