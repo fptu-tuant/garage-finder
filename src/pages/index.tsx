@@ -1,6 +1,5 @@
 import { ClockCircleFilled, LikeFilled, WalletFilled } from '@ant-design/icons';
-import { Button, Cascader, Form, Input, Select, Typography } from 'antd';
-import { first, last } from 'lodash-es';
+import { Button, Form, Input, Select, Typography } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 

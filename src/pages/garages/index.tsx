@@ -8,7 +8,7 @@ import {
   Skeleton,
   Typography,
 } from 'antd';
-import { has, isEmpty, round } from 'lodash-es';
+import { has, isEmpty } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

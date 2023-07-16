@@ -8,7 +8,7 @@ import FlagUK from '@/assets/images/flag-uk.svg';
 import FlagVN from '@/assets/images/flag-vn.svg';
 import { MENU_ITEMS } from '@/constants';
 import { useAuthStore, useTranslateStore } from '@/context';
-import { BellIcon, EnvelopIcon, UserIcon } from '@/icons';
+import { BellIcon, EnvelopIcon } from '@/icons';
 import { twcx } from '@/utils';
 
 type HeaderProps = {
