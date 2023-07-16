@@ -113,7 +113,7 @@ export default function GarageDetailPage() {
               verificationCode: verifyCode,
               categoryGarageId: services,
               carId,
-              timeAppointment: dayjs(date).toISOString(),
+              timeAppointment: dayjs(date).format('DD/MM/YYYY hh:mm A'),
             },
           });
         } else {
