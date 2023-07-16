@@ -73,7 +73,7 @@ export default function AddGaragePage() {
         onFinish={onFinish}
       >
         <div className="col-span-2">
-          <Form.Item name="thumbnail">
+          <Form.Item name="thumbnail" rules={[requiredRule()]}>
             <SingleUploadDragger />
           </Form.Item>
         </div>

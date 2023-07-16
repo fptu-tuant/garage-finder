@@ -150,7 +150,7 @@ export default function ManageGarageInfoPage() {
             </div>
 
             <div className="col-span-2">
-              <Form.Item name="thumbnail">
+              <Form.Item name="thumbnail" rules={[requiredRule()]}>
                 <SingleUploadDragger />
               </Form.Item>
             </div>

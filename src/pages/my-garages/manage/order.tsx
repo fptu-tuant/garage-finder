@@ -160,6 +160,7 @@ export default function ManageGarageOrderPage() {
             <Button
               className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
               onClick={() => {
+                console.log('kjshks', item.gfOrderID);
                 approve.mutateAsync({ id: item.gfOrderID });
                 setCurrentOrderId(item.gfOrderID);
               }}

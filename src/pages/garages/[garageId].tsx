@@ -451,7 +451,7 @@ export default function GarageDetailPage() {
 
         <div className="mt-10">
           {feebacks?.map((item) => (
-            <div key={item.feedbackID}>
+            <div key={item.feedbackID} className="mb-12">
               <div className="flex gap-4 items-center">
                 <div className="w-16 h-16 relative rounded-full overflow-hidden bg-gray-200 border-none">
                   <Image
@@ -463,7 +463,7 @@ export default function GarageDetailPage() {
                 </div>
 
                 <div>
-                  <h4 className="m-0">ten nguoi danh gia</h4>
+                  <h4 className="m-0">{item.name}</h4>
                   <div>
                     <span>{dayjs(item.dateTime).format('DD MMMM, YYYY')}</span>
                     <Rate className="scale-75" value={item.star} />

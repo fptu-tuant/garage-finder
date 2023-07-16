@@ -4,6 +4,7 @@ import { useBaseQueryApi } from './useBaseQueryApi';
 
 type Feedbacks = Array<{
   feedbackID: number;
+  name: string;
   star: number;
   content: string;
   dateTime: string;
