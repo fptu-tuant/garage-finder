@@ -11,13 +11,9 @@ import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 export default function HomePage() {
   const router = useRouter();
 
-  const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
+  const districts = VIETNAM_PROVINCES.map((province) => ({
     label: province.name,
     value: province.code,
-    children: province.districts.map((district) => ({
-      label: district.name,
-      value: district.code,
-    })),
   }));
 
   return (
@@ -44,14 +40,12 @@ export default function HomePage() {
             layout="vertical"
             className="flex justify-between gap-4"
             onFinish={(values) => {
-              const { keyword, places, categoriesID } = values;
+              const { keyword, provineID, categoriesID } = values;
 
               router.push(
-                `/garages?keyword=${keyword || ''}&provineID=${
-                  first(places) || ''
-                }&categoriesID=${categoriesID || ''}&districtsID=${last(
-                  places
-                )}`
+                `/garages?keyword=${
+                  keyword || ''
+                }&provineID=${provineID}&categoriesID=${categoriesID || ''}`
               );
             }}
           >
@@ -59,20 +53,16 @@ export default function HomePage() {
               <Input placeholder="Nhập tên garage" />
             </Form.Item>
 
-            <Form.Item label="Địa điểm" className="grow" name="places">
-              <Cascader
-                options={locationCascaderOptions}
-                placeholder="Tỉnh  / Thành phố - Quận / Huyện"
-                showSearch={{
-                  filter: (inputValue, path) =>
-                    path.some(
-                      (option) =>
-                        (option.label || '')
-                          .toString()
-                          .toLowerCase()
-                          .indexOf(inputValue.toLowerCase()) > -1
-                    ),
-                }}
+            <Form.Item label="Địa điểm" className="grow" name="provineID">
+              <Select
+                options={districts}
+                placeholder="Tỉnh / Thành phố"
+                mode="multiple"
+                maxTagCount={2}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.label ?? '').includes(input.toLowerCase())
+                }
               />
             </Form.Item>
 

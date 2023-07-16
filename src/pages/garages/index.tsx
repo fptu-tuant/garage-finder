@@ -55,9 +55,6 @@ export default function GaragesPage() {
       body: {
         keyword,
         provinceID: isEmpty(places) ? undefined : places,
-        districtsID: isNaN(Number(query?.districtsID))
-          ? undefined
-          : [Number(query?.districtsID)],
         brandsID: isEmpty(brands) ? undefined : brands,
         categoriesID: isEmpty(services) ? undefined : services,
         pageNumber: pagination.currentPage,
@@ -103,7 +100,9 @@ export default function GaragesPage() {
 
   useEffect(() => {
     form.setFieldsValue({
-      places: query?.provineID ? [Number(query?.provineID)] : undefined,
+      places: query?.provineID
+        ? (query?.provineID as string).split(',').map(Number)
+        : undefined,
       services: query?.categoriesID
         ? (query?.categoriesID as string).split(',').map(Number)
         : undefined,
