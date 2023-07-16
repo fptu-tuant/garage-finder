@@ -223,6 +223,25 @@ export default function GarageDetailPage() {
             ))}
           </div>
 
+          <Typography.Title level={4}>Hãng xe sửa chữa</Typography.Title>
+
+          <div className="grid grid-cols-3 gap-2">
+            {garage.garageBrands.map((item) => (
+              <div key={item.brId} className="flex gap-2 items-center">
+                <div className="w-14 h-14 relative">
+                  <Image
+                    src={item.linkImage || ''}
+                    alt=""
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+
+                <span>{item.brandName}</span>
+              </div>
+            ))}
+          </div>
+
           <Typography.Title level={4}>Bản đồ</Typography.Title>
           <div className="mt-5">
             <iframe

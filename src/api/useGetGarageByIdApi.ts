@@ -23,7 +23,11 @@ type GetGarageData = {
     services: [];
     categoryName: string;
   }>;
-  garageBrands: number[];
+  garageBrands: Array<{
+    brId: number;
+    brandName: string;
+    linkImage: string;
+  }>;
   imageGarages: Array<{
     imageID: number;
     garageID: number;
