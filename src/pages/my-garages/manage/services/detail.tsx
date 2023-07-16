@@ -37,7 +37,7 @@ function AddModalContent(props: { onCancel: () => void }) {
       </Form.Item>
 
       <Form.Item label="Giá" required name="cost">
-        <InputNumber className="w-full" />
+        <Input className="w-full" />
       </Form.Item>
 
       <Form.Item label="Lưu ý" name="note">
