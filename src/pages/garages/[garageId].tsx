@@ -422,6 +422,7 @@ export default function GarageDetailPage() {
                       };
                     }}
                     showSecond={false}
+                    format="DD/MM/YYYY hh:mm A"
                   />
                 </Form.Item>
 
