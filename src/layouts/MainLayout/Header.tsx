@@ -1,5 +1,5 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import { Badge, Button, Divider, Dropdown, Typography } from 'antd';
+import { Avatar, Badge, Button, Divider, Dropdown, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -104,13 +104,13 @@ export function Header({ className }: HeaderProps) {
               }}
             >
               <div className="flex items-center gap-1 cursor-pointer">
-                <UserIcon className="text-2xl text-neutral-700" />
+                <Avatar src={user.avatar} />
                 <Typography>{user.fullName}</Typography>
               </div>
             </Dropdown>
           </div>
         ) : (
-          <Link href="/sign-in " >
+          <Link href="/sign-in ">
             <Button className="border-primary text-primary">Đăng nhập</Button>
           </Link>
         )}

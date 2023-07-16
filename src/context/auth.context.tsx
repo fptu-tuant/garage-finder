@@ -47,6 +47,7 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
       phoneNumber: string;
       emailAddress: string;
       name: string;
+      linkImage: string | null;
     }>({
       method: 'GET',
       url: '/api/User/get',
@@ -59,6 +60,7 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,
+          avatar: data.linkImage,
         },
         accessToken: ACCESS_TOKEN,
         refreshToken: '',

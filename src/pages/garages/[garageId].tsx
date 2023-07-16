@@ -468,32 +468,36 @@ export default function GarageDetailPage() {
           <span>{feebacks?.length || 0} đánh giá từ khách hàng</span>
         </div>
 
-        <div className="mt-10">
-          {feebacks?.map((item) => (
-            <div key={item.feedbackID} className="mb-12">
-              <div className="flex gap-4 items-center">
-                <div className="w-16 h-16 relative rounded-full overflow-hidden bg-gray-200 border-none">
-                  <Image
-                    src={item.linkImage || ''}
-                    alt=""
-                    fill
-                    className="border-none object-cover"
-                  />
-                </div>
+        <Skeleton active loading={fetchingFeedback}>
+          <div className="mt-10">
+            {feebacks?.map((item) => (
+              <div key={item.feedbackID} className="mb-12">
+                <div className="flex gap-4 items-center">
+                  <div className="w-16 h-16 relative rounded-full overflow-hidden bg-gray-200 border-none">
+                    <Image
+                      src={item.linkImage || ''}
+                      alt=""
+                      fill
+                      className="border-none object-cover"
+                    />
+                  </div>
 
-                <div>
-                  <h4 className="m-0">{item.name}</h4>
                   <div>
-                    <span>{dayjs(item.dateTime).format('DD MMMM, YYYY')}</span>
-                    <Rate className="scale-75" value={item.star} />
+                    <h4 className="m-0">{item.name}</h4>
+                    <div>
+                      <span>
+                        {dayjs(item.dateTime).format('DD MMMM, YYYY')}
+                      </span>
+                      <Rate className="scale-75" value={item.star} />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-6 text-neutral-800">{item.content}</div>
-            </div>
-          ))}
-        </div>
+                <div className="mt-6 text-neutral-800">{item.content}</div>
+              </div>
+            ))}
+          </div>
+        </Skeleton>
       </div>
     </Skeleton>
   );

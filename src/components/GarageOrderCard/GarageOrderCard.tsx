@@ -161,13 +161,10 @@ function FeedbackModal(props: { gfOrderID: number; onFinish?: () => void }) {
 export default function GarageOrderCard({
   id,
   garageId,
-  name,
-  address,
   carBrand,
   carType,
   carLicensePlates,
   category,
-  phone,
   time,
   status,
   onMutated,

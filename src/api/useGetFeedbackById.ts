@@ -17,6 +17,7 @@ export function useGetFeedbackById(
 ) {
   return useBaseQueryApi({
     endpoint: `/api/Feedback/GetByGarage/${id}`,
+    enabled: !!id,
     ...options,
   });
 }
