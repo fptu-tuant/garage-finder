@@ -92,7 +92,9 @@ export default function HomePage() {
         </Typography.Title>
       </section>
       <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
-        <h2 className="title text-3xl font-bold mb-[100px] ">Dịch vụ</h2>
+        <h2 id="service" className="title text-3xl font-bold mb-[100px] ">
+          Dịch vụ
+        </h2>
         <div className="list-services grid grid-cols-2 gap-10">
           <div className="service-card bg-white shadow-2xl p-5 w-[600px] rounded-xl">
             <div className="flex">

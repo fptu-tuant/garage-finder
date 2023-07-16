@@ -33,7 +33,7 @@ export function Header({ className }: HeaderProps) {
   const NAV_ITEMS = [
     { href: '/', name: t('header.home') },
     { href: '/garages', name: t('header.listGarages') },
-    { href: '/service', name: t('header.services') },
+    { href: '#service', name: t('header.services') },
     { href: '#about', name: t('header.aboutUs') },
     { href: '#contact', name: t('header.contact') },
     { href: '/my-garages', name: t('header.myGarage'), hide: !hadLogin },
