@@ -1,5 +1,6 @@
 import {
   CalendarOutlined,
+  CarOutlined,
   FileImageOutlined,
   HistoryOutlined,
   ScheduleOutlined,
@@ -77,6 +78,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <ScheduleOutlined className="text-lg" />
           <span>Quản lý dịch vụ</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/brand',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/brand',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <CarOutlined className="text-lg" />
+          <span>Quản lý hãng xe</span>
         </Link>
       ),
     },

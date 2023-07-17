@@ -1,7 +1,7 @@
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-export function useAddBrand() {
+export function useGetOneFeedback() {
   return useBaseQueryApi({
-    endpoint: '/api/Brand/GetAll',
+    endpoint: '/api/Feedback/getByGFOrderId',
   });
 }

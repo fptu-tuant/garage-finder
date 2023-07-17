@@ -189,7 +189,7 @@ export default function GarageOrderCard({
             fill
           />
         </div>
-        <div className="col-span-3 pb-4">
+        <div className="col-span-3 pb-4 flex flex-col">
           <div className="flex gap-3">
             <h3 className="text-xl font-bold mb-2 mt-0 grow">
               {garageInfo?.garageName}
@@ -228,23 +228,25 @@ export default function GarageOrderCard({
             <div>{dayjs(time).format('hh:mm A, DD-MM-YYYY')}</div>
           </div>
 
-          <Button
-            className={twcx('mt-10 bg-red-500 hover:bg-red-500/70', {
-              invisible: status !== 'open' && status !== 'confirmed',
-            })}
-            type="primary"
-            disabled={isLoading}
-            loading={isLoading}
-            onClick={() => cancelOrder({ id })}
-          >
-            Hủy đặt
-          </Button>
+          <div>
+            <Button
+              className={twcx('mt-10 bg-red-500 hover:bg-red-500/70', {
+                invisible: status !== 'open' && status !== 'confirmed',
+              })}
+              type="primary"
+              disabled={isLoading}
+              loading={isLoading}
+              onClick={() => cancelOrder({ id })}
+            >
+              Hủy đặt
+            </Button>
+          </div>
 
-          <div className="mt-10 flex gap-2 justify-end">
+          <div className="flex gap-2 justify-end">
             <Button
               type="primary"
               className={twcx('mt-10 ', {
-                invisible: status !== 'done',
+                hidden: status !== 'done',
               })}
               onClick={() => setOpen(true)}
             >
@@ -254,7 +256,7 @@ export default function GarageOrderCard({
             <Button
               type="primary"
               className={twcx('mt-10 bg-green-500 hover:bg-green-500/60', {
-                invisible: status !== 'done',
+                hidden: status !== 'done',
               })}
               onClick={() => setOpenFeedback(true)}
             >
