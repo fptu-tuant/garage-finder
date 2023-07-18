@@ -124,8 +124,13 @@ function ModalContent({
   );
 }
 
-function FeedbackModal(props: { gfOrderID: number; onFinish?: () => void }) {
-  const { gfOrderID, onFinish } = props;
+function FeedbackModal(props: {
+  gfOrderID: number;
+  onFinish?: () => void;
+  content?: string;
+  star?: number;
+}) {
+  const { gfOrderID, onFinish, content, star } = props;
 
   const { mutateAsync, isLoading } = useAddFeedback();
 
@@ -134,6 +139,10 @@ function FeedbackModal(props: { gfOrderID: number; onFinish?: () => void }) {
       onFinish={async (values) => {
         await mutateAsync({ body: { ...values, gfOrderID } });
         onFinish?.();
+      }}
+      initialValues={{
+        content,
+        star,
       }}
     >
       <Form.Item name="star" className="text-center">
@@ -260,7 +269,7 @@ export default function GarageOrderCard({
               })}
               onClick={() => setOpenFeedback(true)}
             >
-              Đánh giá
+              {orderDetail?.content && 'Xem lại'} Đánh giá
             </Button>
           </div>
         </div>
@@ -281,7 +290,11 @@ export default function GarageOrderCard({
         onCancel={() => setOpenFeedback(false)}
         title="Đánh giá dịch vụ"
       >
-        <FeedbackModal gfOrderID={id} onFinish={() => setOpenFeedback(false)} />
+        <FeedbackModal
+          gfOrderID={id}
+          onFinish={() => setOpenFeedback(false)}
+          {...(orderDetail as any)}
+        />
       </Modal>
     </>
   );

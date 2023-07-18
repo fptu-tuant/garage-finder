@@ -1,10 +1,6 @@
-import { Descriptions, Image, Layout, Modal, Skeleton, Typography } from 'antd';
-import dayjs from 'dayjs';
-import { isUndefined } from 'lodash-es';
-import Link from 'next/link';
-import { useState } from 'react';
+import { Layout, Skeleton, Typography } from 'antd';
 
-import { GetOrderGarageData, useGetMyOrder } from '@/api';
+import { useGetMyOrder } from '@/api';
 import { UserDashboardSider } from '@/components';
 import GarageOrderCard from '@/components/GarageOrderCard/GarageOrderCard';
 
