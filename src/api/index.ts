@@ -20,6 +20,7 @@ export * from './useDeleteFavoriteGarageApi';
 export * from './useDeleteGarageApi';
 export * from './useDeleteGrageImage';
 export * from './useDeleteService';
+export * from './useDeleteStaff';
 export * from './useForgotPasswordApi';
 export * from './useGetCarCompaniesApi';
 export * from './useGetFavoriteGarageApi';

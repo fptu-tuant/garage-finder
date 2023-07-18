@@ -13,10 +13,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { useAddStaff, useGetStaffs } from '@/api';
+import useDeleteStaff from '@/api/useDeleteStaff';
 import { SingleUploadDragger } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
 import { ManageGarageLayout } from '@/layouts';
 import { confirmPasswordRule, emailRule, requiredRule } from '@/services';
+import { showError } from '@/utils';
 
 const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
   label: province.name,
@@ -33,7 +35,9 @@ function UpsertStaffModalContent(props: {
 }) {
   const { onCancel, garageID } = props;
 
-  const { mutateAsync: addStaff, isLoading: addingStaff } = useAddStaff();
+  const { mutateAsync: addStaff, isLoading: addingStaff } = useAddStaff({
+    onError: showError,
+  });
 
   return (
     <Form
@@ -94,7 +98,7 @@ function UpsertStaffModalContent(props: {
             name="phoneNumber"
             rules={[requiredRule()]}
           >
-            <Input.Password />
+            <Input />
           </Form.Item>
 
           <Form.Item label="Giới tính" name="gender" rules={[requiredRule()]}>
@@ -106,7 +110,7 @@ function UpsertStaffModalContent(props: {
             />
           </Form.Item>
 
-          <Form.Item label="Địa chỉ" name="address">
+          <Form.Item label="Địa chỉ" name="address" rules={[requiredRule()]}>
             <Cascader options={locationCascaderOptions} />
           </Form.Item>
 
@@ -155,6 +159,9 @@ export default function GarageStaffManagementPage() {
 
   const [open, setOpen] = useState(false);
 
+  const { mutateAsync: deleteStaff, isLoading: deletingStaff } =
+    useDeleteStaff();
+
   return (
     <>
       <div>
@@ -168,6 +175,7 @@ export default function GarageStaffManagementPage() {
 
         <Skeleton active loading={fetchingStaffs}>
           <Table
+            loading={deletingStaff || fetchingStaffs}
             dataSource={staffs}
             columns={[
               { title: 'ID', dataIndex: 'employeeId' },
@@ -175,6 +183,21 @@ export default function GarageStaffManagementPage() {
               { title: 'Email', dataIndex: 'emailAddress' },
               { title: 'Giới tính', dataIndex: 'gender' },
               { title: 'Số điện thoại', dataIndex: 'phoneNumber' },
+              {
+                title: 'Hành động',
+                render: (_, item) => (
+                  <div>
+                    <Button
+                      onClick={async () => {
+                        await deleteStaff({ id: item.staffId });
+                        await refetch();
+                      }}
+                    >
+                      Xóa
+                    </Button>
+                  </div>
+                ),
+              },
             ]}
           />
         </Skeleton>
