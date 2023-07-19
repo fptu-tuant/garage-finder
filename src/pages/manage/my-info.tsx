@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useGetMe, useUpdateUserApi } from '@/api';
 import { SingleUploadDragger, UserDashboardSider } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
+import { useAuthStore } from '@/context';
 import { requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
@@ -29,11 +30,15 @@ type UserFormValues = {
 export default function MyInfoPage() {
   const [form] = Form.useForm<UserFormValues>();
 
+  const [, dispatch] = useAuthStore();
+
   const [isInEditMode, setIsInEditMode] = useState(false);
 
-  const { data: user, isLoading } = useGetMe();
-  const { mutate: updateUser, isLoading: updating } = useUpdateUserApi({
-    onSuccess: () => showSuccess('Cập nhật thông tin thành công'),
+  const { data: user, isLoading, refetch } = useGetMe();
+  const { mutateAsync: updateUser, isLoading: updating } = useUpdateUserApi({
+    onSuccess: () => {
+      showSuccess('Cập nhật thông tin thành công');
+    },
     onError: showError,
   });
 
@@ -52,7 +57,7 @@ export default function MyInfoPage() {
     const { email, fullName, phone, avatar, address, detailAddress } =
       form.getFieldsValue();
 
-    updateUser({
+    await updateUser({
       body: {
         emailAddress: email,
         linkImage: avatar,
@@ -62,6 +67,13 @@ export default function MyInfoPage() {
         districtId: address[1] || NaN,
         addressDetail: detailAddress,
       },
+    });
+
+    await refetch();
+
+    dispatch({
+      type: 'UPDATE_AVATAR',
+      payload: { linkImage: avatar },
     });
 
     setIsInEditMode(false);

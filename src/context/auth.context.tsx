@@ -19,7 +19,13 @@ type Action =
         role?: 'USER' | 'STAFF';
       };
     }
-  | { type: 'SIGN_OUT' };
+  | { type: 'SIGN_OUT' }
+  | {
+      type: 'UPDATE_AVATAR';
+      payload: {
+        linkImage: string;
+      };
+    };
 
 function reducer(state: AuthStore, action: Action): AuthStore {
   switch (action.type) {
@@ -35,6 +41,15 @@ function reducer(state: AuthStore, action: Action): AuthStore {
       localStorage.removeItem('ROLE');
 
       return { ...state, user: null };
+    }
+
+    case 'UPDATE_AVATAR': {
+      const { linkImage } = action.payload;
+
+      return {
+        ...state,
+        user: { ...(state.user ?? ({} as User)), avatar: linkImage },
+      };
     }
   }
 }
