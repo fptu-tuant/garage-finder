@@ -1,7 +1,22 @@
+import { BaseQueryApiOptions } from '@/types';
+
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-export function useGetOneFeedback() {
+type Options = BaseQueryApiOptions<{
+  feedbackID: number;
+  name: null;
+  star: number;
+  content: string;
+  dateTime: string;
+  linkImage: string;
+}> & {
+  id: number;
+};
+
+export function useGetOneFeedback({ id, ...options }: Options) {
   return useBaseQueryApi({
-    endpoint: '/api/Feedback/getByGFOrderId',
+    method: 'POST',
+    endpoint: `/api/Feedback/getByGFOrderId/${id}`,
+    ...options,
   });
 }

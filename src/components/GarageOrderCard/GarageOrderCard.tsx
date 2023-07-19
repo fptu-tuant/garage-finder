@@ -20,6 +20,7 @@ import {
   useAddFeedback,
   useCancelOrderByUser,
   useGetGarageByIdApi,
+  useGetOneFeedback,
 } from '@/api';
 import { PinMapFilledIcon } from '@/icons';
 import { twcx } from '@/utils';
@@ -183,7 +184,14 @@ export default function GarageOrderCard({
     onSuccess: onMutated,
   });
 
+  const orderId = Number(orderDetail?.gfOrderID);
+
   const { data: garageInfo } = useGetGarageByIdApi({}, { id: garageId });
+  const { data: feedback } = useGetOneFeedback({
+    queryKey: orderId.toString(),
+    id: orderId,
+    enabled: !isNaN(orderId),
+  });
 
   const [open, setOpen] = useState(false);
   const [openFeedback, setOpenFeedback] = useState(false);
@@ -269,7 +277,7 @@ export default function GarageOrderCard({
               })}
               onClick={() => setOpenFeedback(true)}
             >
-              {orderDetail?.content && 'Xem lại'} Đánh giá
+              {feedback && 'Xem lại'} Đánh giá
             </Button>
           </div>
         </div>
@@ -293,7 +301,7 @@ export default function GarageOrderCard({
         <FeedbackModal
           gfOrderID={id}
           onFinish={() => setOpenFeedback(false)}
-          {...(orderDetail as any)}
+          {...(feedback as any)}
         />
       </Modal>
     </>
