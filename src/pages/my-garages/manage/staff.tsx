@@ -104,7 +104,7 @@ function UpsertStaffModalContent(props: {
           <Form.Item label="Giới tính" name="gender" rules={[requiredRule()]}>
             <Select
               options={[
-                { label: 'Name', value: 'Nam' },
+                { label: 'Nam', value: 'Nam' },
                 { label: 'Nữ', value: 'Nữ' },
               ]}
             />

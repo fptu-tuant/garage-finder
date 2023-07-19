@@ -6,29 +6,37 @@ import { twcx } from '@/utils';
 
 import { RoundedSelect } from '../RoundSelect/RoundSelect';
 
-type CarBrandSelectProps = SelectProps & { rounded?: boolean };
+type CarBrandSelectProps = SelectProps & {
+  rounded?: boolean;
+  transformOptions?: (
+    options?: Array<{ label: JSX.Element; value: number }>
+  ) => Array<{ label: JSX.Element; value: number }> | undefined;
+};
 
 export function CarBrandSelect({
   rounded = false,
+  transformOptions = (opts) => opts,
   ...rest
 }: CarBrandSelectProps) {
   const { data: brands, isLoading } = useGetCarCompaniesApi();
 
-  const options = brands?.map((item) => ({
-    label: (
-      <div className="flex items-center gap-2">
-        <Image
-          src={item.imageLink}
-          alt={item.brandName}
-          width={36}
-          height={36}
-          className="object-contain"
-        />
-        <span>{item.brandName}</span>
-      </div>
-    ),
-    value: item.brandID,
-  }));
+  const options = transformOptions(
+    brands?.map((item) => ({
+      label: (
+        <div className="flex items-center gap-2">
+          <Image
+            src={item.imageLink}
+            alt={item.brandName}
+            width={36}
+            height={36}
+            className="object-contain"
+          />
+          <span>{item.brandName}</span>
+        </div>
+      ),
+      value: item.brandID,
+    }))
+  );
 
   const FinalSelect = rounded ? RoundedSelect : Select;
 
