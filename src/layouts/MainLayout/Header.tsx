@@ -93,7 +93,7 @@ export function Header({ className }: HeaderProps) {
             <Dropdown
               menu={{
                 items: [
-                  ...MENU_ITEMS,
+                  ...(user.role === 'STAFF' ? [] : MENU_ITEMS),
                   {
                     key: 'logout',
                     label: (
