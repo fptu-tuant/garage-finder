@@ -148,6 +148,13 @@ export default function LoginPage() {
             Đăng ký
           </Link>
         </Typography>
+
+        <Typography className="text-center">
+          <span>Bạn là nhân viên ?</span>{' '}
+          <Link href="/staff-login" className="text-primary font-semibold">
+            Đăng nhập cho nhân viên
+          </Link>
+        </Typography>
       </div>
     </div>
   );

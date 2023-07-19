@@ -1,3 +1,4 @@
+export * from './useAddBrand';
 export * from './useAddBrandForGarage';
 export * from './useAddCarApi';
 export * from './useAddCategoryForGarge';
@@ -40,6 +41,7 @@ export * from './useLoginApi';
 export * from './useLoginWithGoogleApi';
 export * from './useRemoveBrandFromGarage';
 export * from './useSendVerifyCode';
+export * from './useStaffLogin';
 export * from './useUpdateCarApi';
 export * from './useUpdateGarage';
 export * from './useUpdateService';

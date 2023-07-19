@@ -26,8 +26,8 @@ export function Header({ className }: HeaderProps) {
   const [, currentPath] = asPath.split('/');
 
   const onLogout = () => {
-    authDispatch({ type: 'SIGN_OUT' });
     push('/');
+    authDispatch({ type: 'SIGN_OUT' });
   };
 
   const NAV_ITEMS = [
@@ -48,8 +48,12 @@ export function Header({ className }: HeaderProps) {
           <span>Garage</span> <span className="text-primary">Finder</span>
         </div>
       </Link>
-      <nav className="grow flex justify-end">
-        <ul className="flex gap-8">
+      <nav className={twcx('grow flex justify-end')}>
+        <ul
+          className={twcx('flex gap-8', {
+            ['hidden']: user?.role === 'STAFF',
+          })}
+        >
           {NAV_ITEMS.map((item) => (
             <li key={item.href}>
               <Link
@@ -66,7 +70,12 @@ export function Header({ className }: HeaderProps) {
         </ul>
       </nav>
 
-      <Divider type="vertical" className="h-8 bg-gray-800 mx-8" />
+      <Divider
+        type="vertical"
+        className={twcx('h-8 bg-gray-800 mx-8', {
+          ['hidden']: user?.role === 'STAFF',
+        })}
+      />
 
       <div>
         {user ? (

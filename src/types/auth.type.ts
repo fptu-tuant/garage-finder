@@ -7,6 +7,7 @@ export type User = {
   email: string;
   phone: string;
   avatar: string | null;
+  role: 'USER' | 'STAFF';
 };
 
 export type UserRole = ObjectValues<typeof USER_ROLE>;

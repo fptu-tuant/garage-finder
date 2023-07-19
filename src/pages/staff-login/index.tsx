@@ -1,18 +1,12 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useGoogleLogin } from '@react-oauth/google';
-import { Button, Divider, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import {
-  LoginByGoogleData,
-  LoginResponseData,
-  useLoginApi,
-  useLoginWithGoogleApi,
-} from '@/api';
-import { CarIllustrate } from '@/components';
+import { StaffLoginData, useStaffLogin } from '@/api';
+import staffLogin from '@/assets/images/staff-login.png';
 import { useAuthStore } from '@/context/auth.context';
-import { GoogleIcon } from '@/icons';
 import { requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
 
@@ -28,7 +22,7 @@ export default function StaffLoginPage() {
 
   const [form] = Form.useForm<SignInFormProps>();
 
-  const onLoginSuccess = (data: LoginByGoogleData | LoginResponseData) => {
+  const onLoginSuccess = (data: StaffLoginData) => {
     dispatch({
       type: 'SIGN_IN',
       payload: {
@@ -37,42 +31,30 @@ export default function StaffLoginPage() {
           fullName: data.name,
           phone: data.phoneNumber,
           avatar: null,
+          role: 'STAFF',
         },
         accessToken: data.accessToken,
         refreshToken: '',
       },
     });
 
+    localStorage.setItem('ROLE', 'STAFF');
+
     showSuccess('Đăng nhập thành công!');
 
-    router.push('/garages');
+    router.push(`/my-garages/manage/order?garageId=${data.garageID}`);
   };
 
-  const { mutate: loginWithGoogle, isLoading: signingWithGoogle } =
-    useLoginWithGoogleApi({
-      onSuccess: onLoginSuccess,
-      onError: showError,
-    });
-
   const { mutate: loginWithPassword, isLoading: signingWithPassword } =
-    useLoginApi({
+    useStaffLogin({
       onSuccess: onLoginSuccess,
       onError: showError,
     });
-
-  const onLoginWithGoogle = useGoogleLogin({
-    onSuccess: async (token) => {
-      const { access_token } = token;
-
-      loginWithGoogle({ params: { accessToken: access_token } });
-    },
-    onError: showError,
-  });
 
   return (
     <div className="flex mt-20">
       <div className="relative w-3/5 min-h-[500px]">
-        <CarIllustrate />
+        <Image src={staffLogin} alt="" />
       </div>
       <div className="w-2/5 px-5 flex flex-col items-center">
         <Form

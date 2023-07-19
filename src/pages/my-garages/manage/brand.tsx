@@ -24,12 +24,16 @@ export default function GarageManageBrandPage() {
       <Typography.Title level={3}>Quản lý hãng xe</Typography.Title>
 
       <div>
+        <Button type="primary">Thêm</Button>
+      </div>
+
+      <div>
         <Table
           loading={fetchingGarage || deleting}
           columns={[
             {
               title: 'STT',
-              dataIndex: 'brId',
+              render: (_, _2, idx) => idx + 1,
             },
             {
               title: 'Hãng xe',

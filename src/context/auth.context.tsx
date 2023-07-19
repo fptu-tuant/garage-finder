@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 
 import { ACCESS_TOKEN_KEY } from '@/constants';
 import { Maybe, User } from '@/types';
-import { api } from '@/utils';
+import { api, showError } from '@/utils';
 import { makeContext } from '@/utils/context-builder.util';
 
 type AuthStore = {
@@ -12,7 +12,12 @@ type AuthStore = {
 type Action =
   | {
       type: 'SIGN_IN';
-      payload: { user: User; accessToken: string; refreshToken: string };
+      payload: {
+        user: User;
+        accessToken: string;
+        refreshToken: string;
+        role?: 'USER' | 'STAFF';
+      };
     }
   | { type: 'SIGN_OUT' };
 
@@ -27,6 +32,7 @@ function reducer(state: AuthStore, action: Action): AuthStore {
 
     case 'SIGN_OUT': {
       localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem('ROLE');
 
       return { ...state, user: null };
     }
@@ -61,13 +67,45 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
           fullName: data.name,
           phone: data.phoneNumber,
           avatar: data.linkImage,
+          role: 'USER',
         },
         accessToken: ACCESS_TOKEN,
         refreshToken: '',
       },
     });
   } catch (error) {
+    try {
+      const { data } = await api<{
+        phoneNumber: string;
+        emailAddress: string;
+        name: string;
+        linkImage: string | null;
+      }>({
+        method: 'GET',
+        url: '/api/Staff/getMyStaffInfor',
+      });
+
+      dispatch({
+        type: 'SIGN_IN',
+        payload: {
+          user: {
+            email: data.emailAddress,
+            fullName: data.name,
+            phone: data.phoneNumber,
+            avatar: data.linkImage,
+            role: 'STAFF',
+          },
+          accessToken: ACCESS_TOKEN,
+          refreshToken: '',
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      showError(error);
+    }
+
     console.error(error);
+    showError(error);
   }
 }
 

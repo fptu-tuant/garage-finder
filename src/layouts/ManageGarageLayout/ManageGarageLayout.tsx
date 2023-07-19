@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
+import { useAuthStore } from '@/context';
 import { PinMapFilledIcon, UserEditIcon, UsersIcon } from '@/icons';
 
 import { MainLayout } from '../MainLayout/Layout';
@@ -20,6 +21,8 @@ const { Sider, Content } = Layout;
 
 export function ManageGarageLayout({ children }: PropsWithChildren) {
   const router = useRouter();
+
+  const [{ user }] = useAuthStore();
 
   const { data: garage, isLoading: fetchingGarage } = useGetGarageByIdApi(
     { enabled: !isNaN(Number(router.query?.garageId)) },
@@ -128,6 +131,8 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     },
   ];
 
+  const STAFF_MENU_ITEMS = [MENU_ITEMS[2], MENU_ITEMS[5]];
+
   const selectedKey = router.pathname.split('/').slice(0, 4).join('/');
 
   return (
@@ -144,7 +149,10 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
             </Skeleton>
           </div>
 
-          <Menu selectedKeys={[selectedKey]} items={MENU_ITEMS} />
+          <Menu
+            selectedKeys={[selectedKey]}
+            items={user?.role === 'STAFF' ? STAFF_MENU_ITEMS : MENU_ITEMS}
+          />
         </Sider>
         <Content className="flex flex-col pr-6 pl-10">{children}</Content>
       </Layout>
