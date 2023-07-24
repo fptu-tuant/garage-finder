@@ -2,7 +2,7 @@ import { BaseQueryApiOptions, Maybe } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-type GetCarCompaniesData = Array<{
+export type GetCarCompaniesData = Array<{
   brandID: number;
   brandName: string;
   note: Maybe<string>;

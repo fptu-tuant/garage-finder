@@ -1,27 +1,26 @@
 import { Select, SelectProps, Tag } from 'antd';
 import Image from 'next/image';
 
-import { useGetCarCompaniesApi } from '@/api';
+import { GetCarCompaniesData, useGetCarCompaniesApi } from '@/api';
 import { twcx } from '@/utils';
 
 import { RoundedSelect } from '../RoundSelect/RoundSelect';
 
 type CarBrandSelectProps = SelectProps & {
   rounded?: boolean;
-  transformOptions?: (
-    options?: Array<{ label: JSX.Element; value: number }>
-  ) => Array<{ label: JSX.Element; value: number }> | undefined;
+  transformOptions?: (options?: GetCarCompaniesData) => GetCarCompaniesData;
 };
 
 export function CarBrandSelect({
   rounded = false,
-  transformOptions = (opts) => opts,
+  transformOptions = (opts) => opts ?? [],
   ...rest
 }: CarBrandSelectProps) {
   const { data: brands, isLoading } = useGetCarCompaniesApi();
 
-  const options = transformOptions(
-    brands?.map((item) => ({
+  const options = transformOptions(brands)
+    .filter((item) => item.imageLink !== 'string')
+    ?.map((item) => ({
       label: (
         <div className="flex items-center gap-2">
           <Image
@@ -31,12 +30,12 @@ export function CarBrandSelect({
             height={36}
             className="object-contain"
           />
+
           <span>{item.brandName}</span>
         </div>
       ),
       value: item.brandID,
-    }))
-  );
+    }));
 
   const FinalSelect = rounded ? RoundedSelect : Select;
 

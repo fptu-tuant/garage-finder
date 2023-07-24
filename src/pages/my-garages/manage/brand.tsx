@@ -41,7 +41,16 @@ function ModalContent({ onClose, garageId, garageBrands }: ModalContentProps) {
       <Typography.Title>Thêm hãng xe</Typography.Title>
 
       <Form.Item name="brands">
-        <CarBrandSelect />
+        <CarBrandSelect
+          transformOptions={(brands) =>
+            (brands ?? []).filter(
+              (brand) =>
+                !garageBrands
+                  ?.map((item) => item.brandName)
+                  .includes(brand.brandName)
+            )
+          }
+        />
       </Form.Item>
 
       <div className="text-center">
