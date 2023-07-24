@@ -1,3 +1,4 @@
+import { StopOutlined } from '@ant-design/icons';
 import {
   Button,
   Cascader,
@@ -12,8 +13,9 @@ import {
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { useAddStaff, useGetStaffs } from '@/api';
+import { Staff, useAddStaff, useBlockStaff, useGetStaffs } from '@/api';
 import useDeleteStaff from '@/api/useDeleteStaff';
+import { useUpdateStaff } from '@/api/useUpdateStaff';
 import { SingleUploadDragger } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
 import { ManageGarageLayout } from '@/layouts';
@@ -32,27 +34,53 @@ const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
 function UpsertStaffModalContent(props: {
   onCancel?: () => void;
   garageID: number;
+  staff?: Staff;
 }) {
-  const { onCancel, garageID } = props;
+  const { onCancel, garageID, staff } = props;
+
+  const isUpdate = !!staff;
 
   const { mutateAsync: addStaff, isLoading: addingStaff } = useAddStaff({
     onError: showError,
   });
+
+  const { mutateAsync: updateStaff, isLoading: updatingStaff } = useUpdateStaff(
+    {
+      onError: showError,
+    }
+  );
 
   return (
     <Form
       className="pt-6"
       layout="vertical"
       onFinish={async (values) => {
-        await addStaff({
-          body: {
-            ...values,
-            provinceId: values?.address?.[0],
-            districtId: values?.address?.[1],
-            garageID,
-          },
-        });
+        if (isUpdate) {
+          await updateStaff({
+            body: {
+              ...staff,
+              ...values,
+              provinceId: values?.address?.[0],
+              districtId: values?.address?.[1],
+              garageID,
+            },
+          });
+        } else {
+          await addStaff({
+            body: {
+              ...values,
+              provinceId: values?.address?.[0],
+              districtId: values?.address?.[1],
+              garageID,
+            },
+          });
+        }
+
         onCancel?.();
+      }}
+      initialValues={{
+        ...staff,
+        address: [staff?.provinceId, staff?.districtId],
       }}
     >
       <Typography.Title level={3} className="text-center mb-10">
@@ -135,10 +163,10 @@ function UpsertStaffModalContent(props: {
           className="min-w-[200px]"
           type="primary"
           htmlType="submit"
-          disabled={addingStaff}
-          loading={addingStaff}
+          disabled={addingStaff || updatingStaff}
+          loading={addingStaff || updatingStaff}
         >
-          Thêm
+          {isUpdate ? 'Cập nhật' : 'Thêm'}
         </Button>
       </div>
     </Form>
@@ -162,6 +190,10 @@ export default function GarageStaffManagementPage() {
   const { mutateAsync: deleteStaff, isLoading: deletingStaff } =
     useDeleteStaff();
 
+  const { mutateAsync: blockStaff, isLoading: blockingStaff } = useBlockStaff();
+
+  const [staffInfo, setStaffInfo] = useState<Staff | null>(null);
+
   return (
     <>
       <div>
@@ -173,7 +205,7 @@ export default function GarageStaffManagementPage() {
           </Button>
         </div>
 
-        <Skeleton active loading={fetchingStaffs}>
+        <Skeleton active loading={fetchingStaffs || blockingStaff}>
           <Table
             loading={deletingStaff || fetchingStaffs}
             dataSource={staffs}
@@ -186,8 +218,39 @@ export default function GarageStaffManagementPage() {
               {
                 title: 'Hành động',
                 render: (_, item) => (
-                  <div>
+                  <div className="flex gap-2">
                     <Button
+                      className="bg-green-500 border-none text-white"
+                      onClick={async () => {
+                        setStaffInfo(item);
+                        setOpen(true);
+                      }}
+                    >
+                      Chi tiết
+                    </Button>
+
+                    <Button
+                      className={
+                        item.status === 'block'
+                          ? 'bg-green-500 border-none text-white'
+                          : 'bg-red-500 border-none text-white'
+                      }
+                      onClick={async () => {
+                        await blockStaff({
+                          body: {
+                            staffID: item.staffId,
+                            status: item.status === 'block' ? 'open' : 'block',
+                          },
+                        });
+                        await refetch();
+                      }}
+                    >
+                      {item.status === 'block' ? 'Open' : 'Block'}
+                      <StopOutlined />
+                    </Button>
+
+                    <Button
+                      className="bg-red-500 border-none text-white"
                       onClick={async () => {
                         await deleteStaff({ id: item.staffId });
                         await refetch();
@@ -208,6 +271,7 @@ export default function GarageStaffManagementPage() {
         footer={null}
         onCancel={() => setOpen(false)}
         width={900}
+        destroyOnClose
       >
         <UpsertStaffModalContent
           onCancel={() => {
@@ -215,6 +279,7 @@ export default function GarageStaffManagementPage() {
             refetch();
           }}
           garageID={Number(query?.garageId)}
+          staff={staffInfo ?? undefined}
         />
       </Modal>
     </>

@@ -11,6 +11,7 @@ export * from './useAddOrderFromGuest';
 export * from './useAddOrderWithoutCar';
 export * from './useAddService';
 export * from './useAddStaff';
+export * from './useBlockStaff';
 export * from './useCancelOrderByUser';
 export * from './useCarOwnerRegisterApi';
 export * from './useChangeOrderStatus';
