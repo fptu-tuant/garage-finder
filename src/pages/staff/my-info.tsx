@@ -59,7 +59,6 @@ export default function StaffMyInfoPage() {
                 ...values,
                 districtId: last(values?.address),
                 provinceId: first(values?.address),
-                password: '1',
               },
             });
 
@@ -78,6 +77,14 @@ export default function StaffMyInfoPage() {
               rules={[requiredRule()]}
             >
               <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="password"
+              label="Mật khẩu"
+              rules={[requiredRule()]}
+            >
+              <Input.Password />
             </Form.Item>
 
             <Form.Item
