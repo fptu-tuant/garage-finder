@@ -118,7 +118,7 @@ export default function ManageGarageOrderPage() {
     {
       title: 'Thời gian',
       render: (_, item) =>
-        dayjs(item.timeAppointment).format('DD-MM-YYYY hh:mm'),
+        dayjs(item.timeAppointment).format('DD-MM-YYYY hh:mm A'),
     },
     {
       title: 'Trạng thái',
