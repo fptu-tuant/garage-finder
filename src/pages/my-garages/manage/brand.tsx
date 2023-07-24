@@ -103,9 +103,9 @@ export default function GarageManageBrandPage() {
                   <div>
                     <Button
                       className="bg-red-500 text-white"
-                      onClick={() => {
-                        removeBrand({ id: item.brId });
-                        refetch();
+                      onClick={async () => {
+                        await removeBrand({ id: item.brId });
+                        await refetch();
                       }}
                     >
                       Xóa
