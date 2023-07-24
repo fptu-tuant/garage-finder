@@ -131,7 +131,25 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     },
   ];
 
-  const STAFF_MENU_ITEMS = [MENU_ITEMS[2], MENU_ITEMS[5]];
+  const STAFF_MENU_ITEMS = [
+    {
+      key: '/staff/my-info',
+      label: (
+        <Link
+          href={{
+            pathname: '/staff/my-info',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <UserEditIcon className="text-lg" />
+          <span className="ms-[18px]">Thông tin cá nhân</span>
+        </Link>
+      ),
+    },
+    MENU_ITEMS[2],
+    MENU_ITEMS[5],
+  ];
 
   const selectedKey = router.pathname.split('/').slice(0, 4).join('/');
 

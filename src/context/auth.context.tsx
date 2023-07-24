@@ -96,7 +96,7 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
         name: string;
         linkImage: string | null;
       }>({
-        method: 'GET',
+        method: 'POST',
         url: '/api/Staff/getMyStaffInfor',
       });
 
@@ -116,11 +116,11 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
       });
     } catch (error) {
       console.error(error);
-      showError(error);
+      // showError(error);
     }
 
     console.error(error);
-    showError(error);
+    // showError(error);
   }
 }
 

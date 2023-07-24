@@ -36,7 +36,7 @@ export default function LoginPage() {
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,
-          avatar: null,
+          avatar: data.linkImage,
           role: 'USER',
         },
         accessToken: data.accessToken,

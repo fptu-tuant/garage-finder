@@ -2,7 +2,7 @@ import { BaseQueryApiOptions } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-type Staffs = Array<{
+export type Staff = {
   staffId: number;
   name: string;
   // employeeId: number | null;
@@ -13,7 +13,9 @@ type Staffs = Array<{
   provinceId: number;
   status: null;
   emailAddress: string;
-}>;
+};
+
+type Staffs = Array<Staff>;
 
 export function useGetStaffs({
   id,

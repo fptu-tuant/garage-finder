@@ -10,6 +10,7 @@ export type LoginByGoogleData = {
   emailAddress: string;
   password: string;
   roleID: number;
+  linkImage: string;
   roleName: {
     roleID: number;
     nameRole: string;
