@@ -28,8 +28,12 @@ export function AdminLayout({ children }: PropsWithChildren) {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const { data: garages, isLoading: fetchingGarages } = useAdminGetGarages();
-  const { data: users, isLoading: fetchingUsers } = useAdminGetUsers();
+  const { data: garages, isLoading: fetchingGarages } = useAdminGetGarages({
+    queryKey: 'admin-layout-users',
+  });
+  const { data: users, isLoading: fetchingUsers } = useAdminGetUsers({
+    queryKey: 'admin-layout-garages',
+  });
 
   return (
     <Layout hasSider>
