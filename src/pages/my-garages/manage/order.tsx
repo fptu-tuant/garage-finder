@@ -90,7 +90,7 @@ const translateStatus = (status: string) => {
     case 'reject':
       return 'Bị từ chối';
 
-    case 'cancelled':
+    case 'canceled':
       return 'Bị hủy';
 
     case 'done':
