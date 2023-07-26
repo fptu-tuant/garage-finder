@@ -1,5 +1,11 @@
-import { ClockCircleFilled, LikeFilled, WalletFilled } from '@ant-design/icons';
-import { Button, Form, Input, Select, Typography } from 'antd';
+import {
+  ClockCircleFilled,
+  LikeFilled,
+  UploadOutlined,
+  WalletFilled,
+} from '@ant-design/icons';
+import { Button, Form, Input, Select, Typography, Upload } from 'antd';
+import { RcFile } from 'antd/es/upload';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -90,6 +96,31 @@ export default function HomePage() {
         <Typography.Title level={2} className="text-center">
           Đề xuất cho bạn
         </Typography.Title>
+
+        <Upload
+          beforeUpload={console.log}
+          itemRender={(_, file) => {
+            const reader = new FileReader();
+
+            let imageUrl = '';
+
+            reader.addEventListener('load', () => {
+              imageUrl = reader.result as string;
+              console.log(imageUrl);
+            });
+
+            reader.readAsDataURL(file.originFileObj as RcFile);
+
+            return (
+              <div>
+                <img src={imageUrl} className="w-40 h-40" />
+                hehe
+              </div>
+            );
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
       </section>
       <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
         <h2 id="service" className="title text-3xl font-bold mb-[100px] ">
