@@ -75,7 +75,7 @@ const translateStatus = (status: string) => {
     case 'reject':
       return 'Bị từ chối';
 
-    case 'cancelled':
+    case 'canceled':
       return 'Bị hủy';
 
     case 'done':
@@ -233,7 +233,7 @@ export default function GarageOrderCard({
             <h3 className="text-xl font-bold mb-2 mt-0 grow">
               {garageInfo?.garageName}
             </h3>
-            <div>
+            <div className="shrink-0">
               <Tag color={getStatusColor(status)} className="rounded-full">
                 {translateStatus(status)}
               </Tag>
