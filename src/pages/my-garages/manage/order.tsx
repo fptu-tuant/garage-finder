@@ -87,6 +87,28 @@ function ModalContent({
   );
 }
 
+const translateStatus = (status: string) => {
+  switch (status) {
+    case 'confirmed':
+      return 'Đã xác nhận';
+
+    case 'open':
+      return 'Đợi xác nhận';
+
+    case 'reject':
+      return 'Bị từ chối';
+
+    case 'cancelled':
+      return 'Bị hủy';
+
+    case 'done':
+      return 'Hoàn thành';
+
+    default:
+      return '';
+  }
+};
+
 export default function ManageGarageOrderPage() {
   const { query } = useRouter();
 
@@ -147,7 +169,8 @@ export default function ManageGarageOrderPage() {
           })()}
           className="rounded-full"
         >
-          {capitalize(item.status)}
+          {/* {capitalize(item.status)} */}
+          {translateStatus(item.status)}
         </Tag>
       ),
       align: 'center',

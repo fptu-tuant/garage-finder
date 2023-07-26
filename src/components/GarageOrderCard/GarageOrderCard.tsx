@@ -64,6 +64,28 @@ const getStatusColor = (status: string) => {
   }
 };
 
+const translateStatus = (status: string) => {
+  switch (status) {
+    case 'confirmed':
+      return 'Đã xác nhận';
+
+    case 'open':
+      return 'Đợi xác nhận';
+
+    case 'reject':
+      return 'Bị từ chối';
+
+    case 'cancelled':
+      return 'Bị hủy';
+
+    case 'done':
+      return 'Hoàn thành';
+
+    default:
+      return '';
+  }
+};
+
 function ModalContent({
   brand,
   name,
@@ -213,7 +235,7 @@ export default function GarageOrderCard({
             </h3>
             <div>
               <Tag color={getStatusColor(status)} className="rounded-full">
-                {capitalize(status)}
+                {translateStatus(status)}
               </Tag>
             </div>
           </div>
