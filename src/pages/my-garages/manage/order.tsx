@@ -60,19 +60,11 @@ function ModalContent({
         </Form.Item>
 
         <div className="grid grid-cols-2 gap-6">
-          <Form.Item
-            name="fileLinks"
-            label="Tệp đính kèm"
-            rules={[requiredRule()]}
-          >
+          <Form.Item name="fileLinks" label="Tệp đính kèm">
             <MultipleUpload />
           </Form.Item>
 
-          <Form.Item
-            name="imageLinks"
-            label="Hình ảnh"
-            rules={[requiredRule()]}
-          >
+          <Form.Item name="imageLinks" label="Hình ảnh">
             <MultipleUpload />
           </Form.Item>
         </div>
@@ -183,7 +175,6 @@ export default function ManageGarageOrderPage() {
             <Button
               className="bg-green-500 hover:bg-green-500/70 border-none text-white rounded-full"
               onClick={() => {
-                console.log('kjshks', item.gfOrderID);
                 approve.mutateAsync({ id: item.gfOrderID });
                 setCurrentOrderId(item.gfOrderID);
               }}
