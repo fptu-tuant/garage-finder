@@ -23,9 +23,8 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   return (
     <>
       <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6254085152110725"
-        crossOrigin="anonymous"
+        async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9668699173628944"
+        crossorigin="anonymous"
       />
 
       <Head>
