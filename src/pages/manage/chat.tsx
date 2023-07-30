@@ -136,7 +136,7 @@ function Detail() {
           type="ghost"
           icon={<ArrowLeftOutlined className="text-xl" />}
           className="hover:text-purple-800"
-          onClick={() => push('my-garages/manage/chat')}
+          onClick={() => push('/manage/chat')}
         />
 
         <Avatar className="ml-4" src={garage?.thumbnail} />
