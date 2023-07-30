@@ -255,7 +255,11 @@ export default function GarageDetailPage() {
         <div className="grow">
           <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col items-center gap-4 mt-16">
             <Typography.Title level={3}>Liên hệ</Typography.Title>
-            <Button type="primary" className="w-56">
+            <Button
+              type="primary"
+              className="w-56"
+              onClick={() => router.push(`/manage/chat?garageId=${garageId}`)}
+            >
               <MessageFilled />
               <span>Nhắn tin cho Garage</span>
             </Button>

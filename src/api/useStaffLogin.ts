@@ -3,6 +3,7 @@ import { BaseMutationApiOptions } from '@/types';
 import { useBaseMutationApi } from './useBaseMutationApi';
 
 export type StaffLoginData = {
+  userID: number;
   name: string;
   employeeId: string;
   phoneNumber: string;

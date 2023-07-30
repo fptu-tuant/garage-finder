@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { capitalize, isUndefined, lowerCase } from 'lodash-es';
+import { isUndefined, lowerCase } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 

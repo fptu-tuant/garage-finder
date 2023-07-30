@@ -33,6 +33,8 @@ export default function LoginPage() {
       type: 'SIGN_IN',
       payload: {
         user: {
+          id: data.userID,
+          accessToken: data.accessToken,
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,

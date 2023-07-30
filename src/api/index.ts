@@ -45,6 +45,7 @@ export * from './useLoginApi';
 export * from './useLoginWithGoogleApi';
 export * from './useRemoveBrandFromGarage';
 export * from './useSendVerifyCode';
+export * from './useSocket';
 export * from './useStaffLogin';
 export * from './useUpdateCarApi';
 export * from './useUpdateGarage';
