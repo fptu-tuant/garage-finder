@@ -15,15 +15,14 @@ import { twcx } from '@/utils';
 const { Sider, Content } = Layout;
 
 function Conversations() {
-  const [{ user }] = useAuthStore();
   const router = useRouter();
 
   const [rooms, setRooms] = useState<Room[]>();
-  const { getUserRooms, lastJsonMessage } = useSocket();
+  const { getGarageRooms, lastJsonMessage } = useSocket();
 
   useEffect(() => {
-    getUserRooms(user?.id);
-  }, [getUserRooms, user?.id]);
+    getGarageRooms(Number(router.query.garageId));
+  }, [getGarageRooms, router.query.garageId]);
 
   useEffect(() => {
     if (isWsGetList(lastJsonMessage)) {
@@ -49,7 +48,6 @@ function Conversations() {
     <div className="overflow-y-auto">
       <List
         itemLayout="horizontal"
-        loading={isNil(rooms)}
         dataSource={rooms}
         renderItem={(room) => (
           <List.Item
@@ -75,6 +73,8 @@ function Detail() {
 
   const { garageId, roomId } = query as { garageId: string; roomId: string };
 
+  const [room, setRoom] = useState<Room>();
+
   const roomID = Number(roomId);
   const garageID = Number(garageId);
 
@@ -90,8 +90,8 @@ function Detail() {
   const {
     lastJsonMessage,
     getMessagesByRoomId,
-    sendMessageToGarage,
-    getUserRooms,
+    sendMessageToUser,
+    getGarageRooms,
   } = useSocket();
 
   useEffect(() => {
@@ -99,10 +99,12 @@ function Detail() {
   }, [getMessagesByRoomId, roomID]);
 
   useEffect(() => {
-    isNaN(roomID) && getUserRooms(user?.id);
-  }, [getUserRooms, roomID, user?.id]);
+    isNaN(roomID) && getGarageRooms(user?.id);
+  }, [getGarageRooms, roomID, user?.id]);
 
   useEffect(() => {
+    console.table(lastJsonMessage);
+
     if (isWsMessage(lastJsonMessage)) {
       setMessages(lastJsonMessage as Message[]);
     }
@@ -113,6 +115,7 @@ function Detail() {
       );
 
       if (room) {
+        setRoom(room);
         push({ query: { ...query, roomId: room.RoomID } }, undefined, {
           shallow: true,
         });
@@ -121,12 +124,13 @@ function Detail() {
   }, [garage?.garageID, lastJsonMessage, push, query]);
 
   const onSendMessage = (message: string) => {
-    sendMessageToGarage({
+    sendMessageToUser({
+      userId: user?.id,
       garageId: garageID,
       message,
     });
 
-    isNaN(roomID) ? getUserRooms(user?.id) : getMessagesByRoomId(roomID);
+    isNaN(roomID) ? getGarageRooms(user?.id) : getMessagesByRoomId(roomID);
   };
 
   return (
@@ -136,17 +140,20 @@ function Detail() {
           type="ghost"
           icon={<ArrowLeftOutlined className="text-xl" />}
           className="hover:text-purple-800"
-          onClick={() => push('my-garages/manage/chat')}
+          onClick={() => push('/my-garages/manage/chat')}
         />
 
-        <Avatar className="ml-4" src={garage?.thumbnail} />
+        <Avatar className="ml-4" src={room?.LinkImage} />
 
-        <span className="font-bold text-xl">{garage?.garageName}</span>
+        <span className="font-bold text-xl">{room?.UserID}</span>
       </div>
 
       <div
         className="grow p-2 overflow-y-auto pt-3"
-        ref={(ref) => ref?.scrollTo({ top: 999999999, behavior: 'smooth' })}
+        ref={(ref) => {
+          ref?.scrollTo({ top: 999999999, behavior: 'smooth' });
+          ref?.focus();
+        }}
       >
         <Spin spinning={isNil(messages) && !!roomId}>
           {messages?.map((message) => (
@@ -165,12 +172,10 @@ function Detail() {
             </div>
           ))}
         </Spin>
-
-        {/* <div ref={bottomRef} /> */}
       </div>
 
       <div className="absolute inset-x-0 bottom-0 flex gap-3 items-center">
-        <Avatar src={user?.avatar} />
+        <Avatar src={garage?.thumbnail} />
 
         <Form
           className="w-full"
@@ -190,9 +195,9 @@ function Detail() {
   );
 }
 
-export default function UserChatPage() {
+export default function GarageChatPage() {
   const { query } = useRouter();
-  const { roomId, garageId } = query as { roomId: string; garageId: string };
+  const { roomId, userId } = query as { roomId: string; userId: string };
 
   return (
     <Layout hasSider className="bg-transparent mt-20">
@@ -200,7 +205,7 @@ export default function UserChatPage() {
         <UserDashboardSider />
       </Sider>
       <Content className="flex flex-col pr-6 pl-10 h-[60vh]">
-        {roomId || garageId ? <Detail key={garageId} /> : <Conversations />}
+        {roomId || userId ? <Detail /> : <Conversations />}
       </Content>
     </Layout>
   );

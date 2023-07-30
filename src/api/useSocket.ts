@@ -33,28 +33,62 @@ export function useSocket() {
     [sendJsonMessage]
   );
 
-  const sendMessageToGarage = (props: {
-    garageId: number;
-    message: string;
-  }) => {
-    const { garageId, message } = props;
-    console.log('sendMessageToGarage', garageId);
+  const sendMessageToGarage = useCallback(
+    (props: { garageId: number; message: string }) => {
+      const { garageId, message } = props;
+      console.log('sendMessageToGarage', garageId);
 
-    sendJsonMessage({
-      type: 'UserSendMessageToGarage',
-      message: {
-        Content: message,
-        GarageID: garageId,
-      },
-    });
-  };
+      sendJsonMessage({
+        type: 'UserSendMessageToGarage',
+        message: {
+          Content: message,
+          GarageID: garageId,
+        },
+      });
+    },
+    [sendJsonMessage]
+  );
+
+  const sendMessageToUser = useCallback(
+    (props: {
+      message: string;
+      userId: number | undefined;
+      garageId: number;
+    }) => {
+      const { message, garageId, userId } = props;
+
+      console.log('sendMessageToUser', { userId, garageId });
+      sendJsonMessage({
+        type: 'GarageSendMessgeToUser',
+        message: {
+          Content: message,
+          UserID: userId,
+          FromGarageId: garageId,
+        },
+      });
+    },
+    [sendJsonMessage]
+  );
+
+  const getGarageRooms = useCallback(
+    (garageId: number | undefined) => {
+      console.log('getGarageRooms', { garageId });
+      sendJsonMessage({
+        type: 'GetListRoomByGarageId',
+        message: garageId,
+      });
+    },
+    [sendJsonMessage]
+  );
 
   return {
     lastJsonMessage,
     lastMessage,
+    connection: getWebSocket(),
     getUserRooms,
     getMessagesByRoomId,
     sendMessageToGarage,
-    connection: getWebSocket(),
+    sendMessageToUser,
+    getGarageRooms,
   };
 }

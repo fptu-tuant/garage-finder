@@ -4,6 +4,7 @@ import {
   FileImageOutlined,
   HistoryOutlined,
   ScheduleOutlined,
+  WechatOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
@@ -126,6 +127,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <UsersIcon className="text-lg" />
           <span className="ms-[18px]">Quản lý nhân viên</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/chat',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/chat',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <WechatOutlined className="text-lg" />
+          <span className="ms-[18px]">Tin nhắn</span>
         </Link>
       ),
     },
