@@ -140,11 +140,7 @@ function Detail() {
           type="ghost"
           icon={<ArrowLeftOutlined className="text-xl" />}
           className="hover:text-purple-800"
-          onClick={() =>
-            push(
-              `/my-garages/manage/chat?garageId=${garageId}&roomId=${roomId}`
-            )
-          }
+          onClick={() => push(`/my-garages/manage/chat?garageId=${garageId}`)}
         />
 
         <Avatar className="ml-4" src={avatar} alt="user image" />
