@@ -66,7 +66,9 @@ export function AdminLayout({ children }: PropsWithChildren) {
                   bordered={false}
                   className="flex flex-col gap-4 items-center"
                 >
-                  <div className="text-4xl font-bold">{users?.length ?? 0}</div>
+                  <div className="text-4xl font-bold text-center">
+                    {users?.length ?? 0}
+                  </div>
                   <div>Users</div>
                 </Card>
               </Col>
@@ -75,7 +77,7 @@ export function AdminLayout({ children }: PropsWithChildren) {
                   bordered={false}
                   className="flex flex-col gap-4 items-center"
                 >
-                  <div className="text-4xl font-bold">
+                  <div className="text-4xl font-bold text-center">
                     {garages?.length ?? 0}
                   </div>
                   <div>Garages</div>

@@ -1,19 +1,15 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Avatar, Button, Form, Input, Layout, List, Spin } from 'antd';
+import { Avatar, Button, Form, Input, List, Spin } from 'antd';
 import { isNil } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
 import { useSocket } from '@/api/useSocket';
-import { UserDashboardSider } from '@/components';
-import { useAuthStore } from '@/context';
 import { ManageGarageLayout } from '@/layouts';
 import { isWsGetList, isWsMessage } from '@/services/websocket.service';
 import { Message, Room } from '@/types';
 import { twcx } from '@/utils';
-
-const { Sider, Content } = Layout;
 
 function Conversations() {
   const router = useRouter();
@@ -38,6 +34,7 @@ function Conversations() {
           ...router.query,
           roomId: room.RoomID,
           garageId: room.GarageID,
+          userId: room.UserID,
         },
       },
       undefined,
@@ -72,19 +69,20 @@ function Detail() {
 
   const [form] = Form.useForm();
 
-  const { garageId, roomId } = query as { garageId: string; roomId: string };
-
-  const [room, setRoom] = useState<Room>();
+  const { garageId, roomId, userId } = query as {
+    garageId: string;
+    roomId: string;
+    userId: string;
+  };
 
   const roomID = Number(roomId);
   const garageID = Number(garageId);
+  const userID = Number(userId);
 
   const { data: garage } = useGetGarageByIdApi(
     { enabled: !isNaN(garageID) },
     { id: garageID }
   );
-
-  const [{ user }] = useAuthStore();
 
   const [messages, setMessages] = useState<Message[]>();
 
@@ -100,12 +98,10 @@ function Detail() {
   }, [getMessagesByRoomId, roomID]);
 
   useEffect(() => {
-    isNaN(roomID) && getGarageRooms(user?.id);
-  }, [getGarageRooms, roomID, user?.id]);
+    isNaN(roomID) && getGarageRooms(garageID);
+  }, [garageID, getGarageRooms, roomID]);
 
   useEffect(() => {
-    console.table(lastJsonMessage);
-
     if (isWsMessage(lastJsonMessage)) {
       setMessages(lastJsonMessage as Message[]);
     }
@@ -116,7 +112,6 @@ function Detail() {
       );
 
       if (room) {
-        setRoom(room);
         push({ query: { ...query, roomId: room.RoomID } }, undefined, {
           shallow: true,
         });
@@ -126,12 +121,12 @@ function Detail() {
 
   const onSendMessage = (message: string) => {
     sendMessageToUser({
-      userId: user?.id,
+      userId: userID,
       garageId: garageID,
       message,
     });
 
-    isNaN(roomID) ? getGarageRooms(user?.id) : getMessagesByRoomId(roomID);
+    isNaN(roomID) ? getGarageRooms(garageID) : getMessagesByRoomId(roomID);
   };
 
   return (
@@ -144,9 +139,9 @@ function Detail() {
           onClick={() => push('/my-garages/manage/chat')}
         />
 
-        <Avatar className="ml-4" src={room?.LinkImage} />
+        <Avatar className="ml-4" src={''} alt="user image" />
 
-        <span className="font-bold text-xl">{room?.UserID}</span>
+        <span className="font-bold text-xl">user name</span>
       </div>
 
       <div
@@ -164,9 +159,7 @@ function Detail() {
                 ['flex-row-reverse']: message.IsSendByMe,
               })}
             >
-              <Avatar
-                src={message.IsSendByMe ? user?.avatar : garage?.thumbnail}
-              />
+              <Avatar src={message.IsSendByMe ? garage?.thumbnail : ''} />
               <p className="bg-slate-200 p-3 rounded-full text-slate-900 m-0">
                 {message.Content}
               </p>

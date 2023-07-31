@@ -1,14 +1,16 @@
-import { Input, Table } from 'antd';
+import { Input, Table, Tag } from 'antd';
 import { useState } from 'react';
 
 import { useAdminGetGarages, useAdminGetUsers } from '@/api';
 import { AdminLayout } from '@/layouts';
 
 export default function AdminManageGaragesPage() {
-  const { data, isLoading } = useAdminGetGarages();
+  const { data: garages, isLoading } = useAdminGetGarages();
   const { data: users } = useAdminGetUsers({ queryKey: 'users-admin' });
 
   const [search, setSearch] = useState('');
+
+  console.table(garages);
 
   return (
     <div>
@@ -44,12 +46,20 @@ export default function AdminManageGaragesPage() {
             render: (_, item) => item.addressDetail,
           },
           {
+            title: 'Trạng thái',
+            render: (_, item) => (
+              <Tag className="rounded-full" color="green">
+                {item.status}
+              </Tag>
+            ),
+          },
+          {
             title: 'Chủ garage',
             render: (_, item) =>
               users?.find((user) => user.userID === item.userID)?.name,
           },
         ]}
-        dataSource={data?.filter((item) =>
+        dataSource={garages?.filter((item) =>
           item.garageName?.toLowerCase().includes(search.toLowerCase())
         )}
       />
