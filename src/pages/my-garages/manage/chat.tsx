@@ -163,7 +163,7 @@ function Detail() {
                 ['flex-row-reverse']: message.IsSendByMe,
               })}
             >
-              <Avatar src={message.IsSendByMe ? garage?.thumbnail : ''} />
+              <Avatar src={message.IsSendByMe ? garage?.thumbnail : avatar} />
               <p className="bg-slate-200 p-3 rounded-full text-slate-900 m-0">
                 {message.Content}
               </p>
