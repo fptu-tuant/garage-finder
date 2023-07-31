@@ -35,6 +35,8 @@ function Conversations() {
           roomId: room.RoomID,
           garageId: room.GarageID,
           userId: room.UserID,
+          avatar: room.LinkImage,
+          name: room.Name,
         },
       },
       undefined,
@@ -69,10 +71,12 @@ function Detail() {
 
   const [form] = Form.useForm();
 
-  const { garageId, roomId, userId } = query as {
+  const { garageId, roomId, userId, avatar, name } = query as {
     garageId: string;
     roomId: string;
     userId: string;
+    avatar: string;
+    name: string;
   };
 
   const roomID = Number(roomId);
@@ -130,18 +134,22 @@ function Detail() {
   };
 
   return (
-    <div className="h-full relative py-20 flex flex-col">
+    <div className="h-[70vh] relative py-20 flex flex-col">
       <div className="h-20 absolute top-0 inset-x-0 flex items-center px-2 border-b border-0 border-solid border-slate-100 gap-4">
         <Button
           type="ghost"
           icon={<ArrowLeftOutlined className="text-xl" />}
           className="hover:text-purple-800"
-          onClick={() => push('/my-garages/manage/chat')}
+          onClick={() =>
+            push(
+              `/my-garages/manage/chat?garageId=${garageId}&roomId=${roomId}`
+            )
+          }
         />
 
-        <Avatar className="ml-4" src={''} alt="user image" />
+        <Avatar className="ml-4" src={avatar} alt="user image" />
 
-        <span className="font-bold text-xl">user name</span>
+        <span className="font-bold text-xl">{name}</span>
       </div>
 
       <div
