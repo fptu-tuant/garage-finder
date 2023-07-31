@@ -8,6 +8,7 @@ import { useGetGarageByIdApi } from '@/api';
 import { useSocket } from '@/api/useSocket';
 import { UserDashboardSider } from '@/components';
 import { useAuthStore } from '@/context';
+import { ManageGarageLayout } from '@/layouts';
 import { isWsGetList, isWsMessage } from '@/services/websocket.service';
 import { Message, Room } from '@/types';
 import { twcx } from '@/utils';
@@ -199,14 +200,7 @@ export default function GarageChatPage() {
   const { query } = useRouter();
   const { roomId, userId } = query as { roomId: string; userId: string };
 
-  return (
-    <Layout hasSider className="bg-transparent mt-20">
-      <Sider className="text-center bg-transparent">
-        <UserDashboardSider />
-      </Sider>
-      <Content className="flex flex-col pr-6 pl-10 h-[60vh]">
-        {roomId || userId ? <Detail /> : <Conversations />}
-      </Content>
-    </Layout>
-  );
+  return roomId || userId ? <Detail /> : <Conversations />;
 }
+
+GarageChatPage.Layout = ManageGarageLayout;

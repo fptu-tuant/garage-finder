@@ -48,6 +48,12 @@ export default function LoginPage() {
 
     showSuccess('Đăng nhập thành công!');
 
+    if (data.roleName.nameRole === 'admin') {
+      router.replace('/admin');
+
+      return;
+    }
+
     router.push('/garages');
   };
 
