@@ -33,6 +33,7 @@ export function AdminLayout({ children }: PropsWithChildren) {
       danger: true,
       onClick: () => {
         dispatch({ type: 'SIGN_OUT' });
+        router.push('/');
       },
     },
   ];
