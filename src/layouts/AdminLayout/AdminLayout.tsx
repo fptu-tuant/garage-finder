@@ -1,15 +1,17 @@
-import { CarOutlined } from '@ant-design/icons';
+import { CarOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Card, Col, Layout, Menu, MenuProps, Row, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { createElement, PropsWithChildren, useState } from 'react';
 
 import { useAdminGetGarages, useAdminGetUsers } from '@/api';
+import { useAuthStore } from '@/context';
 import { UserEditIcon } from '@/icons';
 
 const { Header, Content, Sider } = Layout;
 
 export function AdminLayout({ children }: PropsWithChildren) {
   const router = useRouter();
+  const [, dispatch] = useAuthStore();
 
   const items: MenuProps['items'] = [
     {
@@ -24,15 +26,26 @@ export function AdminLayout({ children }: PropsWithChildren) {
       icon: createElement(CarOutlined),
       onClick: () => router.push('/admin/garages'),
     },
+    {
+      key: 'log-out',
+      label: <span>Đăng xuất</span>,
+      icon: createElement(LogoutOutlined),
+      danger: true,
+      onClick: () => {
+        dispatch({ type: 'SIGN_OUT' });
+      },
+    },
   ];
 
   const [collapsed, setCollapsed] = useState(false);
 
   const { data: garages, isLoading: fetchingGarages } = useAdminGetGarages({
     queryKey: 'admin-layout-users',
+    variables: { body: {} },
   });
   const { data: users, isLoading: fetchingUsers } = useAdminGetUsers({
     queryKey: 'admin-layout-garages',
+    variables: { body: {} },
   });
 
   return (

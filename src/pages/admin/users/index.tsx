@@ -5,7 +5,7 @@ import { useAdminGetUsers } from '@/api';
 import { AdminLayout } from '@/layouts';
 
 export default function AdminManageUsersPage() {
-  const { data, isLoading } = useAdminGetUsers();
+  const { data, isLoading } = useAdminGetUsers({ variables: { body: {} } });
 
   const [search, setSearch] = useState('');
 

@@ -11,6 +11,7 @@ export * from './useAddOrderFromGuest';
 export * from './useAddOrderWithoutCar';
 export * from './useAddService';
 export * from './useAddStaff';
+export * from './useAdminChangeGarageStatus';
 export * from './useAdminGetGarages';
 export * from './useAdminGetUsers';
 export * from './useBlockStaff';

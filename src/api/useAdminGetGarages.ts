@@ -49,7 +49,9 @@ export function useAdminGetGarages(
   options?: BaseQueryApiOptions<GarageInfo[]>
 ) {
   return useBaseQueryApi({
+    method: 'POST',
     endpoint: '/api/Admin/GetGarages',
+
     ...options,
   });
 }

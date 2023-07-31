@@ -1,16 +1,44 @@
-import { Input, Table, Tag } from 'antd';
+import { Button, Input, Table, Tag } from 'antd';
 import { useState } from 'react';
 
-import { useAdminGetGarages, useAdminGetUsers } from '@/api';
+import {
+  useAdminChangeGarageStatus,
+  useAdminGetGarages,
+  useAdminGetUsers,
+} from '@/api';
 import { AdminLayout } from '@/layouts';
 
+const STATUS_NAMES = {
+  active: 'Đang họat động',
+  waiting: 'Chờ duyệt',
+  denined: 'Bị từ chối',
+  locked: 'Bị khóa',
+};
+
+const STATUS_COLORS = {
+  active: 'green',
+  waiting: 'orange',
+  denined: 'grey',
+  locked: 'red',
+};
+
 export default function AdminManageGaragesPage() {
-  const { data: garages, isLoading } = useAdminGetGarages();
-  const { data: users } = useAdminGetUsers({ queryKey: 'users-admin' });
+  const {
+    data: garages,
+    isLoading,
+    refetch,
+  } = useAdminGetGarages({
+    variables: { body: {} },
+  });
+  const { data: users } = useAdminGetUsers({
+    queryKey: 'users-admin',
+    variables: { body: {} },
+  });
+
+  const { mutateAsync: changeGarageStatus, isLoading: buttonLoading } =
+    useAdminChangeGarageStatus();
 
   const [search, setSearch] = useState('');
-
-  console.table(garages);
 
   return (
     <div>
@@ -48,8 +76,17 @@ export default function AdminManageGaragesPage() {
           {
             title: 'Trạng thái',
             render: (_, item) => (
-              <Tag className="rounded-full" color="green">
-                {item.status}
+              <Tag
+                className="rounded-full"
+                color={
+                  STATUS_COLORS[
+                    item.status as unknown as keyof typeof STATUS_NAMES
+                  ]
+                }
+              >
+                {STATUS_NAMES[
+                  item.status as unknown as keyof typeof STATUS_NAMES
+                ] ?? item.status}
               </Tag>
             ),
           },
@@ -57,6 +94,65 @@ export default function AdminManageGaragesPage() {
             title: 'Chủ garage',
             render: (_, item) =>
               users?.find((user) => user.userID === item.userID)?.name,
+          },
+          {
+            title: 'Hoạt động',
+            render: (_, item) => (
+              <div className="flex gap-3">
+                {item.status === 'waiting' && (
+                  <Button
+                    onClick={async () => {
+                      await changeGarageStatus({
+                        body: { garageId: item.garageID, status: 'active' },
+                      });
+                      await refetch();
+                    }}
+                    disabled={buttonLoading}
+                  >
+                    Chấp nhận
+                  </Button>
+                )}
+                {item.status === 'waiting' && (
+                  <Button
+                    onClick={async () => {
+                      await changeGarageStatus({
+                        body: { garageId: item.garageID, status: 'denined' },
+                      });
+                      await refetch();
+                    }}
+                    disabled={buttonLoading}
+                  >
+                    Từ chối
+                  </Button>
+                )}
+                {item.status === 'active' && (
+                  <Button
+                    onClick={async () => {
+                      await changeGarageStatus({
+                        body: { garageId: item.garageID, status: 'locked' },
+                      });
+                      await refetch();
+                    }}
+                    disabled={buttonLoading}
+                  >
+                    Khóa
+                  </Button>
+                )}
+                {item.status === 'locked' && (
+                  <Button
+                    onClick={async () => {
+                      await changeGarageStatus({
+                        body: { garageId: item.garageID, status: 'active' },
+                      });
+                      await refetch();
+                    }}
+                    disabled={buttonLoading}
+                  >
+                    Mở Khóa
+                  </Button>
+                )}
+              </div>
+            ),
           },
         ]}
         dataSource={garages?.filter((item) =>
