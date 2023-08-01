@@ -8,7 +8,11 @@ import { useGetGarageByIdApi } from '@/api';
 import { useSocket } from '@/api/useSocket';
 import { UserDashboardSider } from '@/components';
 import { useAuthStore } from '@/context';
-import { isWsGetList, isWsMessage } from '@/services/websocket.service';
+import {
+  isDetailRoom,
+  isWsGetList,
+  isWsMessage,
+} from '@/services/websocket.service';
 import { Message, Room } from '@/types';
 import { twcx } from '@/utils';
 
@@ -104,6 +108,11 @@ function Detail() {
 
   useEffect(() => {
     if (isWsMessage(lastJsonMessage)) {
+      getMessagesByRoomId(roomID);
+    }
+
+    if (isDetailRoom(lastJsonMessage)) {
+      console.log('here');
       setMessages(lastJsonMessage as Message[]);
     }
 
@@ -118,7 +127,14 @@ function Detail() {
         });
       }
     }
-  }, [garage?.garageID, lastJsonMessage, push, query]);
+  }, [
+    garage?.garageID,
+    getMessagesByRoomId,
+    lastJsonMessage,
+    push,
+    query,
+    roomID,
+  ]);
 
   const onSendMessage = (message: string) => {
     sendMessageToGarage({

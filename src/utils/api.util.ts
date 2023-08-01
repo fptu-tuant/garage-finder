@@ -6,12 +6,17 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-api.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem(
-    ACCESS_TOKEN_KEY
-  )}`;
+api.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      ACCESS_TOKEN_KEY
+    )}`;
 
-  return config;
-}, Promise.reject);
+    return config;
+  },
+  (error) => {
+    console.info('authError trungluc', error);
+  }
+);
 
 export { api };
