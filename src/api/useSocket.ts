@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import useWebSocket from 'react-use-websocket';
 
 import { getWebSocketUrl } from '@/services/websocket.service';
+import { showError, showSuccess } from '@/utils';
 
 export function useSocket() {
   const { lastJsonMessage, lastMessage, sendJsonMessage, getWebSocket } =
@@ -9,6 +10,8 @@ export function useSocket() {
       share: true,
       shouldReconnect: () => true,
       // onError: (e) => showError('ERROR' + e),
+      onClose: () => showError('WS closed'),
+      onOpen: () => showSuccess('WS connect'),
     });
 
   const getUserRooms = useCallback(
