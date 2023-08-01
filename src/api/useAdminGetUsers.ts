@@ -16,6 +16,7 @@ type User = {
 
 export function useAdminGetUsers(options?: BaseQueryApiOptions<User[]>) {
   return useBaseQueryApi({
+    method: 'POST',
     endpoint: '/api/Admin/GetUsers',
     ...options,
   });

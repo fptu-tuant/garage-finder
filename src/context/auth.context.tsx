@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 
 import { ACCESS_TOKEN_KEY } from '@/constants';
 import { Maybe, User } from '@/types';
-import { api, showError } from '@/utils';
+import { api } from '@/utils';
 import { makeContext } from '@/utils/context-builder.util';
 
 type AuthStore = {
@@ -65,10 +65,12 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
 
   try {
     const { data } = await api<{
+      userID: number;
       phoneNumber: string;
       emailAddress: string;
       name: string;
       linkImage: string | null;
+      accessToken: string;
     }>({
       method: 'GET',
       url: '/api/User/get',
@@ -78,6 +80,8 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
       type: 'SIGN_IN',
       payload: {
         user: {
+          accessToken: data.accessToken,
+          id: data.userID,
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,
@@ -91,10 +95,12 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
   } catch (error) {
     try {
       const { data } = await api<{
+        useID: number;
         phoneNumber: string;
         emailAddress: string;
         name: string;
         linkImage: string | null;
+        accessToken: string;
       }>({
         method: 'POST',
         url: '/api/Staff/getMyStaffInfor',
@@ -104,6 +110,8 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
         type: 'SIGN_IN',
         payload: {
           user: {
+            accessToken: data.accessToken,
+            id: data.useID,
             email: data.emailAddress,
             fullName: data.name,
             phone: data.phoneNumber,

@@ -2,6 +2,7 @@ import {
   HeartOutlined,
   LockOutlined,
   ScheduleOutlined,
+  WechatOutlined,
 } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
@@ -60,6 +61,15 @@ export const MENU_ITEMS: ItemType[] = [
       <Link href="/manage/history" className="flex gap-2 items-center">
         <ScheduleOutlined className="text-lg" />
         <span className="m-0">Lịch sử sửa chữa</span>
+      </Link>
+    ),
+  },
+  {
+    key: '/manage/chat',
+    label: (
+      <Link href="/manage/chat" className="flex gap-2 items-center">
+        <WechatOutlined className="text-lg" />
+        <span className="m-0">Nhắn tin</span>
       </Link>
     ),
   },

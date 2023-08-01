@@ -33,6 +33,8 @@ export default function LoginPage() {
       type: 'SIGN_IN',
       payload: {
         user: {
+          id: data.userID,
+          accessToken: data.accessToken,
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,
@@ -45,6 +47,12 @@ export default function LoginPage() {
     });
 
     showSuccess('Đăng nhập thành công!');
+
+    if (data.roleName.nameRole === 'admin') {
+      router.replace('/admin');
+
+      return;
+    }
 
     router.push('/garages');
   };

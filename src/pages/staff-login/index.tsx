@@ -27,6 +27,8 @@ export default function StaffLoginPage() {
       type: 'SIGN_IN',
       payload: {
         user: {
+          accessToken: data.accessToken,
+          id: data.userID,
           email: data.emailAddress,
           fullName: data.name,
           phone: data.phoneNumber,
