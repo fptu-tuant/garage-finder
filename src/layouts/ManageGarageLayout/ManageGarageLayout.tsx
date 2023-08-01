@@ -1,4 +1,5 @@
 import {
+  BarcodeOutlined,
   CalendarOutlined,
   CarOutlined,
   FileImageOutlined,
@@ -127,6 +128,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <UsersIcon className="text-lg" />
           <span className="ms-[18px]">Quản lý nhân viên</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/subscriptions',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/subscriptions',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <BarcodeOutlined className="text-lg" />
+          <span className="ms-[18px]">Gói thành viên</span>
         </Link>
       ),
     },
