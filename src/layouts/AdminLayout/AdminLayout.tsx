@@ -27,6 +27,12 @@ export function AdminLayout({ children }: PropsWithChildren) {
       onClick: () => router.push('/admin/garages'),
     },
     {
+      key: '/admin/waiting-garages',
+      label: 'Garages cần duyệt',
+      icon: createElement(CarOutlined),
+      onClick: () => router.push('/admin/waiting-garages'),
+    },
+    {
       key: 'log-out',
       label: <span>Đăng xuất</span>,
       icon: createElement(LogoutOutlined),
