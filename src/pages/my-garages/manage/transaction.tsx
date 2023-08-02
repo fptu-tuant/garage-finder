@@ -1,10 +1,16 @@
-import { Button, Result, Skeleton, Table, Typography } from 'antd';
+import { Button, Result, Skeleton, Table, Tag, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAdminGetRegisteredSubscriptions } from '@/api/useAdminGetRegisteredSubscriptions';
 import { ManageGarageLayout } from '@/layouts';
+
+const PAID_STATUS = {
+  waiting: 'Đợi thanh toán',
+  paid: 'Đã thanh toán',
+  fail: 'Thanh toán không thành công',
+};
 
 export default function ManageGarageTransactionPage() {
   const { query, push } = useRouter();
@@ -27,7 +33,6 @@ export default function ManageGarageTransactionPage() {
           <Result
             status="success"
             title="Mua gói thành viên thành công"
-            // subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
             extra={[
               <Button
                 type="primary"
@@ -64,7 +69,14 @@ export default function ManageGarageTransactionPage() {
                 render: (_, item) =>
                   dayjs(item.expirationDate).format('DD-MM-YYYY'),
               },
-              { title: 'Trạng thái', render: (_, item) => 'API chưa có' },
+              {
+                title: 'Trạng thái',
+                render: (_, item) => (
+                  <Tag className="rounded-full">
+                    {PAID_STATUS[item.status as keyof typeof PAID_STATUS]}
+                  </Tag>
+                ),
+              },
             ]}
             dataSource={data}
           />

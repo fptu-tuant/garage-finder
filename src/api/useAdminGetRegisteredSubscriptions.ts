@@ -8,9 +8,9 @@ type Subscription = {
   content: string;
   price: number;
   period: number;
-  status: number;
   dateCreate: string;
   expirationDate: string;
+  status: string;
 };
 
 export function useAdminGetRegisteredSubscriptions({
