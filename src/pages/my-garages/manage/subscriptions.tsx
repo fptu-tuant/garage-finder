@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useAdminGetPaymentLink, useAdminGetSubscriptions } from '@/api';
 import { ManageGarageLayout } from '@/layouts';
 
-export default function ManageGarageInfoPage() {
+export default function ManageGarageSubscriptionsPage() {
   const { query } = useRouter();
   const { garageId = '' } = query as { garageId: string };
 
@@ -61,4 +61,4 @@ export default function ManageGarageInfoPage() {
   );
 }
 
-ManageGarageInfoPage.Layout = ManageGarageLayout;
+ManageGarageSubscriptionsPage.Layout = ManageGarageLayout;

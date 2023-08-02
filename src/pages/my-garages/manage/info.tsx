@@ -10,6 +10,8 @@ import {
 import dayjs, { Dayjs } from 'dayjs';
 import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import MapPicker from 'react-google-map-picker';
 
 import { useGetGarageByIdApi, useUpdateGarage } from '@/api';
 import { SingleUploadDragger } from '@/components';
@@ -30,6 +32,9 @@ const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
 export default function ManageGarageInfoPage() {
   const [form] = Form.useForm();
   const { query } = useRouter();
+
+  const [location, setLocation] = useState({ lat: 10, lng: 106 });
+  const [zoom, setZoom] = useState(16);
 
   const { mutate: updateGarage, isLoading: updatingGarage } = useUpdateGarage();
   const {
@@ -154,6 +159,19 @@ export default function ManageGarageInfoPage() {
                 <SingleUploadDragger />
               </Form.Item>
             </div>
+
+            {/* <div className="col-span-4">
+              <MapPicker
+                defaultLocation={location}
+                zoom={zoom}
+                className="h-[500px] w-full"
+                onChangeLocation={(lat, lng) => {
+                  setLocation({ lat, lng });
+                }}
+                onChangeZoom={setZoom}
+                apiKey="AIzaSyDkRSjjCX8h88-czGbVC97_N_qkE-FHEKk"
+              />
+            </div> */}
           </Form>
         </div>
       </Skeleton>

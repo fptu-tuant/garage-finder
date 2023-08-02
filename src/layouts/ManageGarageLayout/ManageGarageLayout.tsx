@@ -1,4 +1,5 @@
 import {
+  AuditOutlined,
   BarcodeOutlined,
   CalendarOutlined,
   CarOutlined,
@@ -128,6 +129,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
         >
           <UsersIcon className="text-lg" />
           <span className="ms-[18px]">Quản lý nhân viên</span>
+        </Link>
+      ),
+    },
+    {
+      key: '/my-garages/manage/transaction',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/transaction',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <AuditOutlined className="text-lg" />
+          <span className="ms-[18px]">Giao dịch</span>
         </Link>
       ),
     },

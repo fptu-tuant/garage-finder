@@ -9,13 +9,16 @@ type Subscription = {
   price: number;
   period: number;
   status: number;
+  dateCreate: string;
+  expirationDate: string;
 };
 
-export function useAdminGetRegisteredSubscriptions(
-  options?: BaseQueryApiOptions<Subscription[]>
-) {
+export function useAdminGetRegisteredSubscriptions({
+  garageId,
+  ...options
+}: BaseQueryApiOptions<Subscription[]> & { garageId: number }) {
   return useBaseQueryApi({
-    endpoint: '/api/Subscription/getAll',
+    endpoint: `/api/Subscription/registeredSubscription/${garageId}`,
     ...options,
   });
 }
