@@ -28,6 +28,10 @@ export default function AdminManageUsersPage() {
 
   const [search, setSearch] = useState('');
 
+  const filteredData = data?.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div>
       <div className="mb-10">
@@ -116,9 +120,7 @@ export default function AdminManageUsersPage() {
             ),
           },
         ]}
-        dataSource={data?.filter((item) =>
-          item.name?.toLowerCase().includes(search.toLowerCase())
-        )}
+        dataSource={filteredData}
       />
     </div>
   );

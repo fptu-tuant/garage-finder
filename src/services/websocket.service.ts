@@ -1,4 +1,4 @@
-import { first, has, isArray } from 'lodash-es';
+import { first, has, isArray, isObject } from 'lodash-es';
 import { ReadyState } from 'react-use-websocket';
 
 import { ACCESS_TOKEN_KEY, WEB_SOCKET_URL } from '@/constants';
@@ -23,6 +23,10 @@ export const isWsGetList = (event: unknown): event is Room[] => {
   return isArray(event) && has(first(event), 'RoomID');
 };
 
-export const isWsMessage = (event: unknown): event is Message[] => {
+export const isDetailRoom = (event: unknown): event is Message[] => {
   return isArray(event) && has(first(event), 'IsSendByMe');
+};
+
+export const isWsMessage = (event: unknown) => {
+  return isObject(event) && (event as { type: string }).type === 'chat';
 };

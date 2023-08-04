@@ -22,7 +22,7 @@ const STATUS_COLORS = {
   locked: 'red',
 };
 
-export default function AdminManageGaragesPage() {
+export default function AdminManageWaitingGaragesPage() {
   const {
     data: garages,
     isLoading,
@@ -44,7 +44,7 @@ export default function AdminManageGaragesPage() {
     ?.filter((item) =>
       item.garageName?.toLowerCase().includes(search.toLowerCase())
     )
-    .filter((item) => item.status !== 'waiting');
+    .filter((item) => item.status === 'waiting');
 
   return (
     <div>
@@ -167,4 +167,4 @@ export default function AdminManageGaragesPage() {
   );
 }
 
-AdminManageGaragesPage.Layout = AdminLayout;
+AdminManageWaitingGaragesPage.Layout = AdminLayout;

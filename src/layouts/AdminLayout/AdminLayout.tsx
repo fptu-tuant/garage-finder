@@ -1,4 +1,8 @@
-import { CarOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+  BarcodeOutlined,
+  CarOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 import { Card, Col, Layout, Menu, MenuProps, Row, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { createElement, PropsWithChildren, useState } from 'react';
@@ -25,6 +29,18 @@ export function AdminLayout({ children }: PropsWithChildren) {
       label: 'Quản lý garages',
       icon: createElement(CarOutlined),
       onClick: () => router.push('/admin/garages'),
+    },
+    {
+      key: '/admin/waiting-garages',
+      label: 'Garages cần duyệt',
+      icon: createElement(CarOutlined),
+      onClick: () => router.push('/admin/waiting-garages'),
+    },
+    {
+      key: '/admin/subscriptions',
+      label: 'Gói thành viên',
+      icon: createElement(BarcodeOutlined),
+      onClick: () => router.push('/admin/subscriptions'),
     },
     {
       key: 'log-out',
