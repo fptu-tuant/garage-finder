@@ -197,6 +197,21 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     },
     MENU_ITEMS[2],
     MENU_ITEMS[5],
+    {
+      key: '/my-garages/manage/chat',
+      label: (
+        <Link
+          href={{
+            pathname: '/my-garages/manage/chat',
+            query: router.query,
+          }}
+          className="flex gap-2 items-center"
+        >
+          <WechatOutlined className="text-lg" />
+          <span className="ms-[18px]">Tin nhắn</span>
+        </Link>
+      ),
+    },
   ];
 
   const selectedKey = router.pathname.split('/').slice(0, 4).join('/');
