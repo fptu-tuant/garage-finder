@@ -80,7 +80,12 @@ export default function AdminReportPage() {
         ]}
       />
 
-      <Modal open={open} onCancel={() => setOpen(false)} footer={null}>
+      <Modal
+        open={open}
+        onCancel={() => setOpen(false)}
+        footer={null}
+        width={800}
+      >
         {reportId && <ReportModalContent id={reportId} />}
       </Modal>
     </div>
