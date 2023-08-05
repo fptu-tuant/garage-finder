@@ -6,7 +6,6 @@ import {
   Divider,
   Dropdown,
   Popover,
-  Tooltip,
   Typography,
 } from 'antd';
 import Link from 'next/link';
