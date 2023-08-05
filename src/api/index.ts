@@ -9,6 +9,7 @@ export * from './useAddGargeImages';
 export * from './useAddOrder';
 export * from './useAddOrderFromGuest';
 export * from './useAddOrderWithoutCar';
+export * from './useAddReport';
 export * from './useAddService';
 export * from './useAddStaff';
 export * from './useAdminAddSubscriptions';

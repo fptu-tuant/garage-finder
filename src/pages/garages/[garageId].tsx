@@ -1,9 +1,15 @@
-import { CheckOutlined, MessageFilled, PhoneFilled } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  FlagOutlined,
+  MessageFilled,
+  PhoneFilled,
+} from '@ant-design/icons';
 import {
   Button,
   DatePicker,
   Form,
   Input,
+  Modal,
   Rate,
   Result,
   Select,
@@ -14,17 +20,19 @@ import dayjs from 'dayjs';
 import { isEmpty, range, take } from 'lodash-es';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import {
   useAddOrder,
   useAddOrderFromGuest,
   useAddOrderWithoutCar,
+  useAddReport,
   useGetFeedbackById,
   useGetGarageByIdApi,
   useSendVerifyCode,
 } from '@/api';
 import { useGetMyCarsApi } from '@/api/useGetMyCarsApi';
-import { CarBrandSelect, ServiceCard } from '@/components';
+import { CarBrandSelect, MultipleUpload, ServiceCard } from '@/components';
 import { REGEX_VIETNAM_PHONE } from '@/constants';
 import { useAuthStore } from '@/context';
 import { ClockIcon, PinMapFilledIcon } from '@/icons';
@@ -39,6 +47,52 @@ import { showError, showSuccess } from '@/utils';
 type RouteParams = {
   garageId: string;
 };
+
+function ReportModal(props: { garageId: number; onClose: () => void }) {
+  const { garageId, onClose } = props;
+
+  const { mutateAsync: addReport, isLoading } = useAddReport();
+
+  return (
+    <Form
+      className="mt-10"
+      layout="vertical"
+      onFinish={async (values) => {
+        await addReport({
+          body: {
+            garageID: garageId,
+            ...values,
+          },
+        });
+        showSuccess('Báo cáo thành công !');
+        onClose();
+      }}
+    >
+      <Typography className="mb-10 text-lg font-bold text-center">
+        Tại sao bạn muốn báo cáo garage này ?
+      </Typography>
+
+      <Form.Item label="Lý do" rules={[requiredRule()]} required name="reason">
+        <Input.TextArea autoSize={{ minRows: 4 }} />
+      </Form.Item>
+
+      <Form.Item name="imageLink">
+        <MultipleUpload />
+      </Form.Item>
+
+      <div className="flex justify-center mt-20">
+        <Button
+          disabled={isLoading}
+          loading={isLoading}
+          className="min-w-[80px]"
+          htmlType="submit"
+        >
+          Gửi
+        </Button>
+      </div>
+    </Form>
+  );
+}
 
 export default function GarageDetailPage() {
   const [{ user }] = useAuthStore();
@@ -75,6 +129,8 @@ export default function GarageDetailPage() {
   const { data: feebacks, isLoading: fetchingFeedback } = useGetFeedbackById(
     +garageId
   );
+
+  const [openReport, setOpenReport] = useState(false);
 
   if (!garage && !isLoading)
     return (
@@ -166,18 +222,35 @@ export default function GarageDetailPage() {
   return (
     <Skeleton active loading={isLoading}>
       <Typography.Title level={3}>{garage.garageName}</Typography.Title>
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <PinMapFilledIcon className="text-primary" />
-          <span className="text-neutral-600 font-semibold">
-            {getGarageDetailAddress(garage.addressDetail)}
-          </span>
+      <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <PinMapFilledIcon className="text-primary" />
+            <span className="text-neutral-600 font-semibold">
+              {getGarageDetailAddress(garage.addressDetail)}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ClockIcon className="text-primary" />
+            <span className="text-neutral-600 font-semibold">
+              Giờ mở cửa - đóng cửa: {openTime} - {closeTime}
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <ClockIcon className="text-primary" />
-          <span className="text-neutral-600 font-semibold">
-            Giờ mở cửa - đóng cửa: {openTime} - {closeTime}
-          </span>
+        <div>
+          <Button icon={<FlagOutlined />} onClick={() => setOpenReport(true)}>
+            Báo cáo
+          </Button>
+          <Modal
+            open={openReport}
+            onCancel={() => setOpenReport(false)}
+            footer={null}
+          >
+            <ReportModal
+              garageId={+garageId}
+              onClose={() => setOpenReport(false)}
+            />
+          </Modal>
         </div>
       </div>
 
