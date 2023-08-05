@@ -13,6 +13,8 @@ type GetGaragesData = Array<{
   latAddress: number;
   addressDetail: string;
   thumbnail: Maybe<string>;
+  feedbacksNumber: number;
+  star: number;
 }>;
 
 type GetGaragesVariables = {

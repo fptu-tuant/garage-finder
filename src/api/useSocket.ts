@@ -13,13 +13,6 @@ export function useSocket() {
 
         return true;
       },
-      onError: (e) => showError('ERROR: ' + e),
-      onClose: () => showError('WS closed'),
-      onOpen: () => showSuccess('WS connect'),
-      onMessage: (e) => {
-        showSuccess('Receive message');
-        console.log('MMMM', e);
-      },
     });
 
   const getUserRooms = useCallback(
@@ -92,6 +85,22 @@ export function useSocket() {
     [sendJsonMessage]
   );
 
+  const getAllNotifications = useCallback(
+    () =>
+      sendJsonMessage({
+        type: 'GetAllNotification',
+      }),
+    [sendJsonMessage]
+  );
+
+  const readAllNotifications = useCallback(
+    () =>
+      sendJsonMessage({
+        type: 'ReadAllNotification',
+      }),
+    [sendJsonMessage]
+  );
+
   return {
     lastJsonMessage,
     lastMessage,
@@ -101,5 +110,7 @@ export function useSocket() {
     sendMessageToGarage,
     sendMessageToUser,
     getGarageRooms,
+    getAllNotifications,
+    readAllNotifications,
   };
 }

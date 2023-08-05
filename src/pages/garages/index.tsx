@@ -111,6 +111,8 @@ export default function GaragesPage() {
     setKeyword(query?.keyword?.toString() || '');
   }, [form, query?.categoriesID, query?.keyword, query?.provineID]);
 
+  console.log(garages);
+
   return (
     <>
       <ContentWrapper className="w-2/5 flex gap-2 mx-auto">
@@ -177,8 +179,8 @@ export default function GaragesPage() {
                   image={garage.thumbnail}
                   title={garage.garageName}
                   address={garage.addressDetail}
-                  totalRate={318}
-                  rating={4.8}
+                  totalRate={garage.feedbacksNumber}
+                  rating={garage.star}
                 />
               ))}
 
