@@ -1,14 +1,26 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Divider, Dropdown, Typography } from 'antd';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Divider,
+  Dropdown,
+  Popover,
+  Tooltip,
+  Typography,
+} from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
+import { useSocket } from '@/api';
 import FlagUK from '@/assets/images/flag-uk.svg';
 import FlagVN from '@/assets/images/flag-vn.svg';
 import { MENU_ITEMS } from '@/constants';
 import { useAuthStore, useTranslateStore } from '@/context';
 import { BellIcon, EnvelopIcon } from '@/icons';
+import { isWsNotification } from '@/services/websocket.service';
 import { twcx } from '@/utils';
 
 type HeaderProps = {
@@ -18,6 +30,16 @@ type HeaderProps = {
 export function Header({ className }: HeaderProps) {
   const t = useTranslations();
   const [{ lang }, translateDispatch] = useTranslateStore();
+
+  const { lastJsonMessage, getAllNotifications, readAllNotifications } =
+    useSocket();
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    if (isWsNotification(lastJsonMessage)) {
+      getAllNotifications();
+    }
+  }, [getAllNotifications, lastJsonMessage]);
 
   const [{ user }, authDispatch] = useAuthStore();
   const hadLogin = !!user;
@@ -81,9 +103,11 @@ export function Header({ className }: HeaderProps) {
         {user ? (
           <div className="flex gap-6 items-center">
             <div className="rounded-full p-2 flex items-center justify-center w-4 h-4 border-slate-100 shadow-md">
-              <Badge dot>
-                <BellIcon className="text-xl text-neutral-700 cursor-pointer" />
-              </Badge>
+              <Popover placement="bottomLeft" content={<div>heheheehe</div>}>
+                <Badge dot>
+                  <BellIcon className="text-xl text-neutral-700 cursor-pointer" />
+                </Badge>
+              </Popover>
             </div>
 
             <div className="rounded-full p-2 flex items-center justify-center w-4 h-4 border-slate-100 shadow-md">

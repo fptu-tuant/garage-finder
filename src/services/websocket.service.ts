@@ -30,3 +30,7 @@ export const isDetailRoom = (event: unknown): event is Message[] => {
 export const isWsMessage = (event: unknown) => {
   return isObject(event) && (event as { type: string }).type === 'chat';
 };
+
+export const isWsNotification = (event: unknown) => {
+  return isObject(event) && (event as { type: string }).type === 'Notify';
+};

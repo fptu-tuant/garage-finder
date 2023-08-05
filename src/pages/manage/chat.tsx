@@ -53,7 +53,6 @@ function Conversations() {
     <div className="overflow-y-auto">
       <List
         itemLayout="horizontal"
-        loading={isNil(rooms)}
         dataSource={rooms}
         renderItem={(room) => (
           <List.Item
