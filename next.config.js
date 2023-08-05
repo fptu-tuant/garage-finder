@@ -30,7 +30,7 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     if (isServer) {
-      require('./src/scripts/generate-sitemap')
+      require('./scripts/generate-sitemap')
     }
 
     return config;
