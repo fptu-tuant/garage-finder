@@ -1,6 +1,7 @@
 import {
   BarcodeOutlined,
   CarOutlined,
+  FlagFilled,
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Card, Col, Layout, Menu, MenuProps, Row, Spin } from 'antd';
@@ -41,6 +42,12 @@ export function AdminLayout({ children }: PropsWithChildren) {
       label: 'Gói thành viên',
       icon: createElement(BarcodeOutlined),
       onClick: () => router.push('/admin/subscriptions'),
+    },
+    {
+      key: '/admin/reports',
+      label: 'Quản lý báo cáo',
+      icon: createElement(FlagFilled),
+      onClick: () => router.push('/admin/reports'),
     },
     {
       key: 'log-out',
