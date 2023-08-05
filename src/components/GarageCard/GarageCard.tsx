@@ -40,7 +40,7 @@ export function GarageCard({
 
   const [isLove, setIsLove] = useState(isFavorite);
 
-  const showRedHeart =  isLove;
+  const showRedHeart = isLove;
 
   const imageUrl = image?.startsWith('http') ? image : '';
 
@@ -52,7 +52,12 @@ export function GarageCard({
 
       <div className="p-4 flex flex-col gap-3 grow">
         <div className="flex gap-1 items-center">
-          <span className="font-semibold text-lg line-clamp-1 grow">
+          <span
+            role="button"
+            tabIndex={0}
+            className="font-semibold text-lg line-clamp-1 grow cursor-pointer"
+            onMouseDown={onGotoDetailPage}
+          >
             {title}
           </span>
           {showRedHeart ? (
