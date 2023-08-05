@@ -22,6 +22,16 @@ const STATUS_COLORS = {
   locked: 'red',
 };
 
+const getGarageDetailAddress = (detail?: string) => {
+  try {
+    const { label } = JSON.parse(detail ?? '');
+
+    return label;
+  } catch (error) {
+    return '';
+  }
+};
+
 export default function AdminManageGaragesPage() {
   const {
     data: garages,
@@ -77,7 +87,7 @@ export default function AdminManageGaragesPage() {
           },
           {
             title: 'Địa chỉ',
-            render: (_, item) => item.addressDetail,
+            render: (_, item) => getGarageDetailAddress(item.addressDetail),
           },
           {
             title: 'Trạng thái',

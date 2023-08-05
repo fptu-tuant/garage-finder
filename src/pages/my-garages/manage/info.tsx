@@ -10,15 +10,15 @@ import {
 import dayjs, { Dayjs } from 'dayjs';
 import { first, last } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import MapPicker from 'react-google-map-picker';
+import { useState } from 'react';
+import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 import { useGetGarageByIdApi, useUpdateGarage } from '@/api';
-import { SingleUploadDragger } from '@/components';
+import { PlaceAutoCompleted, SingleUploadDragger } from '@/components';
 import { VIETNAM_PROVINCES } from '@/constants';
 import { ManageGarageLayout } from '@/layouts';
 import { phoneRule, requiredRule } from '@/services';
-import { showSuccess } from '@/utils';
+import { showError, showSuccess } from '@/utils';
 
 const locationCascaderOptions = VIETNAM_PROVINCES.map((province) => ({
   label: province.name,
@@ -36,38 +36,45 @@ export default function ManageGarageInfoPage() {
   const [location, setLocation] = useState({ lat: 10, lng: 106 });
   const [zoom, setZoom] = useState(16);
 
-  const { mutate: updateGarage, isLoading: updatingGarage } = useUpdateGarage();
-  const {
-    data: garage,
-    isLoading: fetchingGarage,
-    isError,
-  } = useGetGarageByIdApi(
+  const { mutateAsync: updateGarage, isLoading: updatingGarage } =
+    useUpdateGarage();
+  const { data: garage, isLoading: fetchingGarage } = useGetGarageByIdApi(
     { enabled: !isNaN(Number(query?.garageId)) },
     { id: Number(query?.garageId) }
   );
 
-  const onFinish = () => {
+  const onFinish = async () => {
     const values = form.getFieldsValue();
+    try {
+      const { place_id } = JSON.parse(values?.addressDetail).value;
+      console.log(JSON.parse(values?.addressDetail));
+      const [{ geometry }] = await geocodeByPlaceId(place_id);
 
-    updateGarage({
-      body: {
-        ...values,
-        garageID: query?.garageId,
-        provinceID: first(values?.address),
-        districtsID: last(values?.address),
-        openTime: (first(values?.time) as Dayjs)?.format('hh:mm A'),
-        closeTime: (last(values?.time) as Dayjs)?.format('hh:mm A'),
-        address: undefined,
-        time: undefined,
-      },
-    });
-
-    !isError && showSuccess('Cập nhật thông tin thành công!');
+      await updateGarage({
+        body: {
+          ...values,
+          garageID: query?.garageId,
+          provinceID: first(values?.address),
+          districtsID: last(values?.address),
+          openTime: (first(values?.time) as Dayjs)?.format('hh:mm A'),
+          closeTime: (last(values?.time) as Dayjs)?.format('hh:mm A'),
+          // addressDetail: values?.addressDetail?.placeId,
+          latAddress: geometry.location.lat(),
+          lngAddress: geometry.location.lng(),
+          address: undefined,
+          time: undefined,
+        },
+      });
+      showSuccess('Cập nhật thông tin thành công!');
+    } catch (error) {
+      showError(error);
+    }
   };
 
   const initValues = {
     ...garage,
     address: [garage?.provinceID, garage?.districtsID],
+    addressDetail: garage?.addressDetail,
     time: [
       dayjs(garage?.openTime, 'hh:mm A'),
       dayjs(garage?.closeTime, 'hh:mm A'),
@@ -126,7 +133,7 @@ export default function ManageGarageInfoPage() {
                 name="addressDetail"
                 rules={[requiredRule()]}
               >
-                <Input />
+                <PlaceAutoCompleted />
               </Form.Item>
 
               <Form.Item

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAddFavoriteGarageApi } from '@/api';
 import useDeleteFavoriteGarageApi from '@/api/useDeleteFavoriteGarageApi';
 import { HeartFilledIcon, PinMapFilledIcon } from '@/icons';
+import { getGarageDetailAddress } from '@/services';
 import { Maybe } from '@/types';
 
 type GarageCardProps = {
@@ -81,7 +82,9 @@ export function GarageCard({
 
         <div className="flex gap-2 items-center">
           <PinMapFilledIcon className="text-rose-600 text-xl shrink-0" />
-          <span className="text-neutral-600">{address}</span>
+          <span className="text-neutral-600">
+            {getGarageDetailAddress(address)}
+          </span>
         </div>
 
         <div className="flex gap-1 text-neutral-600 items-center justify-between text-sm mt-8 grow">

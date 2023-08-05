@@ -28,7 +28,12 @@ import { CarBrandSelect, ServiceCard } from '@/components';
 import { REGEX_VIETNAM_PHONE } from '@/constants';
 import { useAuthStore } from '@/context';
 import { ClockIcon, PinMapFilledIcon } from '@/icons';
-import { emailRule, phoneRule, requiredRule } from '@/services';
+import {
+  emailRule,
+  getGarageDetailAddress,
+  phoneRule,
+  requiredRule,
+} from '@/services';
 import { showError, showSuccess } from '@/utils';
 
 type RouteParams = {
@@ -165,7 +170,7 @@ export default function GarageDetailPage() {
         <div className="flex items-center gap-2">
           <PinMapFilledIcon className="text-primary" />
           <span className="text-neutral-600 font-semibold">
-            {garage.addressDetail}
+            {getGarageDetailAddress(garage.addressDetail)}
           </span>
         </div>
         <div className="flex items-center gap-2">

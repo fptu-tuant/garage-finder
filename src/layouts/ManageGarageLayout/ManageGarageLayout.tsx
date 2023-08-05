@@ -12,7 +12,7 @@ import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
 import { useAuthStore } from '@/context';
@@ -216,6 +216,16 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
 
   const selectedKey = router.pathname.split('/').slice(0, 4).join('/');
 
+  const addressDetail = useMemo(() => {
+    try {
+      const { label } = JSON.parse(garage?.addressDetail ?? '');
+
+      return label;
+    } catch (error) {
+      return '';
+    }
+  }, [garage?.addressDetail]);
+
   return (
     <MainLayout>
       <Layout hasSider className="bg-transparent mt-20">
@@ -225,7 +235,7 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
               <h2>{garage?.garageName}</h2>
               <div className="flex gap-2 items-center justify-center">
                 <PinMapFilledIcon className="text-xl text-rose-600" />
-                <span>{garage?.addressDetail}</span>
+                <span>{addressDetail}</span>
               </div>
             </Skeleton>
           </div>

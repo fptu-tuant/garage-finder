@@ -5,6 +5,7 @@ export * from './CheckboxGroup/CheckboxGroup';
 export * from './GarageCard/GarageCard';
 export * from './GarageOrderCard/GarageOrderCard';
 export * from './GarageOwnerSignUpForm/GarageOwnerSignUpForm';
+export * from './PlaceAutoCompleted/PlaceAutoCompleted';
 export * from './RoundedCascader/RoundedCascader';
 export * from './ServiceCard/ServiceCard';
 export * from './ServicesSelect/ServicesSelect';

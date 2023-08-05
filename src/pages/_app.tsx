@@ -6,7 +6,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { notification } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
-import Script from 'next/script';
 
 import { fontMono, fontSans } from '@/assets/fonts';
 import { AntConfigProvider } from '@/configs';
@@ -22,12 +21,6 @@ export default function App({ Component, pageProps }: CustomAppProps) {
 
   return (
     <>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6254085152110725"
-        crossOrigin="anonymous"
-      />
-
       <Head>
         <title>{title}</title>
       </Head>
