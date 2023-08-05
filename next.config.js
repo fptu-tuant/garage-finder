@@ -36,6 +36,14 @@ const nextConfig = {
     defaultLocale: 'vi',
     localeDetection: false,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/sitemap',
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;
