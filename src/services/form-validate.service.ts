@@ -33,3 +33,13 @@ export const phoneRule = (
   message,
   pattern: new RegExp(REGEX_VIETNAM_PHONE),
 });
+
+export const getGarageDetailAddress = (detail: string) => {
+  try {
+    const { label } = JSON.parse(detail ?? '');
+
+    return label;
+  } catch (error) {
+    return detail;
+  }
+};

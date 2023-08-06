@@ -4,6 +4,16 @@ import { useRouter } from 'next/router';
 
 import { GetMyGarageData, useDeleteGarageApi, useGetMyGarageApi } from '@/api';
 
+const getGarageDetailAddress = (detail?: string) => {
+  try {
+    const { label } = JSON.parse(detail ?? '');
+
+    return label;
+  } catch (error) {
+    return '';
+  }
+};
+
 export default function MyGaragePage() {
   const { data, isLoading, refetch } = useGetMyGarageApi();
 
@@ -18,7 +28,11 @@ export default function MyGaragePage() {
   const columns: TableProps<GetMyGarageData[number]>['columns'] = [
     { title: 'ID', dataIndex: 'garageID' },
     { title: 'Tên Garage', dataIndex: 'garageName' },
-    { title: 'Địa chỉ', dataIndex: 'addressDetail' },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'addressDetail',
+      render: getGarageDetailAddress,
+    },
     {
       title: 'Hành động',
       render: (garage: GetMyGarageData[number]) => (

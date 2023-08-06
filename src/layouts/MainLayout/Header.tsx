@@ -6,7 +6,6 @@ import {
   Divider,
   Dropdown,
   Popover,
-  Tooltip,
   Typography,
 } from 'antd';
 import Link from 'next/link';
@@ -110,7 +109,12 @@ export function Header({ className }: HeaderProps) {
               </Popover>
             </div>
 
-            <div className="rounded-full p-2 flex items-center justify-center w-4 h-4 border-slate-100 shadow-md">
+            <div
+              tabIndex={0}
+              role="button"
+              className="rounded-full p-2 flex items-center justify-center w-4 h-4 border-slate-100 shadow-md"
+              onMouseDown={() => push('/manage/chat')}
+            >
               <EnvelopIcon className="text-xl text-neutral-700 cursor-pointer" />
             </div>
 
