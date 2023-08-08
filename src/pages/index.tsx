@@ -42,9 +42,9 @@ export default function HomePage() {
               const { keyword, provineID, categoriesID } = values;
 
               router.push(
-                `/garages?keyword=${
-                  keyword || ''
-                }&provineID=${provineID}&categoriesID=${categoriesID || ''}`
+                `/garages?keyword=${keyword || ''}&provineID=${
+                  provineID || ''
+                }&categoriesID=${categoriesID || ''}`
               );
             }}
           >
