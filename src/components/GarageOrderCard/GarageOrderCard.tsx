@@ -23,6 +23,7 @@ import {
   useGetOneFeedback,
 } from '@/api';
 import { PinMapFilledIcon } from '@/icons';
+import { getGarageDetailAddress } from '@/services';
 import { twcx } from '@/utils';
 
 type GarageOrderCardProps = {
@@ -242,7 +243,10 @@ export default function GarageOrderCard({
 
           <div className="flex gap-2 items-center">
             <PinMapFilledIcon className="text-rose-600" />
-            <span>{garageInfo?.addressDetail}</span>
+            <span>
+              {garageInfo?.addressDetail &&
+                getGarageDetailAddress(garageInfo.addressDetail)}
+            </span>
           </div>
 
           <div className="flex gap-2 items-center">

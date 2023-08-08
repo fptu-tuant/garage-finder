@@ -17,6 +17,7 @@ import { PropsWithChildren, useMemo } from 'react';
 import { useGetGarageByIdApi } from '@/api';
 import { useAuthStore } from '@/context';
 import { PinMapFilledIcon, UserEditIcon, UsersIcon } from '@/icons';
+import { getGarageDetailAddress } from '@/services';
 
 import { MainLayout } from '../MainLayout/Layout';
 
@@ -235,7 +236,7 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
               <h2>{garage?.garageName}</h2>
               <div className="flex gap-2 items-center justify-center">
                 <PinMapFilledIcon className="text-xl text-rose-600" />
-                <span>{addressDetail}</span>
+                <span>{getGarageDetailAddress(addressDetail)}</span>
               </div>
             </Skeleton>
           </div>
