@@ -1,6 +1,6 @@
 import { Button, Result, Skeleton, Table, Tag, Typography } from 'antd';
 import dayjs from 'dayjs';
-import { isEmpty } from 'lodash-es';
+import { isNil } from 'lodash-es';
 import { useRouter } from 'next/router';
 
 import { useAdminGetRegisteredSubscriptions } from '@/api/useAdminGetRegisteredSubscriptions';
@@ -14,21 +14,23 @@ const PAID_STATUS = {
 
 export default function ManageGarageTransactionPage() {
   const { query, push } = useRouter();
-  const { garageId = '', vnp_TransactionStatus } = query as {
+  const { garageId, vnp_TransactionStatus } = query as {
     garageId: string;
     vnp_TransactionStatus: string;
   };
 
   const { data, isLoading } = useAdminGetRegisteredSubscriptions({
     garageId: +garageId,
-    enabled: !isEmpty(garageId),
+    enabled: !isNil(garageId),
   });
 
   return (
     <div>
-      <Typography.Title level={3}>Giao dịch</Typography.Title>
+      {!vnp_TransactionStatus && (
+        <Typography.Title level={3}>Giao dịch</Typography.Title>
+      )}
 
-      <Skeleton active loading={isLoading}>
+      <Skeleton active loading={isLoading && !isNil(garageId)}>
         {vnp_TransactionStatus ? (
           <Result
             status="success"
@@ -38,10 +40,10 @@ export default function ManageGarageTransactionPage() {
                 type="primary"
                 key="console"
                 onClick={() => {
-                  push({ query: { garageId } }, undefined, { shallow: true });
+                  push('/my-garages');
                 }}
               >
-                Về trang giao dịch
+                Về trang quản lý garage
               </Button>,
               // <Button key="buy">Buy Again</Button>,
             ]}

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   createContext,
   Dispatch,
@@ -11,7 +12,7 @@ type MakeContextParams<S, A> = {
   name?: string;
   initial: S | (() => S);
   reducer: (prevState: S, action: A) => S;
-  initOnMounted?: (state: S, dispatch: Dispatch<A>) => Promise<void>;
+  initOnMounted?: (state: S, dispatch: Dispatch<A>) => Promise<boolean>;
 };
 
 export function makeContext<S, A>({
@@ -29,8 +30,16 @@ export function makeContext<S, A>({
       initial instanceof Function ? initial() : initial
     );
 
+    const router = useRouter();
+
     useEffect(() => {
-      initOnMounted?.(state, dispatch);
+      (async () => {
+        const alreadyLogin = await initOnMounted?.(state, dispatch);
+
+        if (alreadyLogin === false && router.asPath !== '/sign-in') {
+          router.replace('/sign-in');
+        }
+      })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

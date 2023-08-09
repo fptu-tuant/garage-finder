@@ -5,9 +5,12 @@ import {
   Button,
   Divider,
   Dropdown,
+  List,
   Popover,
   Typography,
 } from 'antd';
+import dayjs from 'dayjs';
+import { uniqueId } from 'lodash-es';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -19,7 +22,10 @@ import FlagVN from '@/assets/images/flag-vn.svg';
 import { MENU_ITEMS } from '@/constants';
 import { useAuthStore, useTranslateStore } from '@/context';
 import { BellIcon, EnvelopIcon } from '@/icons';
-import { isWsNotification } from '@/services/websocket.service';
+import {
+  isWsNofitications,
+  isWsNotification,
+} from '@/services/websocket.service';
 import { twcx } from '@/utils';
 
 type HeaderProps = {
@@ -32,11 +38,20 @@ export function Header({ className }: HeaderProps) {
 
   const { lastJsonMessage, getAllNotifications, readAllNotifications } =
     useSocket();
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    getAllNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (isWsNotification(lastJsonMessage)) {
       getAllNotifications();
+    }
+
+    if (isWsNofitications(lastJsonMessage)) {
+      setNotifications(lastJsonMessage as any);
     }
   }, [getAllNotifications, lastJsonMessage]);
 
@@ -102,8 +117,50 @@ export function Header({ className }: HeaderProps) {
         {user ? (
           <div className="flex gap-6 items-center">
             <div className="rounded-full p-2 flex items-center justify-center w-4 h-4 border-slate-100 shadow-md">
-              <Popover placement="bottomLeft" content={<div>heheheehe</div>}>
-                <Badge dot>
+              <Popover
+                placement="bottomLeft"
+                content={
+                  <div>
+                    <div
+                      className="text-right text-primary font-medium cursor-pointer"
+                      role="button"
+                      tabIndex={0}
+                      onMouseDown={() => {
+                        readAllNotifications();
+                        getAllNotifications();
+                      }}
+                    >
+                      Đánh dấu tất cả đã đọc
+                    </div>
+                    <Divider className="mt-2" />
+                    <div className="max-h-96 w-64">
+                      {notifications.map((item) => (
+                        <div
+                          key={uniqueId()}
+                          className="flex gap-4 items-center"
+                        >
+                          <div className="grow">
+                            <div className="text-xs text-neutral-500">
+                              {dayjs(item?.DateTime).format(
+                                'DD/MM/YYYY hh:mm A'
+                              )}
+                            </div>
+                            <div className="font-semibold text-neutral-700">
+                              {item?.Content}
+                            </div>
+                          </div>
+
+                          <Badge
+                            status="processing"
+                            className={twcx({ invisible: item?.IsRead })}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                }
+              >
+                <Badge count={notifications.length || 0}>
                   <BellIcon className="text-xl text-neutral-700 cursor-pointer" />
                 </Badge>
               </Popover>

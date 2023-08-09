@@ -42,9 +42,9 @@ export default function HomePage() {
               const { keyword, provineID, categoriesID } = values;
 
               router.push(
-                `/garages?keyword=${
-                  keyword || ''
-                }&provineID=${provineID}&categoriesID=${categoriesID || ''}`
+                `/garages?keyword=${keyword || ''}&provineID=${
+                  provineID || ''
+                }&categoriesID=${categoriesID || ''}`
               );
             }}
           >
@@ -235,10 +235,6 @@ export default function HomePage() {
         </div>
       </section>
       <Contact></Contact>
-
-      <Button type="link" onClick={() => router.replace('/admin')}>
-        Admin
-      </Button>
     </div>
   );
 }

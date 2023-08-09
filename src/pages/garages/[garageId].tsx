@@ -350,12 +350,7 @@ export default function GarageDetailPage() {
 
           <Skeleton active loading={!!user && fetchingMyCars}>
             <div className="p-6 border border-neutral-400 border-solid rounded-lg w-full box-border flex flex-col gap-4 mt-16">
-              <Form
-                form={form}
-                layout="vertical"
-                onFinish={onFinish}
-                onValuesChange={console.log}
-              >
+              <Form form={form} layout="vertical" onFinish={onFinish}>
                 {!hasCar && (
                   <Form.Item
                     label="Họ Tên"

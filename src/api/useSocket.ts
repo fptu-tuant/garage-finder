@@ -8,16 +8,11 @@ export function useSocket() {
   const { lastJsonMessage, lastMessage, sendJsonMessage, getWebSocket } =
     useWebSocket(getWebSocketUrl, {
       share: true,
-      shouldReconnect: () => {
-        showError('Reconnect');
-
-        return true;
-      },
+      shouldReconnect: () => true,
     });
 
   const getUserRooms = useCallback(
     (userId?: number) => {
-      console.log('getUserRooms', userId);
       sendJsonMessage({
         type: 'GetListRoomByUserId',
         message: userId,
@@ -28,7 +23,6 @@ export function useSocket() {
 
   const getMessagesByRoomId = useCallback(
     (roomId: number) => {
-      console.log('getMessagesByRoomId', roomId);
       sendJsonMessage({
         type: 'GetDetailRoom',
         message: roomId,
@@ -40,7 +34,6 @@ export function useSocket() {
   const sendMessageToGarage = useCallback(
     (props: { garageId: number; message: string }) => {
       const { garageId, message } = props;
-      console.log('sendMessageToGarage', garageId);
 
       sendJsonMessage({
         type: 'UserSendMessageToGarage',
@@ -61,7 +54,6 @@ export function useSocket() {
     }) => {
       const { message, garageId, userId } = props;
 
-      console.log('sendMessageToUser', { userId, garageId });
       sendJsonMessage({
         type: 'GarageSendMessgeToUser',
         message: {
@@ -76,7 +68,6 @@ export function useSocket() {
 
   const getGarageRooms = useCallback(
     (garageId: number | undefined) => {
-      console.log('getGarageRooms', { garageId });
       sendJsonMessage({
         type: 'GetListRoomByGarageId',
         message: garageId,

@@ -24,7 +24,6 @@ export default function StaffMyInfoPage() {
 
   const { isLoading, refetch, data } = useGetMyStaffInfo({
     onSuccess: (data) => {
-      console.log(data);
       form.setFieldsValue({
         ...data,
         address: [data.provinceId, data.districtId],

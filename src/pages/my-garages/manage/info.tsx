@@ -47,7 +47,6 @@ export default function ManageGarageInfoPage() {
     const values = form.getFieldsValue();
     try {
       const { place_id } = JSON.parse(values?.addressDetail).value;
-      console.log(JSON.parse(values?.addressDetail));
       const [{ geometry }] = await geocodeByPlaceId(place_id);
 
       await updateGarage({

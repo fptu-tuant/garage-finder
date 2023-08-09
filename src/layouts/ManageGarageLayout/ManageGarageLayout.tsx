@@ -10,13 +10,16 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { isNil } from 'lodash-es';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren, useEffect, useMemo } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
 import { useAuthStore } from '@/context';
 import { PinMapFilledIcon, UserEditIcon, UsersIcon } from '@/icons';
+import { getGarageDetailAddress } from '@/services';
+import { twcx } from '@/utils';
 
 import { MainLayout } from '../MainLayout/Layout';
 
@@ -31,6 +34,16 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     { enabled: !isNaN(Number(router.query?.garageId)) },
     { id: Number(router.query?.garageId) }
   );
+
+  useEffect(() => {
+    if (
+      router.isReady &&
+      isNil(router.query?.garageId) &&
+      isNil(router.query?.vnp_TransactionStatus)
+    ) {
+      router.replace('/my-garages');
+    }
+  }, [router]);
 
   const MENU_ITEMS: ItemType[] = [
     {
@@ -226,16 +239,28 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     }
   }, [garage?.addressDetail]);
 
+  if (
+    isNil(router.query?.garageId) &&
+    isNil(router.query?.vnp_TransactionStatus)
+  ) {
+    return null;
+  }
+
   return (
     <MainLayout>
       <Layout hasSider className="bg-transparent mt-20">
-        <Sider className="text-center bg-transparent" width={300}>
+        <Sider
+          className={twcx('text-center bg-transparent', {
+            ['hidden']: !isNil(router.query?.vnp_TransactionStatus),
+          })}
+          width={300}
+        >
           <div className="mb-10">
             <Skeleton active loading={fetchingGarage}>
               <h2>{garage?.garageName}</h2>
               <div className="flex gap-2 items-center justify-center">
                 <PinMapFilledIcon className="text-xl text-rose-600" />
-                <span>{addressDetail}</span>
+                <span>{getGarageDetailAddress(addressDetail)}</span>
               </div>
             </Skeleton>
           </div>
