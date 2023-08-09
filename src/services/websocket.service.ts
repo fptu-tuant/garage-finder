@@ -34,3 +34,12 @@ export const isWsMessage = (event: unknown) => {
 export const isWsNotification = (event: unknown) => {
   return isObject(event) && (event as { type: string }).type === 'Notify';
 };
+
+export const isWsNofitications = (event: unknown) => {
+  return (
+    isArray(event) &&
+    has(first(event), 'DateTime') &&
+    has(first(event), 'Content') &&
+    has(first(event), 'IsRead')
+  );
+};
