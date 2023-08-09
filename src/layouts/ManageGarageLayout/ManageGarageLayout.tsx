@@ -35,7 +35,10 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
   );
 
   useEffect(() => {
-    if (isNil(router.query?.garageId)) {
+    if (
+      isNil(router.query?.garageId) &&
+      isNil(router.query?.vnp_TransactionStatus)
+    ) {
       router.replace('/my-garages');
     }
   }, [router]);
