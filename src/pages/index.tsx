@@ -235,10 +235,6 @@ export default function HomePage() {
         </div>
       </section>
       <Contact></Contact>
-
-      <Button type="link" onClick={() => router.replace('/admin')}>
-        Admin
-      </Button>
     </div>
   );
 }
