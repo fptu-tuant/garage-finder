@@ -24,13 +24,6 @@ export default function App({ Component, pageProps }: CustomAppProps) {
     <>
       <Head>
         <title>{title}</title>
-        <>
-          <Script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6254085152110725"
-            crossOrigin="anonymous"
-          />
-        </>
       </Head>
 
       <TranslateIntlProvider>

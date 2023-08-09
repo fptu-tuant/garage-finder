@@ -62,7 +62,7 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
   console.log('init on Auth context mount');
   const ACCESS_TOKEN = localStorage.getItem(ACCESS_TOKEN_KEY);
 
-  if (!ACCESS_TOKEN) return;
+  if (!ACCESS_TOKEN) return false;
 
   try {
     const { data } = await api<{
@@ -131,6 +131,8 @@ async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
     console.error(error);
     // showError(error);
   }
+
+  return true;
 }
 
 export const [AuthProvider, useAuthStore] = makeContext({
