@@ -8,11 +8,7 @@ export function useSocket() {
   const { lastJsonMessage, lastMessage, sendJsonMessage, getWebSocket } =
     useWebSocket(getWebSocketUrl, {
       share: true,
-      shouldReconnect: () => {
-        showError('Reconnect');
-
-        return true;
-      },
+      shouldReconnect: () => true,
     });
 
   const getUserRooms = useCallback(
