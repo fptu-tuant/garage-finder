@@ -40,10 +40,6 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     }
   }, [router]);
 
-  if (isNil(router.query?.garageId)) {
-    return null;
-  }
-
   const MENU_ITEMS: ItemType[] = [
     {
       key: '/my-garages/manage/info',
@@ -237,6 +233,10 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
       return '';
     }
   }, [garage?.addressDetail]);
+
+  if (isNil(router.query?.garageId)) {
+    return null;
+  }
 
   return (
     <MainLayout>
