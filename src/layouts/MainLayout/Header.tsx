@@ -160,7 +160,7 @@ export function Header({ className }: HeaderProps) {
                   </div>
                 }
               >
-                <Badge dot>
+                <Badge count={notifications.length || 0}>
                   <BellIcon className="text-xl text-neutral-700 cursor-pointer" />
                 </Badge>
               </Popover>
