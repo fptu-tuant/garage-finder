@@ -10,9 +10,10 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { isNil } from 'lodash-es';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren, useEffect, useMemo } from 'react';
 
 import { useGetGarageByIdApi } from '@/api';
 import { useAuthStore } from '@/context';
@@ -32,6 +33,16 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     { enabled: !isNaN(Number(router.query?.garageId)) },
     { id: Number(router.query?.garageId) }
   );
+
+  useEffect(() => {
+    if (isNil(router.query?.garageId)) {
+      router.replace('/my-garages');
+    }
+  }, [router]);
+
+  if (isNil(router.query?.garageId)) {
+    return null;
+  }
 
   const MENU_ITEMS: ItemType[] = [
     {
