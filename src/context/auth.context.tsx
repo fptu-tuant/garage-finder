@@ -59,8 +59,9 @@ function initialAuthStore(): AuthStore {
 }
 
 async function initOnMounted(state: AuthStore, dispatch: Dispatch<Action>) {
-  console.log('init on Auth context mount');
   const ACCESS_TOKEN = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+  console.log('ACCESS_TOKEN', ACCESS_TOKEN);
 
   if (!ACCESS_TOKEN) return false;
 

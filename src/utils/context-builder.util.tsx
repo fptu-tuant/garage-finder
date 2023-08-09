@@ -33,10 +33,13 @@ export function makeContext<S, A>({
     const router = useRouter();
 
     useEffect(() => {
-      const alreadyLogin = initOnMounted?.(state, dispatch);
-      if (!alreadyLogin && router.asPath !== '/sign-in') {
-        router.replace('/sign-in');
-      }
+      (async () => {
+        const alreadyLogin = await initOnMounted?.(state, dispatch);
+
+        if (alreadyLogin === false && router.asPath !== '/sign-in') {
+          router.replace('/sign-in');
+        }
+      })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

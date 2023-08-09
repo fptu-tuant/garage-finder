@@ -6,7 +6,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { notification } from 'antd';
 import type { CustomAppProps } from 'next/app';
 import Head from 'next/head';
-import Script from 'next/script';
 
 import { fontMono, fontSans } from '@/assets/fonts';
 import { AntConfigProvider } from '@/configs';

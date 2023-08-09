@@ -35,7 +35,13 @@ export function Header({ className }: HeaderProps) {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
+    getAllNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (isWsNotification(lastJsonMessage)) {
+      getAllNotifications();
       getAllNotifications();
     }
   }, [getAllNotifications, lastJsonMessage]);
