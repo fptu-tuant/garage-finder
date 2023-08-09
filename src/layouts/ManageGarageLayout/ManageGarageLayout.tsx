@@ -19,6 +19,7 @@ import { useGetGarageByIdApi } from '@/api';
 import { useAuthStore } from '@/context';
 import { PinMapFilledIcon, UserEditIcon, UsersIcon } from '@/icons';
 import { getGarageDetailAddress } from '@/services';
+import { twcx } from '@/utils';
 
 import { MainLayout } from '../MainLayout/Layout';
 
@@ -36,6 +37,7 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (
+      router.isReady &&
       isNil(router.query?.garageId) &&
       isNil(router.query?.vnp_TransactionStatus)
     ) {
@@ -237,14 +239,22 @@ export function ManageGarageLayout({ children }: PropsWithChildren) {
     }
   }, [garage?.addressDetail]);
 
-  if (isNil(router.query?.garageId)) {
+  if (
+    isNil(router.query?.garageId) &&
+    isNil(router.query?.vnp_TransactionStatus)
+  ) {
     return null;
   }
 
   return (
     <MainLayout>
       <Layout hasSider className="bg-transparent mt-20">
-        <Sider className="text-center bg-transparent" width={300}>
+        <Sider
+          className={twcx('text-center bg-transparent', {
+            ['hidden']: !isNil(router.query?.vnp_TransactionStatus),
+          })}
+          width={300}
+        >
           <div className="mb-10">
             <Skeleton active loading={fetchingGarage}>
               <h2>{garage?.garageName}</h2>

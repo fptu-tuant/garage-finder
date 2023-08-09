@@ -26,7 +26,9 @@ export default function ManageGarageTransactionPage() {
 
   return (
     <div>
-      <Typography.Title level={3}>Giao dịch</Typography.Title>
+      {!vnp_TransactionStatus && (
+        <Typography.Title level={3}>Giao dịch</Typography.Title>
+      )}
 
       <Skeleton active loading={isLoading && !isNil(garageId)}>
         {vnp_TransactionStatus ? (
@@ -38,10 +40,10 @@ export default function ManageGarageTransactionPage() {
                 type="primary"
                 key="console"
                 onClick={() => {
-                  push({ query: { garageId } }, undefined, { shallow: true });
+                  push('/my-garages');
                 }}
               >
-                Về trang giao dịch
+                Về trang quản lý garage
               </Button>,
               // <Button key="buy">Buy Again</Button>,
             ]}

@@ -17,8 +17,6 @@ export function PlaceAutoCompleted({
 
   const location = useMemo(() => {
     try {
-      console.log(value);
-
       return (value && JSON.parse(value)) ?? place;
     } catch (error) {
       return undefined;

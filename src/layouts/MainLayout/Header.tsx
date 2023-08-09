@@ -75,8 +75,6 @@ export function Header({ className }: HeaderProps) {
     { href: '/my-garages', name: t('header.myGarage'), hide: !hadLogin },
   ];
 
-  console.log(notifications);
-
   return (
     <header
       className={twcx(className, 'h-20 flex items-center container mx-auto')}
