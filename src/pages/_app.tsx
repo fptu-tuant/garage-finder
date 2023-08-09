@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
     <>
       <Head>
         <title>{title}</title>
+        
       </Head>
 
       <TranslateIntlProvider>
