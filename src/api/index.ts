@@ -39,6 +39,7 @@ export * from './useGetFeaturedGarages';
 export * from './useGetFeedbackById';
 export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';
+export * from './useGetIncome';
 export * from './useGetListReport';
 export * from './useGetMe';
 export * from './useGetMyGarageApi';

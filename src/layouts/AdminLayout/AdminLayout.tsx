@@ -8,7 +8,7 @@ import { Card, Col, Layout, Menu, MenuProps, Row, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { createElement, PropsWithChildren, useState } from 'react';
 
-import { useAdminGetGarages, useAdminGetUsers } from '@/api';
+import { useAdminGetGarages, useAdminGetUsers, useGetTotalIncome } from '@/api';
 import { useAuthStore } from '@/context';
 import { UserEditIcon } from '@/icons';
 
@@ -72,6 +72,8 @@ export function AdminLayout({ children }: PropsWithChildren) {
     variables: { body: {} },
   });
 
+  const { data: totalIncome } = useGetTotalIncome();
+
   return (
     <Layout hasSider>
       <Sider
@@ -118,6 +120,17 @@ export function AdminLayout({ children }: PropsWithChildren) {
                     {garages?.length ?? 0}
                   </div>
                   <div>Garages</div>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  bordered={false}
+                  className="flex flex-col gap-4 items-center"
+                >
+                  <div className="text-4xl font-bold text-center">
+                    {totalIncome}
+                  </div>
+                  <div>Revenue generated</div>
                 </Card>
               </Col>
             </Row>
