@@ -211,6 +211,7 @@ export default function GarageDetailPage() {
       }
 
       showSuccess('Tạo yêu cầu thành công');
+      form.setFieldsValue({});
     } catch (error) {
       showError(error);
     }
