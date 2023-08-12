@@ -49,7 +49,7 @@ export default function ManageGarageTransactionPage() {
       <Skeleton active loading={isLoading && !isNil(garageId)}>
         {vnp_TransactionStatus ? (
           <Result
-            status="success"
+            status={vnp_TransactionStatus === '00' ? 'success' : 'error'}
             title={get(message, vnp_TransactionStatus)}
             extra={[
               <Button
