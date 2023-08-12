@@ -39,7 +39,7 @@ export function AdminLayout({ children }: PropsWithChildren) {
     },
     {
       key: '/admin/subscriptions',
-      label: 'Gói thành viên',
+      label: 'Quản lí giao dịch',
       icon: createElement(BarcodeOutlined),
       onClick: () => router.push('/admin/subscriptions'),
     },
