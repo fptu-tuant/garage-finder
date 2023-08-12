@@ -535,6 +535,7 @@ export default function GarageDetailPage() {
       </div>
 
       <div>
+        <Typography.Title level={4}>Đánh giá từ khách hàng</Typography.Title>
         <div className="flex gap-3 items-center">
           <Rate
             value={
@@ -543,7 +544,7 @@ export default function GarageDetailPage() {
             }
           />
 
-          <span>{feebacks?.length || 0} đánh giá từ khách hàng</span>
+          <span>{feebacks?.length || 0} đánh giá</span>
         </div>
 
         <Skeleton active loading={fetchingFeedback}>
