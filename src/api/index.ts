@@ -35,6 +35,7 @@ export * from './useDeleteStaff';
 export * from './useForgotPasswordApi';
 export * from './useGetCarCompaniesApi';
 export * from './useGetFavoriteGarageApi';
+export * from './useGetFeaturedGarages';
 export * from './useGetFeedbackById';
 export * from './useGetGarageByIdApi';
 export * from './useGetGaragesApi';

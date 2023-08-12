@@ -3,12 +3,15 @@ import { Button, Form, Input, Select, Typography } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { CarIllustrate } from '@/components';
+import { useGetFeaturedGarages } from '@/api';
+import { CarIllustrate, GarageCard } from '@/components';
 import Contact from '@/components/Contact/Contact';
 import { GARAGE_SERVICES, VIETNAM_PROVINCES } from '@/constants';
 
 export default function HomePage() {
   const router = useRouter();
+
+  const { data: garages } = useGetFeaturedGarages();
 
   const districts = VIETNAM_PROVINCES.map((province) => ({
     label: province.name,
@@ -90,6 +93,20 @@ export default function HomePage() {
         <Typography.Title level={2} className="text-center">
           Đề xuất cho bạn
         </Typography.Title>
+
+        <div className="grid grid-cols-4 gap-x-6 gap-y-8">
+          {garages?.map((item) => (
+            <GarageCard
+              key={item.garageID}
+              address={item.addressDetail}
+              id={item.garageID}
+              image={item.thumbnail}
+              rating={item.star}
+              title={item.garageName}
+              totalRate={item.feedbacksNumber}
+            />
+          ))}
+        </div>
       </section>
       <section className="ml-auto mr-auto max-w-[1280px] mt-[200px] text-center">
         <h2 id="service" className="title text-3xl font-bold mb-[100px] ">
