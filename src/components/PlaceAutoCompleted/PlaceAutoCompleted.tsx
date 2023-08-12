@@ -27,7 +27,7 @@ export function PlaceAutoCompleted({
     <GooglePlacesAutocomplete
       ref={ref}
       apiKey="AIzaSyCA0WrEq6hrP4JrxkWX-TYKrUtu2D7yIJo"
-      minLengthAutocomplete={4}
+      // minLengthAutocomplete={4}
       selectProps={{
         value: location,
         onChange: async (value) => {

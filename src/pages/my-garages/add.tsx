@@ -1,4 +1,5 @@
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import styled from '@emotion/styled';
 import { Button, DatePicker, Form, Input, Typography } from 'antd';
 import { Dayjs } from 'dayjs';
 import { first, last } from 'lodash-es';
@@ -7,14 +8,26 @@ import { useRouter } from 'next/router';
 import { useAddGarageApi } from '@/api';
 import {
   CarBrandSelect,
+  PlaceAutoCompleted,
   RoundedCascader,
   ServicesSelect,
   SingleUploadDragger,
 } from '@/components';
 import { LOCATION_CASCADER_OPTIONS } from '@/constants';
-import { PinMapFilledIcon, UserIcon } from '@/icons';
+import { UserIcon } from '@/icons';
 import { emailRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
+
+const Wrapper = styled.div`
+  #place {
+    .css-13cymwt-control {
+      border-radius: 9999px !important;
+      height: 48px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    }
+  }
+`;
 
 type AddGarageFormValues = {
   name: string;
@@ -62,7 +75,7 @@ export default function AddGaragePage() {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Typography.Title level={2} className="text-center my-10">
         Đăng ký Garage
       </Typography.Title>
@@ -161,14 +174,11 @@ export default function AddGaragePage() {
             />
           </Form.Item>
 
-          <Form.Item name="detailAddress" rules={[requiredRule()]}>
-            <Input
-              size="large"
-              className="rounded-full shadow-md"
-              placeholder="Chi tiết địa chỉ"
-              suffix={<PinMapFilledIcon className="text-neutral-400" />}
-            />
-          </Form.Item>
+          <div id="place">
+            <Form.Item name="detailAddress" rules={[requiredRule()]}>
+              <PlaceAutoCompleted />
+            </Form.Item>
+          </div>
         </div>
 
         <Form.Item className="mx-auto col-span-2">
@@ -183,6 +193,6 @@ export default function AddGaragePage() {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </Wrapper>
   );
 }
