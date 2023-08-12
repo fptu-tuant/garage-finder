@@ -1,4 +1,5 @@
 import { Button, Input, Table, Tag } from 'antd';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +8,7 @@ import {
   useAdminGetUsers,
 } from '@/api';
 import { AdminLayout } from '@/layouts';
+import { getGarageDetailAddress } from '@/services';
 
 const STATUS_NAMES = {
   active: 'Đang họat động',
@@ -23,6 +25,8 @@ const STATUS_COLORS = {
 };
 
 export default function AdminManageWaitingGaragesPage() {
+  const router = useRouter();
+
   const {
     data: garages,
     isLoading,
@@ -77,7 +81,7 @@ export default function AdminManageWaitingGaragesPage() {
           },
           {
             title: 'Địa chỉ',
-            render: (_, item) => item.addressDetail,
+            render: (_, item) => getGarageDetailAddress(item.addressDetail),
           },
           {
             title: 'Trạng thái',
@@ -105,6 +109,17 @@ export default function AdminManageWaitingGaragesPage() {
             title: 'Hoạt động',
             render: (_, item) => (
               <div className="flex gap-3">
+                {item.status === 'waiting' && (
+                  <Button
+                    onClick={async () => {
+                      window.open(`/garages/${item.garageID}`, '_blank');
+                      // router.push(`/garages/${item.garageID}`, undefined, {});
+                    }}
+                    disabled={buttonLoading}
+                  >
+                    Xem
+                  </Button>
+                )}
                 {item.status === 'waiting' && (
                   <Button
                     onClick={async () => {
