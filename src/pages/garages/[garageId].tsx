@@ -188,7 +188,7 @@ export default function GarageDetailPage() {
               typeCar,
               licensePlates,
               categoryGargeId: services,
-              timeAppointment: dayjs(date).toISOString(),
+              timeAppointment: dayjs(date).format('DD/MM/YYYY hh:mm A'),
             },
           });
         }
@@ -204,7 +204,8 @@ export default function GarageDetailPage() {
             typeCar,
             licensePlates,
             categoryGargeId: services,
-            timeAppointment: dayjs(date).toISOString(),
+            timeAppointment: dayjs(date).format('DD/MM/YYYY hh:mm A'),
+            // timeAppointment: dayjs(date).toISOString(),
           },
         });
       }

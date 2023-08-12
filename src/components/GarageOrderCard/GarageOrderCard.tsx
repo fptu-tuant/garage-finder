@@ -268,7 +268,7 @@ export default function GarageOrderCard({
 
           <div className="flex gap-2 mt-2">
             <div className="font-bold">Thời gian: </div>
-            <div>{dayjs(time).format('hh:mm A, DD-MM-YYYY')}</div>
+            <div>{dayjs(time).format('DD/MM/YYYY, hh:mm A')}</div>
           </div>
 
           <div>
