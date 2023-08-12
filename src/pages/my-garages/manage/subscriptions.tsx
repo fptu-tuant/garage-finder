@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useAdminGetPaymentLink, useAdminGetSubscriptions } from '@/api';
 import { ManageGarageLayout } from '@/layouts';
+import { showError } from '@/utils';
 
 export default function ManageGarageSubscriptionsPage() {
   const { query } = useRouter();
@@ -12,7 +13,7 @@ export default function ManageGarageSubscriptionsPage() {
     useAdminGetSubscriptions();
 
   const { mutateAsync: getPaymentLink, isLoading: fetchingPaymentLink } =
-    useAdminGetPaymentLink();
+    useAdminGetPaymentLink({ onError: showError });
 
   return (
     <div>
