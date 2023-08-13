@@ -13,7 +13,8 @@ const nextConfig = {
       destination: '/',
     },
   ],
-  webpack: (config) => {
+
+  webpack: (config, { isServer }) => {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.('.svg')
@@ -34,6 +35,10 @@ const nextConfig = {
     );
 
     fileLoaderRule.exclude = /\.svg$/i;
+
+    if (isServer) {
+      require('./scripts/generate-sitemap')
+    }
 
     return config;
   },
