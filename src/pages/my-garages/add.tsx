@@ -56,9 +56,10 @@ export default function AddGaragePage() {
 
   const onFinish = async () => {
     const values = form.getFieldsValue();
+    try {
     const { place_id } = (values?.address).value;
     const [{ geometry }] = await geocodeByPlaceId(place_id);
-    addGarage({
+    await addGarage({
       body: {
         addressDetail: values.detailAddress,
         brandsID: values.carCompanies,
@@ -76,6 +77,9 @@ export default function AddGaragePage() {
         lngAddress: geometry.location.lng(),
       },
     });
+  } catch(error) {
+      showError(error);
+    }
   };
 
   return (
