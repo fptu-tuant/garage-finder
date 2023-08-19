@@ -50,7 +50,7 @@ export default function GaragesPage() {
   const [keyword, setKeyword] = useState('');
   const pagination = usePagination({ currentPage: 1, pageSize: 10000 });
 
-  const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi({
+  const { data: garages.data, isLoading: fetchingGarages } = useGetGaragesApi({
     variables: {
       body: {
         keyword,
@@ -170,7 +170,7 @@ export default function GaragesPage() {
         <div className="flex flex-col grow">
           <Skeleton active loading={fetchingGarages}>
             <div className="grid grid-cols-3 gap-x-6 gap-y-8">
-              {garages.data(garages)?.map((garage) => (
+              {garages?.map((garage) => (
                 <GarageCard
                   key={garage.garageID}
                   id={garage.garageID}
