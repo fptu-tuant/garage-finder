@@ -30,7 +30,7 @@ function Contact() {
           <h3 className="contact__title mb-10">
             Để lại lời nhắn cho chúng tôi
           </h3>
-          <form ref={form} onFinish={sendEmail} className="contact__form">
+          <form ref={form} onSubmit={sendEmail} className="contact__form">
             <div className="contact__form-div">
               <input
                 className="tl-input css-1wl8g3 max-w-[400px] mb-5"
