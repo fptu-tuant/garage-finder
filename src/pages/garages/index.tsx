@@ -48,7 +48,7 @@ export default function GaragesPage() {
   const brands = Form.useWatch(['brands'], form);
 
   const [keyword, setKeyword] = useState('');
-  const pagination = usePagination({ currentPage: 1, pageSize: 9 });
+  const pagination = usePagination();
 
   const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi({
     variables: {
@@ -63,7 +63,7 @@ export default function GaragesPage() {
     },
   });
 
-  pagination.totalItem = garages?.total;
+  // pagination.totalItem = garages?.total;
 
   const { data: servicesResponseData, isLoading: fetchingServices } =
     useGetServicesApi();
@@ -189,9 +189,9 @@ export default function GaragesPage() {
 
             <Pagination
               className="mt-10 text-center"
-              total={pagination.totalItem}
+              // total={pagination.totalItem}
               // pageSize={pagination.pageSize}
-              // total={50}
+              total={50}
               current={pagination.currentPage}
               onChange={(pageNumber) => pagination.goPage(pageNumber)}
             />
