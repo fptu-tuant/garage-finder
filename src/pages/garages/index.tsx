@@ -189,8 +189,8 @@ export default function GaragesPage() {
 
             <Pagination
               className="mt-10 text-center"
-              // total={pagination.totalItem}
-              total={50}
+              total={pagination.totalItem}
+              // total={50}
               current={pagination.currentPage}
               onChange={(pageNumber) => pagination.goPage(pageNumber)}
             />
