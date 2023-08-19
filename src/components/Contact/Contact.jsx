@@ -1,31 +1,20 @@
 import emailjs from '@emailjs/browser';
-import { Form,Input } from 'antd';
+import { Input } from 'antd';
 import React, { useRef } from 'react';
-
 function Contact() {
-  // const form = useRef();
-  const formRef = React.createRef();
-  // const sendEmail = (e) => {
-  //   e.preventDefault();
+  const form = useRef();
 
-  //   emailjs.sendForm(
-  //     'service_tq1gfkm',
-  //     'template_v8hxkmv',
-  //     form.current,
-  //     '7IE1jATfI-2lIgJoU'
-  //   );
-  //   e.target.reset();
-  // };
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-  const submitForm = () => {
-    // console.log("Form submitted:", this.formRef, Form);
-        emailjs.sendForm(
+    emailjs.sendForm(
       'service_tq1gfkm',
       'template_v8hxkmv',
-      this.formRef.current,
+      form.current,
       '7IE1jATfI-2lIgJoU'
     );
-    this.formRef.current.resetFields();
+    e.target.reset();
+    form.resetFields();
   };
 
   return (
@@ -41,7 +30,7 @@ function Contact() {
           <h3 className="contact__title mb-10">
             Để lại lời nhắn cho chúng tôi
           </h3>
-          <Form className="contact__form" onFinish={() => this.submitForm()} ref={this.formRef}>
+          <form ref={form} onSubmit={sendEmail} className="contact__form">
             <div className="contact__form-div">
               <Input
                 className="max-w-[400px] mb-5"
@@ -70,7 +59,7 @@ function Contact() {
             <button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white cursor-pointer">
               Gửi
             </button>
-          </Form>
+          </form>
         </div>
       </div>
     </section>
