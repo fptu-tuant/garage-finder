@@ -5,7 +5,7 @@ function Contact() {
   const form = useRef();
 
   const sendEmail = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     emailjs.sendForm(
       'service_tq1gfkm',
@@ -13,8 +13,8 @@ function Contact() {
       form.current,
       '7IE1jATfI-2lIgJoU'
     );
-    // e.target.reset();
-    form.current.resetFields()
+    e.target.reset();
+    // form.current.resetFields()
   };
 
   return (
@@ -30,36 +30,36 @@ function Contact() {
           <h3 className="contact__title mb-10">
             Để lại lời nhắn cho chúng tôi
           </h3>
-          <Form ref={form} onFinish={sendEmail} className="contact__form">
+          <form ref={form} onFinish={sendEmail} className="contact__form">
             <div className="contact__form-div">
-              <Input
-                className="max-w-[400px] mb-5"
+              <input
+                className="tl-input css-1wl8g3 max-w-[400px] mb-5"
                 placeholder="Nhập tên của bạn"
                 name="name"
               />
             </div>
 
             <div className="contact__form-div">
-              <Input
+              <input
                 type="email"
-                className="max-w-[400px] mb-5"
+                className="tl-input css-1wl8g3 max-w-[400px] mb-5"
                 placeholder="Nhập email của bạn"
                 name="email"
               />
             </div>
 
             <div className="contact__form-div contact__form-area">
-              <Input
+              <input
                 type="text"
-                className="max-w-[400px] h-[100px] mb-10"
+                className="tl-input css-1wl8g3 max-w-[400px] h-[100px] mb-10"
                 placeholder="Lời nhắn..."
                 name="message"
               />
             </div>
-            <Button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white cursor-pointer">
+            <button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white cursor-pointer">
               Gửi
-            </Button>
-          </Form>
+            </button>
+          </form>
         </div>
       </div>
     </section>
