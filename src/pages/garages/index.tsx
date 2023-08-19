@@ -63,7 +63,7 @@ export default function GaragesPage() {
     },
   });
 
-  // pagination.totalItem = garages?.total;
+  pagination.totalItem = garages?.total;
 
   const { data: servicesResponseData, isLoading: fetchingServices } =
     useGetServicesApi();
