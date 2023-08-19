@@ -48,7 +48,7 @@ export default function GaragesPage() {
   const brands = Form.useWatch(['brands'], form);
 
   const [keyword, setKeyword] = useState('');
-  const pagination = usePagination({ currentPage: 1, pageSize: 10000 });
+  const pagination = usePagination({ currentPage: 1, pageSize: 10 });
 
   const { data: garages, isLoading: fetchingGarages } = useGetGaragesApi({
     variables: {
