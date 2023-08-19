@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import { Input } from 'antd';
+import { Input, Form } from 'antd';
 import React, { useRef } from 'react';
 function Contact() {
   const form = useRef();
@@ -14,7 +14,6 @@ function Contact() {
       '7IE1jATfI-2lIgJoU'
     );
     e.target.reset();
-    form.resetFields();
   };
 
   return (
@@ -30,7 +29,7 @@ function Contact() {
           <h3 className="contact__title mb-10">
             Để lại lời nhắn cho chúng tôi
           </h3>
-          <form ref={form} onSubmit={sendEmail} className="contact__form">
+          <Form ref={form} onSubmit={sendEmail} className="contact__form">
             <div className="contact__form-div">
               <Input
                 className="max-w-[400px] mb-5"
@@ -59,7 +58,7 @@ function Contact() {
             <button className="button bg-purple-600 border-none px-10 py-3 rounded-lg text-white cursor-pointer">
               Gửi
             </button>
-          </form>
+          </Form>
         </div>
       </div>
     </section>
