@@ -56,7 +56,7 @@ export default function AddGaragePage() {
 
   const onFinish = async () => {
     const values = form.getFieldsValue();
-    const { place_id } = JSON.parse(values?.addressDetail).value;
+    const { place_id } = JSON.parse(values?.address).value;
     const [{ geometry }] = await geocodeByPlaceId(place_id);
     addGarage({
       body: {
