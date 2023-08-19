@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import { Input, Form } from 'antd';
+import { Form,Input } from 'antd';
 import React, { useRef } from 'react';
 function Contact() {
   const form = useRef();
