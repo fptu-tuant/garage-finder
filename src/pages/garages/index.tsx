@@ -170,7 +170,7 @@ export default function GaragesPage() {
         <div className="flex flex-col grow">
           <Skeleton active loading={fetchingGarages}>
             <div className="grid grid-cols-3 gap-x-6 gap-y-8">
-              {(garages.garages)?.map((garage) => (
+              {garages?.map((garage) => (
                 <GarageCard
                   key={garage.garageID}
                   id={garage.garageID}
