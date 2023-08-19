@@ -17,7 +17,7 @@ type GetGaragesData = {
   feedbacksNumber: number;
   star: number;
 }>,
-  total};
+  total: number};
 
 type GetGaragesVariables = {
   body: {
