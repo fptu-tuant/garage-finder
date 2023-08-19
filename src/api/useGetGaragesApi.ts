@@ -2,7 +2,8 @@ import { BaseQueryApiOptions, Maybe } from '@/types';
 
 import { useBaseQueryApi } from './useBaseQueryApi';
 
-type GetGaragesData = Array<{
+type GetGaragesData = {
+  Array<{
   garageID: number;
   userID: number;
   garageName: string;
@@ -15,7 +16,8 @@ type GetGaragesData = Array<{
   thumbnail: Maybe<string>;
   feedbacksNumber: number;
   star: number;
-}>;
+}>,
+  total};
 
 type GetGaragesVariables = {
   body: {
