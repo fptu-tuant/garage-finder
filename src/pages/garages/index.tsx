@@ -182,7 +182,7 @@ export default function GaragesPage() {
                 />
               ))}
 
-              {isEmpty(garages.garages) && <Empty className="col-span-3" />}
+              {isEmpty(garages?.garages) && <Empty className="col-span-3" />}
             </div>
 
             <Pagination
