@@ -57,7 +57,7 @@ export default function AddGaragePage() {
   const onFinish = async () => {
     const values = form.getFieldsValue();
     try {
-    const { place_id } = (values.address).value;
+    const { place_id } = (values.detailAddress).value;
     const [{ geometry }] = await geocodeByPlaceId(place_id);
     await addGarage({
       body: {
