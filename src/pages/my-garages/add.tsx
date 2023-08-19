@@ -17,6 +17,7 @@ import { LOCATION_CASCADER_OPTIONS } from '@/constants';
 import { UserIcon } from '@/icons';
 import { emailRule, requiredRule } from '@/services';
 import { showError, showSuccess } from '@/utils';
+import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 const Wrapper = styled.div`
   #place {
@@ -55,7 +56,8 @@ export default function AddGaragePage() {
 
   const onFinish = async () => {
     const values = form.getFieldsValue();
-
+    const { place_id } = JSON.parse(values?.addressDetail).value;
+    const [{ geometry }] = await geocodeByPlaceId(place_id);
     addGarage({
       body: {
         addressDetail: values.detailAddress,
@@ -70,6 +72,8 @@ export default function AddGaragePage() {
         phoneNumber: values.phone,
         imageLink: [''],
         thumbnail: values.thumbnail,
+        latAddress: geometry.location.lat(),
+        lngAddress: geometry.location.lng(),
       },
     });
   };
