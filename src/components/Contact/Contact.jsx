@@ -5,7 +5,7 @@ function Contact() {
   const form = useRef();
 
   const sendEmail = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     emailjs.sendForm(
       'service_tq1gfkm',
@@ -13,7 +13,7 @@ function Contact() {
       form.current,
       '7IE1jATfI-2lIgJoU'
     );
-    e.target.reset();
+    // e.target.reset();
     form.current.resetFields()
   };
 
