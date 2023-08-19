@@ -14,6 +14,7 @@ function Contact() {
       '7IE1jATfI-2lIgJoU'
     );
     e.target.reset();
+    form.current.resetFields()
   };
 
   return (
