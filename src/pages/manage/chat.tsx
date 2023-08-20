@@ -148,7 +148,7 @@ function Detail() {
     <div className="h-full relative py-20 flex flex-col">
       <div className="h-20 absolute top-0 inset-x-0 flex items-center px-2 border-b border-0 border-solid border-slate-100 gap-4">
         <Button
-          type="ghost"
+          ghost
           icon={<ArrowLeftOutlined className="text-xl" />}
           className="hover:text-purple-800"
           onClick={() => push('/manage/chat')}
