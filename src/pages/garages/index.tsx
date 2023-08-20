@@ -109,7 +109,7 @@ export default function GaragesPage() {
         ? (query?.categoriesID as string).split(',').map(Number)
         : undefined,
     });
-
+    
     setKeyword(query?.keyword?.toString() || '');
   }, [form, query?.categoriesID, query?.keyword, query?.provineID]);
 
